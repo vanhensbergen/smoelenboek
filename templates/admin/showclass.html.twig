@@ -1,0 +1,41 @@
+{% extends './base_admin.html.twig' %}
+
+{% block content %}
+    {% if class is empty %}
+        <div class="row">
+            <h1 class="p-2 display-3">De door jou opgevraagde klas bestaat  nog niet {{ app.user.firstname }}!</h1>
+        </div>
+    {% else %}
+    <div class="row justify-content-center"><h1> {{ class.name }}</h1></div>
+    <div class="row justify-content-center">
+        <div class="col-3">
+            <article class="row text-center p-1">
+                <figure class="figure w-100">
+                    <figcaption class="figure-caption bg-light">mentor: <a href="mailto:{{ class.mentor.email }}">{{ class.mentor.fullname }}</a></figcaption>
+                    <img src="{{ asset(class.mentor.photo) }}" class="w-100 img-fluid figure-img w-100"/>
+                </figure>
+            </article>
+        </div>
+    </div>
+    <div class="row">
+        {% if class.users is empty %}
+            <h1 class="col-12 text-center display-4">klas is nog leeg</h1>
+        {% else %}
+            {% for pupil in class.users%}
+                <div class="col-2 bg-light border border-success">
+                    <article class="text-center row p-1">
+                        <div class="text-center col-12"><a href="mailto:{{ pupil.email }}">{{ pupil.fullname }}</a></div>
+                        <figure class="figure w-100">
+                            <img src="{{ asset(pupil.photo) }}" class=" rounded figure-img img-fluid w-100" alt="{{ pupil.fullname }}"/>
+                            <figcaption class="figure-caption text-center">
+                                <div><a href="#">update</a></div>
+                                <div><a href="{{ path('admin_delete_pupil',{'id':pupil.id})}}">delete</a></div>
+                            </figcaption>
+                        </figure>
+                    </article>
+                </div>
+            {% endfor %}
+        {% endif %}
+    </div>
+    {% endif %}
+{% endblock %}

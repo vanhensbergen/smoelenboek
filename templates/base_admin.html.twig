@@ -1,0 +1,64 @@
+{% extends 'base.html.twig' %}
+{% block nav %}
+<div class="row border border-success">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light col-12">
+    <a class="navbar-brand" href="#">{{ app.user.fullname }}</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+                <a class="nav-link" href="{{ path('admin_home') }}">home<span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Leerlingen</a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="{{ path('admin_new_user') }}">nieuw</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="{{ path('admin_home') }}">ongeplaatst</a>
+
+                </div>
+            </li>
+
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Klassen</a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    {% for class in classes %}
+                        <a class="dropdown-item" href="{{ path('admin_get_class',{'id':class.id }) }}">{{ class.name }}</a>
+                    {% endfor %}
+
+                </div>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ path('admin_new_password') }}">wijzig wachtwoord</a>
+            </li>
+        </ul>
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item bg-white rounded border border-success">
+                <a class="nav-link" href="{{ path('app_logout') }}">log uit</a>
+            </li>
+        </ul>
+
+    </div>
+</nav>
+</div>
+{% endblock %}
+
+{% block body %}
+    <div class="row">
+        <div class="col-2 pt-2 bg-light border border-success">
+            <article >
+                <figure>
+                    <img class="figure-img img-fluid" src="{{ asset(app.user.photo) }}"/>
+                </figure>
+            </article>
+        </div>
+
+        <div class="col-10">
+            {% block content %}
+            {% endblock %}
+        </div>
+    </div>
+{% endblock %}

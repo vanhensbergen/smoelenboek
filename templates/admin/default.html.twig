@@ -1,0 +1,21 @@
+{% extends "./base_admin.html.twig"  %}
+
+{% block content %}
+    <div class = row><h1 class="col-12 display-4">ONGEPLAATSTE LEERLINGEN</h1></div>
+    <div class="row ml-2" >
+    {% for pupil in classless %}
+        <div class="col-3 bg-light border border-success mb-1 ">
+            <article class="p-1">
+                <div class="text-center" ><a href="mailto:{{ pupil.email}}">{{ pupil.fullname }}</a></div>
+                <figure>
+                    <img src="{{ pupil.photo }}" class="figure-img img-fluid w-100" alt="{{ pupil.fullname }}"/>
+                    <figcaption class="figure-caption text-center">
+                        <div><a href="{{ path('admin_delete_pupil',{'id':pupil.id}) }}">delete</a></div>
+                        <div><a href="#">update</a></div>
+                    </figcaption>
+                </figure>
+            </article>
+        </div>
+    {% endfor %}
+    </div>
+{% endblock %}

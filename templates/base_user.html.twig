@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+    <div class="row">
+        <div class="col-4">
+            <article>
+                <figure>
+                    <figcaption>Welkom {{ app.user.fullname }}</figcaption>
+                    <img src="{{ asset(app.user.photo) }}"/>
+                </figure>
+            </article>
+        </div>
+
+        <div class="col-8">
+            {% block class %}
+            {% endblock %}
+        </div>
+    </div>
+{% endblock %}

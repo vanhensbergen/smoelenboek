@@ -1,0 +1,23 @@
+{% extends './base_admin.html.twig' %}
+
+{% block content %}
+
+    <div class="col-12 justify-content-center">
+        <h1>gegevens van een nieuwe leerling:</h1>
+        {{ form(form) }}
+    </div>
+{% endblock %}
+{% block javascripts %}
+<script>
+    $('#user_photofile').on('change',function(e){
+        //get the file name
+        let fileName = "";
+        if(!(e.target.files[0] === undefined)){
+            fileName = e.target.files[0].name;
+        }
+        $(this).next('.custom-file-label').text(fileName);
+    })
+</script>
+{% endblock %}
+
+
