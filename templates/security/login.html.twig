@@ -4,6 +4,9 @@
 
 {% block body %}
     <div class="row">
+       <div class="col-3"><a href="{{ path('visitor_home') }}"><button class="btn btn-lg btn-primary mt-2">terug</button></a></div>
+    </div>
+    <div class="row">
         <form action="{{ path('app_login') }}"  method="post" class="col-5 bg-success p-5 ">
             {% if error %}
                 <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
@@ -16,7 +19,6 @@
             {% endif %}
 
             <h1 class="h3 mb-3 font-weight-normal">aub wilt u inloggen</h1>
-            <p class="h5 mb-3 font-weight-normal">welkom</p>
             <label for="inputEmail">Email</label>
             <input type="email" value="{{ last_username }}" placeholder="vul je emailadres van school in" name="email" id="inputEmail" class="form-control" required autofocus>
             <label for="inputPassword">Wachtwoord</label>

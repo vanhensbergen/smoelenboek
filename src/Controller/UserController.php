@@ -81,6 +81,7 @@ class UserController extends BaseController
 
                 $form->get('email')->addError(new FormError("emailadres {$user->getEmail()} is helaas al in gebruik. Kies een ander"));
                 return $this->render('admin/new-user.html.twig', [
+                    'header'=>'gegevens van een nieuwe leerling',
                     'form' => $form->createView(),
                     'classes'=>$this->getClasses(),
                 ]);
@@ -211,7 +212,10 @@ class UserController extends BaseController
 
     }
 
-
+    /**
+     * @param Request $request
+     * @return Response
+     */
     private function changePasswordAction(Request $request):Response
     {
         $form = $this->createForm(ChangePasswordType::class);
@@ -235,6 +239,31 @@ class UserController extends BaseController
             'classes'=>$this->getClasses(),
         ]);
 
+    }
+
+    /**
+     * @Route("admin/reset/{id}", name="admin_reset", requirements={"id"="\d+"})
+     * @param in $id
+     * @return Response
+     */
+    public function adminResetPasswordAction(int $id):Response{
+        //insert constraint as to user types allowed
+        return $this->resetPasswordAction($id);
+    }
+
+    private function resetPasswordAction(int $id):Response{
+        $user = $this->getDoctrine()->getRepository(User::class)->find($id);
+        $path = $this->getUserString();
+        if(empty($user)){
+            $this->addFlash('message','deze gebruiker bestaat niet in de database!');
+            return $this->redirectToRoute("{$path}_home");
+        }
+        $user->setPassword($this->encode('qwerty'));
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->persist($user);
+        $entityManager->flush();
+        $this->addFlash('message',"wachtwoord van {$user->getFullname()} is gereset naar 'qwerty'.");
+        return $this->redirectToRoute("{$path}_home");
     }
     /**
      * @Route ("admin/new_password", name="admin_new_password")

@@ -61,6 +61,11 @@ class User implements UserInterface
      */
     private $schoolclass;
 
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $motto;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -207,5 +212,17 @@ class User implements UserInterface
     {
         $prefix = $this->prefix?:"";
         return "$this->firstname $prefix $this->lastname";
+    }
+
+    public function getMotto(): ?string
+    {
+        return $this->motto;
+    }
+
+    public function setMotto(?string $motto): self
+    {
+        $this->motto = $motto;
+
+        return $this;
     }
 }
