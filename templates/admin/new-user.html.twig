@@ -3,7 +3,11 @@
 {% block content %}
 
     <div class="col-12 justify-content-center">
-        <h1>gegevens van een nieuwe leerling:</h1>
+        <h1 class="row"><span>{{ header }}:</span>
+        {% if photo is defined %}
+        <img class="col-1 p-1 w-100" src="{{ asset(photo) }}" />
+        {% endif %}
+        </h1>
         {{ form(form) }}
     </div>
 {% endblock %}

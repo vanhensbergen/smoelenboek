@@ -28,7 +28,7 @@
                         <figure class="figure w-100">
                             <img src="{{ asset(pupil.photo) }}" class=" rounded figure-img img-fluid w-100" alt="{{ pupil.fullname }}"/>
                             <figcaption class="figure-caption text-center">
-                                <div><a href="#">update</a></div>
+                                <div><a href="{{ path('admin_update_pupil',{'id':pupil.id})}}">update</a></div>
                                 <div><a href="{{ path('admin_delete_pupil',{'id':pupil.id})}}">delete</a></div>
                             </figcaption>
                         </figure>

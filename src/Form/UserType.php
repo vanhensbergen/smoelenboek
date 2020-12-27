@@ -24,7 +24,7 @@ class UserType extends AbstractType
     {
         $builder
             ->add('firstname',TextType::class,['label'=>'voornaam','attr'=>['placeholder'=>'vul een voornaam in']])
-            ->add('prefix',TextType::class,['label'=>'tussenvoegsel(s)','attr'=>['placeholder'=>'vul eventueel tussenvoegsels in']])
+            ->add('prefix',TextType::class,['label'=>'tussenvoegsel(s)','required'=>false,'attr'=>['placeholder'=>'vul eventueel tussenvoegsels in']])
             ->add('lastname', TextType::class,['label'=>'achternaam','attr'=>['placeholder'=>'vul een achternaam in']])
             ->add('email', EmailType::class,['label'=>'emailadres','attr'=>['placeholder'=>'vul verplicht een (uniek) emailadres in']])
             ->add('password',TextType::class,['label'=>'wachtwoord','attr'=>['placeholder'=>'kies een wachtwoord voor de gebruiker']])

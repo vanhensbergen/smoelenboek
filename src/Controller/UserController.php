@@ -30,7 +30,7 @@ class UserController extends BaseController
 
     }
     /**
-     * @Route("/admin/pupil/new", name="admin_new_user")
+     * @Route("/admin/pupil/new", name="admin_new_pupil")
      * @param Request $request
      * @return Response
      */
@@ -44,6 +44,8 @@ class UserController extends BaseController
 
             /** @var UploadedFile $imgFile */
             $imgFile = $form->get('photofile')->getData();
+            $class = $form->get('schoolclass')->getData();
+            $class_id = empty($class)?null:$class->getId();
             if ($imgFile) {
 
                 $originalFilename = pathinfo($imgFile->getClientOriginalName(), PATHINFO_FILENAME);
@@ -69,7 +71,10 @@ class UserController extends BaseController
                 }
                 $this->addFlash("message", "nieuwe gebruiker {$user->getFullName()} succesvol toegevoegd");
                 $path = $this->getUserString();
-                return $this->redirectToRoute($path."_home");
+                if(empty($class_id)){
+                    return $this->redirectToRoute($path."_home");
+                }
+                return $this->redirectToRoute($path."_get_class",['id'=>$class_id]);
             }
             catch(UniqueConstraintViolationException $e){
 
@@ -83,12 +88,90 @@ class UserController extends BaseController
         }
 
         return $this->render('admin/new-user.html.twig', [
+            'header'=>'gegevens van een nieuwe leerling',
             'form' => $form->createView(),
             'classes'=>$this->getClasses(),
         ]);
 
     }
 
+    /**
+     * @Route("/admin/pupil/update/{id}", name="admin_update_pupil", requirements={"id"="\d+"})
+     * @param int $id
+     * @param Request $request
+     * @return Response
+     */
+    public function updateAction(int $id, Request $request):Response{
+        $user = $this->getDoctrine()->getRepository(User::class)->find($id);
+        if(empty($user))
+        {
+            $this->addFlash('message','de te wijzigen gebruiker bestaat niet!');
+            return $this->redirectToRoute('admin_home');
+        }
+        $form = $this->createForm(UserType::class, $user);
+        $form->remove('password');
+        $form->handleRequest($request);
+        $old_photo = $user->getPhotoFileName();
+        if($form->isSubmitted()&&$form->isValid())
+        {
+            /** @var UploadedFile $imgFile */
+            $imgFile = $form->get('photofile')->getData();
+            $class = $form->get('schoolclass')->getData();
+            $class_id = empty($class)?null:$class->getId();
+            if ($imgFile) {
+
+                $originalFilename = pathinfo($imgFile->getClientOriginalName(), PATHINFO_FILENAME);
+                $newFilename = substr(md5($originalFilename),10).uniqid() . '.' . $imgFile->guessExtension();
+                $user->setPhoto($newFilename);
+            }
+            $user->setRoles(["ROLE_PUPIL"]);
+            try {
+
+                $entityManager = $this->getDoctrine()->getManager();
+                $entityManager->persist($user);
+                $entityManager->flush();
+                $dir = $this->getParameter('app.image_directory');
+                if (isset($newFilename)) {
+                    try {
+
+                        $imgFile->move($dir, $newFilename);
+                    } catch (FileException $e) {
+                        echo "file could not be moved{$e->getMessage()}";
+                        die();
+                    }
+                    if(!empty($old_photo)){
+                        $file = $dir.'/'.$old_photo;
+                        if(file_exists($file)) {
+
+                            unlink($file);
+                        }
+                    }
+                }
+
+                $this->addFlash("message", "gebruiker {$user->getFullName()} succesvol gewijzigd");
+                $path = $this->getUserString();
+                if(empty($class_id)){
+                    return $this->redirectToRoute($path."_home");
+                }
+                return $this->redirectToRoute($path."_get_class",['id'=>$class_id]);
+            }
+            catch(UniqueConstraintViolationException $e){
+
+
+                $form->get('email')->addError(new FormError("emailadres {$user->getEmail()} is helaas al in gebruik. Kies een ander"));
+                return $this->render('admin/new-user.html.twig', [
+                    'form' => $form->createView(),
+                    'classes'=>$this->getClasses(),
+                ]);
+            }
+        }
+        return $this->render('admin/new-user.html.twig', [
+            'header'=>'wijzig de gegevens van deze leerling',
+            'photo'=>$user->getPhoto(),
+            'form' => $form->createView(),
+            'classes'=>$this->getClasses(),
+        ]);
+    }
 
 
     private function encode($plainPassword):string{
@@ -103,7 +186,9 @@ class UserController extends BaseController
      */
     public function deleteUserAction(int $id):Response{
         $user = $this->getDoctrine()->getRepository(User::class)->find($id);
-        $classId = $user->getSchoolclass()->getId();
+        $class = $user->getSchoolclass();
+
+        $class_id = empty($class)?null:$class->getId();
         $photoName = $user->getPhotoFileName();
         $entityManager = $this->getDoctrine()->getManager();
         $entityManager->remove($user);
@@ -118,7 +203,10 @@ class UserController extends BaseController
         }
         $this->addFlash('message',"leerling {$user->getFullName()} verwijderd");
         $path = $this->getUserString();
-        return $this->redirectToRoute("{$path}_home");
+        if(empty($class_id)){
+           return $this->redirectToRoute($path.'_home');
+        }
+        return $this->redirectToRoute("{$path}_get_class",['id'=>$class_id]);
 
 
     }
@@ -131,10 +219,8 @@ class UserController extends BaseController
         $path = $this->getUserString();
         if($form->isSubmitted()&&$form->isValid())
         {
-            $old = $form->get('password')->getData();
             $new = $form->get('new_password')->getData();
             $user = $this->getUser();
-            $old_encoded = $this->encode($old);
             $user->setPassword($this->encode($new));
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($user);
@@ -207,9 +293,4 @@ class UserController extends BaseController
 
     }
 
-    private function getClasslessPupilsAction():array{
-        $classless = $this->getDoctrine()->getRepository(User::class)->findClasslessPupils();
-        var_dump($classless);
-            die();
-    }
 }

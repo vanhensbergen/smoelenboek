@@ -5,8 +5,9 @@ namespace App\Controller;
 
 
 use App\Entity\Schoolclass;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
-abstract class BaseController extends \Symfony\Bundle\FrameworkBundle\Controller\AbstractController
+abstract class BaseController extends AbstractController
 {
 
     protected function getClasses():array{

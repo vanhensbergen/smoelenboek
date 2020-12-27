@@ -6,7 +6,6 @@
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
-
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item active">
@@ -15,7 +14,7 @@
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Leerlingen</a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="{{ path('admin_new_user') }}">nieuw</a>
+                    <a class="dropdown-item" href="{{ path('admin_new_pupil') }}">nieuw</a>
                     <div class="dropdown-divider"></div>
                     <a class="dropdown-item" href="{{ path('admin_home') }}">ongeplaatst</a>
 
@@ -28,6 +27,8 @@
                     {% for class in classes %}
                         <a class="dropdown-item" href="{{ path('admin_get_class',{'id':class.id }) }}">{{ class.name }}</a>
                     {% endfor %}
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="#">nieuwe klas</a>
 
                 </div>
             </li>
@@ -51,7 +52,7 @@
         <div class="col-2 pt-2 bg-light border border-success">
             <article >
                 <figure>
-                    <img class="figure-img img-fluid" src="{{ asset(app.user.photo) }}"/>
+                    <img class="figure-img img-fluid" src="{{ asset(app.user.photo) }}" alt="app.user.fullname"/>
                 </figure>
             </article>
         </div>
