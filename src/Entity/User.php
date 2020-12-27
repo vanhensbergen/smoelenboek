@@ -23,48 +23,48 @@ class User implements UserInterface
     /**
      * @ORM\Column(type="string", length=180, unique=true)
      */
-    private $email;
+    private string $email;
 
     /**
      * @ORM\Column(type="json")
      */
-    private $roles = [];
+    private array $roles = [];
 
     /**
      * @var string The hashed password
      * @ORM\Column(type="string")
      */
-    private $password;
+    private string $password;
 
     /**
      * @ORM\Column(type="string", length=50, nullable=false)
      */
-    private $firstname;
+    private string $firstname;
 
     /**
      * @ORM\Column(type="string", length=20, nullable=true)
      */
-    private $prefix;
+    private ?string $prefix;
 
     /**
      * @ORM\Column(type="string", length=50)
      */
-    private $lastname;
+    private string $lastname;
 
     /**
      * @ORM\Column(type="string", length=50, nullable=true)
      */
-    private $photo;
+    private ?string $photo;
 
     /**
      * @ORM\ManyToOne(targetEntity=Schoolclass::class, inversedBy="users")
      */
-    private $schoolclass;
+    private ?Schoolclass $schoolclass;
 
     /**
      * @ORM\Column(type="text", nullable=true)
      */
-    private $motto;
+    private ?string $motto;
 
     public function getId(): ?int
     {

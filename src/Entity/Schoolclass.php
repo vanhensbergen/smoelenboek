@@ -18,22 +18,22 @@ class Schoolclass
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      */
-    private $id;
+    private ?int $id;
 
     /**
      * @ORM\Column(type="string", length=10, unique=true)
      */
-    private $name;
+    private ?string $name;
 
     /**
      * @ORM\Column(type="text")
      */
-    private $description;
+    private ?string $description;
 
     /**
      * @ORM\ManyToOne(targetEntity=User::class)
      */
-    private $mentor;
+    private ?User $mentor;
 
     /**
      * @ORM\OneToMany(targetEntity=User::class, mappedBy="schoolclass")

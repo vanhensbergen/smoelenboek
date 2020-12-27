@@ -28,7 +28,7 @@
                         <a class="dropdown-item" href="{{ path('admin_get_class',{'id':class.id }) }}">{{ class.name }}</a>
                     {% endfor %}
                     <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="#">nieuwe klas</a>
+                    <a class="dropdown-item" href="{{ path('admin_new_class') }}">nieuwe klas</a>
 
                 </div>
             </li>
@@ -49,7 +49,7 @@
 
 {% block body %}
     <div class="row">
-        <div class="col-2 pt-2 bg-light border border-success">
+        <div class="col-2 pt-2 bg-light border border-success ">
             <article >
                 <figure>
                     <img class="figure-img img-fluid" src="{{ asset(app.user.photo) }}" alt="app.user.fullname"/>
