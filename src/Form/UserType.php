@@ -35,6 +35,7 @@ class UserType extends AbstractType
             ->add('photofile',FileType::class,
 
                 [
+                    'attr'=>['accept'=>"image/x-png,image/gif,image/jpeg",],
                     'label'=>'foto voor user',
                     'mapped'=>false,
                     'required'=>false,

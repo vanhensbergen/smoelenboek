@@ -156,13 +156,7 @@ class UserController extends BaseController
                 return $this->redirectToRoute($path."_get_class",['id'=>$class_id]);
             }
             catch(UniqueConstraintViolationException $e){
-
-
                 $form->get('email')->addError(new FormError("emailadres {$user->getEmail()} is helaas al in gebruik. Kies een ander"));
-                return $this->render('admin/new-user.html.twig', [
-                    'form' => $form->createView(),
-                    'classes'=>$this->getClasses(),
-                ]);
             }
         }
         return $this->render('admin/new-user.html.twig', [
