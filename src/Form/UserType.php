@@ -50,8 +50,7 @@ class UserType extends AbstractType
                 ],
 
             ])
-        ->add('save', SubmitType::class)
-        ->add('reset', ResetType::class);
+        ->add('save', SubmitType::class);
     }
 
     public function configureOptions(OptionsResolver $resolver)

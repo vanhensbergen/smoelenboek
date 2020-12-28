@@ -22,6 +22,9 @@ class AdministratorController extends BaseController
     public function defaultAction():Response{
         $classless = $this->getDoctrine()->getRepository(User::class)->findClasslessPupils();
         return $this->render('admin/default.html.twig',
-            [ 'classes'=>$this->getClasses() ,'classless'=>$classless]);
+            [   'classes'=>$this->getClasses() ,
+                'pupils'=>$classless,
+                'header'=>'ONGEPLAATSTE LEERLINGEN',
+            ]);
     }
 }

@@ -23,7 +23,7 @@ class User implements UserInterface
     /**
      * @ORM\Column(type="string", length=180, unique=true)
      */
-    private string $email;
+    private $email;
 
     /**
      * @ORM\Column(type="json")
@@ -34,37 +34,37 @@ class User implements UserInterface
      * @var string The hashed password
      * @ORM\Column(type="string")
      */
-    private string $password;
+    private $password;
 
     /**
      * @ORM\Column(type="string", length=50, nullable=false)
      */
-    private string $firstname;
+    private  $firstname;
 
     /**
      * @ORM\Column(type="string", length=20, nullable=true)
      */
-    private ?string $prefix;
+    private $prefix;
 
     /**
      * @ORM\Column(type="string", length=50)
      */
-    private string $lastname;
+    private $lastname;
 
     /**
      * @ORM\Column(type="string", length=50, nullable=true)
      */
-    private ?string $photo;
+    private $photo;
 
     /**
      * @ORM\ManyToOne(targetEntity=Schoolclass::class, inversedBy="users")
      */
-    private ?Schoolclass $schoolclass;
+    private $schoolclass;
 
     /**
      * @ORM\Column(type="text", nullable=true)
      */
-    private ?string $motto;
+    private $motto;
 
     public function getId(): ?int
     {

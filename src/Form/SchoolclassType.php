@@ -5,6 +5,7 @@ namespace App\Form;
 use App\Entity\Schoolclass;
 use App\Entity\User;
 use App\Repository\UserRepository;
+use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -24,7 +25,7 @@ class SchoolclassType extends AbstractType
                 ['label'=>'geef een omschrijving van de klas'])
             ->add('mentor', EntityType::class,
                 [   'class'=>User::class,
-                    'query_builder'=>function(UserRepository $ur){
+                    'query_builder'=>function(EntityRepository $ur){
                         return  $ur->createQueryBuilder('u')
                             ->where('u.roles LIKE :roles')
                             ->setParameter('roles', '%"ROLE_TEACHER"%')

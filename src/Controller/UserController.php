@@ -321,4 +321,18 @@ class UserController extends BaseController
 
     }
 
+    /**
+     * @Route("/admin/search", name="admin_search")
+     * @param Request $request
+     * @return Response
+     */
+    public function searchAction(Request  $request):Response{
+        $searchValue = $request->get('search');
+        $results = $this->getDoctrine()->getRepository(User::class)->findLike($searchValue,'ROLE_PUPIL');
+        return $this->render('admin/default.html.twig',
+            [   'classes'=>$this->getClasses() ,
+                'pupils'=>$results,
+                'header'=>'ZOEKRESULTATEN VAN: '.$searchValue,
+            ]);
+    }
 }
