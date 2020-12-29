@@ -60,6 +60,11 @@ class User implements UserInterface
      * @ORM\ManyToOne(targetEntity=Schoolclass::class, inversedBy="users")
      */
     private $schoolclass;
+    /**
+     * one mentor has one class
+     * @ORM\OneToOne(targetEntity=Schoolclass::class, mappedBy="mentor")
+     */
+    private $mentorclass;
 
     /**
      * @ORM\Column(type="text", nullable=true)
@@ -205,6 +210,18 @@ class User implements UserInterface
     public function setSchoolclass(?Schoolclass $schoolclass): self
     {
         $this->schoolclass = $schoolclass;
+
+        return $this;
+    }
+
+    public function getMentorclass(): ?Schoolclass
+    {
+        return $this->mentorclass;
+    }
+
+    public function setMentorclass(?Schoolclass $mentorclass): self
+    {
+        $this->mentorclass = $mentorclass;
 
         return $this;
     }

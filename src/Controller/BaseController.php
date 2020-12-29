@@ -20,15 +20,24 @@ abstract class BaseController extends AbstractController
     public function __construct(UserPasswordEncoderInterface $passwordEncoder){
 
         $this->passwordEncoder = $passwordEncoder;
+
     }
 
     /**
+     * geeft de klassen als een array van objecten van het type Schoolclass terug
+     *
      * @return array
      */
     protected function getClasses():array{
         return $this->getDoctrine()->getRepository(Schoolclass::class)->findAll();
     }
 
+    /**
+     * beschrijft de afhandeling in abstracte termen van een actie die het wachtword reset naar qwerty.
+     * Veronderstelt dat er een home directory (admin_home, pupil_home etc) is.
+     * @param int $id
+     * @return Response
+     */
     protected function resetPasswordAction(int $id):Response{
         $user = $this->getDoctrine()->getRepository(User::class)->find($id);
         $path = $this->getUserString();
@@ -44,6 +53,10 @@ abstract class BaseController extends AbstractController
         return $this->redirectToRoute("{$path}_home");
     }
 
+    /**
+     * geeft de string die als pad verwijst naar de specifieke gebruiker: admin. pupil, visitor, teacher
+     * @return string de userstring één van visitor, pupil, teacher, admin of principal
+     */
     protected function getUserString():string{
         if($this->isGranted('ROLE_PRINCIPAL')){
             return 'principal';
@@ -68,7 +81,13 @@ abstract class BaseController extends AbstractController
         return $this->render("$path/showclass.html.twig",['classes'=>$this->getClasses(),'class'=>$class]);
     }
 
-    protected function encode($plainPassword):string{
+    /**
+     * de methode maakt een hash van het plain pwachtwoord dat in de database bewaard wordt
+     *
+     * @param string $plainPassword het door de gebruiker ingevoerde wachtwoord
+     * @return string het volgens het door symfony ingestelde algoritme geëncrypte wachtwoord
+     */
+    protected function encode(string $plainPassword):string{
         $user = new User();
         return $this->passwordEncoder->encodePassword($user, $plainPassword);
     }
@@ -100,6 +119,5 @@ abstract class BaseController extends AbstractController
         ]);
 
     }
-
 
 }

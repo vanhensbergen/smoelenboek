@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Gegenereerd op: 28 dec 2020 om 22:33
+-- Gegenereerd op: 30 dec 2020 om 00:53
 -- Serverversie: 10.4.16-MariaDB
 -- PHP-versie: 7.4.12
 
@@ -43,7 +43,9 @@ CREATE TABLE `doctrine_migration_versions` (
 INSERT INTO `doctrine_migration_versions` (`version`, `executed_at`, `execution_time`) VALUES
 ('DoctrineMigrations\\Version20201211141559', '2020-12-11 15:16:54', 387),
 ('DoctrineMigrations\\Version20201211142937', '2020-12-11 15:30:13', 67),
-('DoctrineMigrations\\Version20201227144254', '2020-12-27 15:43:38', 98);
+('DoctrineMigrations\\Version20201227144254', '2020-12-27 15:43:38', 98),
+('DoctrineMigrations\\Version20201229212504', '2020-12-29 22:25:37', 317),
+('DoctrineMigrations\\Version20201229213339', '2020-12-29 22:34:21', 267);
 
 -- --------------------------------------------------------
 
@@ -53,22 +55,22 @@ INSERT INTO `doctrine_migration_versions` (`version`, `executed_at`, `execution_
 
 CREATE TABLE `schoolclasses` (
   `id` int(11) NOT NULL,
-  `mentor_id` int(11) DEFAULT NULL,
   `name` varchar(10) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `description` longtext COLLATE utf8mb4_unicode_ci NOT NULL
+  `description` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `mentor_id` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Gegevens worden geëxporteerd voor tabel `schoolclasses`
 --
 
-INSERT INTO `schoolclasses` (`id`, `mentor_id`, `name`, `description`) VALUES
-(1, 1, 'AO_2J', 'leerjaar 2 van de opleiding. Er is sprake van een klas zonder differentiatie.D methode boeken werken conform het havo/vwo. Leerlingen die het niveau niet aankunnen kunnen worden gedetermineerd als mavo-theoretische leerweg en krijgen les op hun gedetermineerde niveau.'),
-(2, 9, 'AO_3K', 'Deze klas behoort tot leerjaar 3 van de opleiding. Programmeren op client-server niveau met talen als PHP, ES6 en opmaaktalen als CSS en HML.\r\nFrameworks zoals symfony staan centraal.\r\nDe student heeft kennis van SQL en kan een database ontwerpen.'),
-(3, 6, 'AO_3G', 'Dit is de derde klas van de opleiding, hier worden leerlingen klaargestoomd voor un examens en voor de stage.\r\nZe beheersen hier de full client-server stack'),
-(4, 8, 'AO_P3', 'De derde klas van de opleiding AO. De groep studenten is zojuist terug van stage en bereidt zich voor op de laatste 2 examens K2 en K3'),
-(9, 4, 'IB_2J', 'De tweede klas van de 3 jarige opleiding netwerkbeheerder'),
-(14, 124, 'IB_3Q', 'de twede klas BOL 3 systembeheer');
+INSERT INTO `schoolclasses` (`id`, `name`, `description`, `mentor_id`) VALUES
+(1, 'AO_2J', 'leerjaar 2 van de opleiding. Er is sprake van een klas zonder differentiatie.D methode boeken werken conform het havo/vwo. Leerlingen die het niveau niet aankunnen kunnen worden gedetermineerd als mavo-theoretische leerweg en krijgen les op hun gedetermineerde niveau.', 1),
+(2, 'AO_3K', 'Deze klas behoort tot leerjaar 3 van de opleiding. Programmeren op client-server niveau met talen als PHP, ES6 en opmaaktalen als CSS en HML.\r\nFrameworks zoals symfony staan centraal.\r\nDe student heeft kennis van SQL en kan een database ontwerpen.', 9),
+(3, 'AO_3G', 'Dit is de derde klas van de opleiding, hier worden leerlingen klaargestoomd voor un examens en voor de stage.\r\nZe beheersen hier de full client-server stack', 6),
+(4, 'AO_P3', 'De derde klas van de opleiding AO. De groep studenten is zojuist terug van stage en bereidt zich voor op de laatste 2 examens K2 en K3', 8),
+(9, 'IB_2J', 'De tweede klas van de 3 jarige opleiding netwerkbeheerder', 4),
+(14, 'IB_3Q', 'de tweede klas BOL 3 systembeheer', 124);
 
 -- --------------------------------------------------------
 
@@ -165,7 +167,7 @@ INSERT INTO `users` (`id`, `schoolclass_id`, `email`, `roles`, `password`, `firs
 (99, 4, 'c.van.dam@svjit.nl', '[\"ROLE_PUPIL\"]', '$argon2id$v=19$m=65536,t=4,p=1$YVNKSTVya2xuaTRhYnU0RQ$8spnZ1WPkpLEcYE5L/f0yCv5z8PcFr/GAC9tIBb79Rs', 'Chaddy', 'van', 'Dam', 'd770610e2e2c00108f0bbe5fe898373ae01.png', NULL),
 (100, NULL, 'j.lo-a-foe@svjit.nl', '[\"ROLE_PUPIL\"]', '$argon2id$v=19$m=65536,t=4,p=1$T05HNk54UkZXVEI2aVhNMw$WIYthDKcZaiPU31mlvjofwmO7DBcUbsQsKS4s+jlL4c', 'Jeffrey', NULL, 'Lo-a-Foe', 'ed9946f4f0740d53e80f885fe898c71669a.png', NULL),
 (101, NULL, 'j.van.den.bos@svjit.nl', '[\"ROLE_PUPIL\"]', '$argon2id$v=19$m=65536,t=4,p=1$aDdSNHFjYUFTVmUyYUpZdw$39qniStjP5AfCH8uDpTw8YDheU+cJDKT3X9hppi+/VY', 'Jeffrey', 'van den', 'Bos', '8ab564a789e58f1b576ab65fe8992ff2333.jpeg', NULL),
-(102, NULL, 'j.uilhoorn@svjit.nl', '[\"ROLE_PUPIL\"]', '$argon2id$v=19$m=65536,t=4,p=1$ODdQcWFRWE5ISEhBLlhTLw$i5qm/OKoqyQwZwyUVztv0nrjM9lvy9QDAWllmJND/eY', 'Jeroen', NULL, 'Uilhoorn', 'c90625c7655ef566536fa85fe89993c970b.jpeg', NULL),
+(102, 14, 'j.uilhoorn@svjit.nl', '[\"ROLE_PUPIL\"]', '$argon2id$v=19$m=65536,t=4,p=1$ODdQcWFRWE5ISEhBLlhTLw$i5qm/OKoqyQwZwyUVztv0nrjM9lvy9QDAWllmJND/eY', 'Jeroen', NULL, 'Uilhoorn', 'c90625c7655ef566536fa85fe89993c970b.jpeg', NULL),
 (105, NULL, 'j.den.brabander@svjit.nl', '[\"ROLE_PUPIL\"]', '$argon2id$v=19$m=65536,t=4,p=1$WXBRcnFjSTJOVEFUQnY2Tg$Cz6qufFbd9CaWsV+6tjaNHGAkWVjO69Q6R4oFbGwYtA', 'Joey', 'den', 'Brabander', 'a3eedea0964c33219bf7975fe89b148dd6f.jpeg', NULL),
 (106, NULL, 'k.ruinaard@svjit.nl', '[\"ROLE_PUPIL\"]', '$argon2id$v=19$m=65536,t=4,p=1$bEhPNzdydjVlazNTTGxmRA$NZMUyJuZsEpl2ubmQz9RR95AsL11CENh87JRUnSZuHY', 'Kevin', NULL, 'Ruinaard', '2dd4aca3941d162a557f235fe89b6f312b7.png', NULL),
 (107, NULL, 'z.ulusal@svjit.nl', '[\"ROLE_PUPIL\"]', '$argon2id$v=19$m=65536,t=4,p=1$OXBOUHpaVmxXQklMaFpVYw$IZJnrTcM98+jHkWxzdkaS9WZF1OC1qwT7nET6FY5qko', 'Zafer', NULL, 'Ulusal', '06c1d8c687d789891b72725fe89bb63a4d2.png', NULL),
@@ -173,7 +175,7 @@ INSERT INTO `users` (`id`, `schoolclass_id`, `email`, `roles`, `password`, `firs
 (110, 9, 'd.de.jager@svjit.nl', '[\"ROLE_PUPIL\"]', '$argon2id$v=19$m=65536,t=4,p=1$U0VIS2Z2SGlxMjFHRVpELg$Y2Cho2LubPNfxR4FDDlS3vQ8dElCsY1e1n3oMG63nHc', 'Djeysin', 'de', 'Jager', 'bcada47c764dd9050f3b1e5fe9c5eb27578.jpeg', NULL),
 (111, 9, 'j.marain@svjit.nl', '[\"ROLE_PUPIL\"]', '$argon2id$v=19$m=65536,t=4,p=1$N21WSWNMZUZOVE5sWXFCZw$rtzD3jAOfifzqDcvWyY6BxKR12Ypr+nNWQ1Dc57qVII', 'Jermaine', NULL, 'Marapin', '1ce2a90c7b78da5da8d27d5fe9c65f8853d.jpeg', NULL),
 (112, 9, 'j.spitters@svjit.nl', '[\"ROLE_PUPIL\"]', '$argon2id$v=19$m=65536,t=4,p=1$SHVqNmtBbkpha0R5TXRjUg$GTrHOQGi7IIFOdFRY0G85swr0ibfT3gfU/f+OdB2O0E', 'Jordy', NULL, 'Spitters', 'f9534732f45c325ad3defb5fe9c6cd44e2f.jpeg', NULL),
-(113, NULL, 'j.van.dam@svjit.nl', '[\"ROLE_PUPIL\"]', '$argon2id$v=19$m=65536,t=4,p=1$dzdzazBYMDF3aW9iVk95Tw$jWgr1TZLCpmJAseoYG69rZLQq6Ko2nIzvt1dQv7Y0Fg', 'Joeri', 'van', 'Dam', 'fafc8ad37d84952bd0e3205fe9d011b94e8.jpeg', NULL),
+(113, 14, 'j.van.dam@svjit.nl', '[\"ROLE_PUPIL\"]', '$argon2id$v=19$m=65536,t=4,p=1$dzdzazBYMDF3aW9iVk95Tw$jWgr1TZLCpmJAseoYG69rZLQq6Ko2nIzvt1dQv7Y0Fg', 'Joeri', 'van', 'Dam', 'fafc8ad37d84952bd0e3205fe9d011b94e8.jpeg', NULL),
 (114, 9, 'j.roos@svjit.nl', '[\"ROLE_PUPIL\"]', '$argon2id$v=19$m=65536,t=4,p=1$MFJGckR3cFlZc2doYnhPQw$BygGeKtuWtB0/WNgZT9bdtldLO+ZN20iBmCGr2B0kxk', 'Joey', NULL, 'Roos', '55e82bb454aaee095a59405fe9f3f100af3.jpeg', NULL),
 (115, 9, 'm.vlaardingerbroek@svjit.nl', '[\"ROLE_PUPIL\"]', '$argon2id$v=19$m=65536,t=4,p=1$STk1TVJEcVNRdDhLaDI1Ug$vfRF9wOsrvyHVeKWUw1V5pF8DU+wlcgdBVXSXYj4OCI', 'Maxim', NULL, 'Vlaardingerbroek', 'd1b4efae11385cda0aadf25fe9f777dc465.png', NULL),
 (117, 9, 'm_van_der_linden@svjit.nl', '[\"ROLE_PUPIL\"]', '$argon2id$v=19$m=65536,t=4,p=1$cTNqajE1RkZYc2NDMWlNdg$4hieb3T8PaJEBVczG2NmVLqqtGCl/WpoGNkVnHVHOYQ', 'Michael', 'van der', 'Linden', '376c10382d23de982a56465fe9f8fa64e7e.jpeg', NULL),
@@ -185,7 +187,12 @@ INSERT INTO `users` (`id`, `schoolclass_id`, `email`, `roles`, `password`, `firs
 (123, 2, 'v.van.ruijven@svjit.nl', '[\"ROLE_PUPIL\"]', '$argon2id$v=19$m=65536,t=4,p=1$aDhPV2NuUWhvazF3YXB3dA$m53vuvcVteM1LvPqSPftJWF49X5yjQlhNxZbj19ZkfU', 'Vincent', 'van', 'Ruijven', 'e24938f4a8532eee37fdaf5fea36b41b29f.png', NULL),
 (124, NULL, 'm.rotteveel@sjvit.nl', '[\"ROLE_TEACHER\"]', '$argon2id$v=19$m=65536,t=4,p=1$dEVQZEtPVzEyNEczclVDTQ$f+w8eGJ1qm+2/OfRVW5jkpqNdqV3X1arkvZcRsMjY/Y', 'Martijn', NULL, 'Rotteveel', 'rotteveel.jpg', NULL),
 (125, 9, 't.verbraeken@svjit.nl', '[\"ROLE_PUPIL\"]', '$argon2id$v=19$m=65536,t=4,p=1$OVNqZlMxZ0xxejZaa1UxUw$enVS8o1CGZSXmb2utqMuHoEqeKhayjctPs8mxTRq4is', 'Thomas', NULL, 'Verbraeken', '052fca4e77424b5603fde65fea467c95eb8.jpeg', NULL),
-(126, 9, 'n.sewpal@svjit.nl', '[\"ROLE_PUPIL\"]', '$argon2id$v=19$m=65536,t=4,p=1$dlNBOVl5RVBnNmVFdk56bA$2Pyp4XpaEi63NctmTDt/Qyxsun/SVObymFF3kxLjkJE', 'Nishad', NULL, 'Sewpal', '39cd89e3359f085502a6935fea484c94cd2.png', NULL);
+(126, 9, 'n.sewpal@svjit.nl', '[\"ROLE_PUPIL\"]', '$argon2id$v=19$m=65536,t=4,p=1$dlNBOVl5RVBnNmVFdk56bA$2Pyp4XpaEi63NctmTDt/Qyxsun/SVObymFF3kxLjkJE', 'Nishad', NULL, 'Sewpal', '39cd89e3359f085502a6935fea484c94cd2.png', NULL),
+(127, 14, 'm.van.der.kooij@svjit.nl', '[\"ROLE_PUPIL\"]', '$argon2id$v=19$m=65536,t=4,p=1$RzdMc0YuMk9YbVJnUU9KWA$o9tnuEBIlromK2GougO9QL08ilcNxfWVZq05+iQE7XU', 'Mike', 'van der', 'Kooij', '6f02581773ca4350fb05b65fea5a4647a11.jpeg', NULL),
+(128, 14, 'm.heesterman@svjit.nl', '[\"ROLE_PUPIL\"]', '$argon2id$v=19$m=65536,t=4,p=1$ck5ZWXZCSS5nZHlndjMzeA$9c9/m78eWEaFWZ3VVo3oUliZjotXXnF87bHh25zz9Aw', 'Mitchel', NULL, 'Heesterman', '22fe3bd6acfbc2de3917dd5fea5a89a7b15.jpeg', NULL),
+(129, 14, 't.schouten@svjit.nl', '[\"ROLE_PUPIL\"]', '$argon2id$v=19$m=65536,t=4,p=1$RVNMcnNqZzVTWUhNZFIyNw$UvcMxU54N2zNSCiB5M2i8ph7J0iH3opfN6rtwT6skpE', 'Teun', NULL, 'Schouten', '535646ec213c6ea24d015d5fea5afee2488.png', NULL),
+(130, 14, 'm.berkhuysen@svjit.nl', '[\"ROLE_PUPIL\"]', '$argon2id$v=19$m=65536,t=4,p=1$TW0vaGJ4M296QjVCQnJ0SA$ojnclVf+1JTAFHTJUB7nY7uIC9FvIiGpCyTnr/bDX3E', 'Mike', NULL, 'Berkhuysen', 'faca23d229bc1aec06d88f5fea5b559d4c7.jpeg', NULL),
+(131, NULL, 'r.springer@svjit.nl', '[\"ROLE_TEACHER\"]', '$argon2id$v=19$m=65536,t=4,p=1$amliSlFIWFZPSnBLVzJYdw$c1BosKruRGQftXiPBFLNmwY86Rd8mJZxDiwn2Qzk0wE', 'Roy', NULL, 'Springer', 'roy.jpg', NULL);
 
 --
 -- Indexen voor geëxporteerde tabellen
@@ -203,7 +210,7 @@ ALTER TABLE `doctrine_migration_versions`
 ALTER TABLE `schoolclasses`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `UNIQ_6629A8A5E237E06` (`name`),
-  ADD KEY `IDX_6629A8ADB403044` (`mentor_id`);
+  ADD UNIQUE KEY `UNIQ_6629A8ADB403044` (`mentor_id`);
 
 --
 -- Indexen voor tabel `users`
@@ -227,7 +234,7 @@ ALTER TABLE `schoolclasses`
 -- AUTO_INCREMENT voor een tabel `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=127;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=132;
 
 --
 -- Beperkingen voor geëxporteerde tabellen

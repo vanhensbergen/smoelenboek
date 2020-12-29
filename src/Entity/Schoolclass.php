@@ -31,7 +31,8 @@ class Schoolclass
     private ?string $description;
 
     /**
-     * @ORM\ManyToOne(targetEntity=User::class)
+     * one schoolclass has one mentor
+     * @ORM\OneToOne(targetEntity=User::class, inversedBy="mentorclass")
      */
     private ?User $mentor;
 

@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Schoolclass;
+use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -17,6 +18,16 @@ class SchoolclassRepository extends ServiceEntityRepository
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Schoolclass::class);
+    }
+
+    public function findMentorClass(User $teacher)
+    {
+        return $this->createQueryBuilder('s')
+            ->andWhere('s.mentor = :val')
+            ->setParameter('val', $teacher)
+            ->getQuery()
+            ->getOneOrNullResult();
+            ;
     }
 
     // /**

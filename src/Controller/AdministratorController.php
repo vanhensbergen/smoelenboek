@@ -37,7 +37,7 @@ class AdministratorController extends BaseController
      * @param Request $request
      * @return Response
      */
-    public function newAction(Request $request):Response
+    public function newPupilAction(Request $request):Response
     {
         $user = new User();
         $form = $this->createForm(UserType::class, $user);
@@ -104,7 +104,7 @@ class AdministratorController extends BaseController
      * @param Request $request
      * @return Response
      */
-    public function updateAction(int $id, Request $request):Response{
+    public function updatePupilAction(int $id, Request $request):Response{
         $user = $this->getDoctrine()->getRepository(User::class)->find($id);
         if(empty($user))
         {

@@ -6,6 +6,7 @@ use App\Entity\Schoolclass;
 use App\Entity\User;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\Query\Expr\Join;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -16,8 +17,10 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class SchoolclassType extends AbstractType
 {
+
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+
         $builder
             ->add('name',TextType::class,
                 ['label'=>'kies een unieke naam voor de klas'])
@@ -27,7 +30,11 @@ class SchoolclassType extends AbstractType
                 [   'class'=>User::class,
                     'query_builder'=>function(EntityRepository $ur){
                         return  $ur->createQueryBuilder('u')
+                            //Select * From users u LEFT JOIN schoolclasses s ON u.id = s.mentor_id WHERE u.roles="[\"ROLE_TEACHER\"]" AND s.mentor_id IS NULL
+                                ->leftJoin(Schoolclass::class,'s', Join::WITH,
+                                's.mentor = u')
                             ->where('u.roles LIKE :roles')
+                            ->andWhere('s.mentor IS NULL')
                             ->setParameter('roles', '%"ROLE_TEACHER"%')
                             ->orderBy('u.lastname','ASC');
                     },
@@ -39,7 +46,7 @@ class SchoolclassType extends AbstractType
                     },
                     'placeholder'=>'----------',
                     'required'=>true,
-                    'label'=>'Kies verplicht een mentor voor de nieuwe klas'
+                    'label'=>'Kies een beschikbare docent als mentor voor de nieuwe klas'
                 ]
             )
             ->add('save',SubmitType::class)
