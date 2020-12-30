@@ -27,7 +27,7 @@
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Klassen</a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                             {% for class in classes %}
-                                <a class="dropdown-item" href="#">TODO</a>
+                                <a class="dropdown-item" href="path('teacher_get_class',{'id':class.id })">{{ class.name }}</a>
                             {% endfor %}
                             <div class="dropdown-divider"></div>
                             <a class="dropdown-item" href="#">nieuwe klas</a>
@@ -38,7 +38,7 @@
                         <a class="nav-link" href="#">wijzig wachtwoord</a>
                     </li>
                 </ul>
-                <form class="form-inline border rounded border-success p-1" method="post" action="#" >
+                <form class="form-inline border rounded border-success p-1" method="post" action="{{path('teacher_search')}}" >
                     <input class="form-control mr-sm-2" type="search" name='search' placeholder="Zoek..." aria-label="Search">
                     <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Zoek</button>
                 </form>

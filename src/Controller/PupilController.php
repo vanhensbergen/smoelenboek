@@ -41,4 +41,13 @@ class PupilController extends BaseController
     {
         return $this->getSchoolclassAction($id);
     }
+
+    /**
+     * @Route("/pupil/search", name="pupil_search")
+     * @param Request $request
+     * @return Response
+     */
+    public function searchForTeacherAction(Request  $request):Response{
+        return $this->searchAction($request);
+    }
 }

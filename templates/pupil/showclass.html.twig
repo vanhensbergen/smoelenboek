@@ -21,16 +21,7 @@
             {% if class.users is empty %}
                 <h1 class="col-12 text-center display-4">klas is nog leeg</h1>
             {% else %}
-                {% for pupil in class.users%}
-                    <div class="col-2 bg-light border border-success">
-                        <article class="text-center row p-1">
-                            <figure class="figure w-100">
-                                <img src="{{ asset(pupil.photo) }}" class=" rounded figure-img img-fluid w-100" alt="{{ pupil.fullname }}"/>
-                                <figcaption class="figure-caption"><a href="mailto:{{ pupil.email }}">{{ pupil.fullname }}</a></figcaption>
-                            </figure>
-                        </article>
-                    </div>
-                {% endfor %}
+                {{ include ('pupil/includes/pupilsforloop.incl.twig',{pupils:class.users}) }}
             {% endif %}
         </div>
     {% endif %}

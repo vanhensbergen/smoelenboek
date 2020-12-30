@@ -4,6 +4,8 @@
 namespace App\Controller;
 
 
+use App\Entity\User;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -22,6 +24,25 @@ class TeacherController extends BaseController
                 'classes'=>$classes,
                 ]);
 
+    }
+
+    /**
+     * @Route("/teacher/search", name="teacher_search")
+     * @param Request $request
+     * @return Response
+     */
+    public function searchForTeacherAction(Request  $request):Response{
+        return $this->searchAction($request);
+    }
+
+    /**
+     * @Route("/teacher/class/{id}", name="teacher_get_class", requirements={"id"="\d+"})
+     * @param int $id
+     * @return Response
+     */
+    public function getClassForTeacherAction(int $id):Response
+    {
+        return $this->getSchoolclassAction($id);
     }
 
 }

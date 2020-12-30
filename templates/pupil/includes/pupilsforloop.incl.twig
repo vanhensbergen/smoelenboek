@@ -1,0 +1,10 @@
+{% for pupil in pupils%}
+    <div class="col-2 bg-light border border-success">
+        <article class="text-center row p-1">
+            <figure class="figure w-100">
+                <img src="{{ asset(pupil.photo) }}" class=" rounded figure-img img-fluid w-100" alt="{{ pupil.fullname }}"/>
+                <figcaption class="figure-caption"><a href="mailto:{{ pupil.email }}">{{ pupil.fullname }}</a></figcaption>
+            </figure>
+        </article>
+    </div>
+{% endfor %}

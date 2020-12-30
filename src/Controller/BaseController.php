@@ -64,6 +64,9 @@ abstract class BaseController extends AbstractController
         if($this->isGranted('ROLE_ADMIN')){
             return 'admin';
         }
+        if($this->isGranted('ROLE_TEACHER')){
+            return 'teacher';
+        }
         if($this->isGranted('ROLE_PUPIL')){
             return 'pupil';
         }
@@ -118,6 +121,21 @@ abstract class BaseController extends AbstractController
             'classes'=>$this->getClasses(),
         ]);
 
+    }
+
+    /**
+     * @param Request $request
+     * @return Response
+     */
+    protected function searchAction(Request  $request):Response{
+        $searchValue = $request->get('search');
+        $results = $this->getDoctrine()->getRepository(User::class)->findLike($searchValue,'ROLE_PUPIL');
+        $path = $this->getUserString();
+        return $this->render($path.'/search.html.twig',
+            [   'classes'=>$this->getClasses() ,
+                'pupils'=>$results,
+                'searchvalue'=>$searchValue,
+            ]);
     }
 
 }
