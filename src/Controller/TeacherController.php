@@ -5,6 +5,7 @@ namespace App\Controller;
 
 
 use App\Entity\User;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -16,7 +17,7 @@ class TeacherController extends BaseController
      * @return Response
      */
     public function defaultAction():Response{
-            //$myClass = $this->getMentorClass();
+
             $myClass = $this->getUser()->getMentorclass();
             $classes = $this->getClasses();
             return $this->render('teacher/default.html.twig',[
@@ -43,6 +44,24 @@ class TeacherController extends BaseController
     public function getClassForTeacherAction(int $id):Response
     {
         return $this->getSchoolclassAction($id);
+    }
+
+    /**
+     * @Route("/teacher/motto", name="teacher_motto")
+     * @param Request $request
+     * @return Response
+     */
+    public function mottoAction(Request $request):Response{
+        $newMotto = $request->get("motto");
+
+        /** @var User $user*/
+        $user = $this->getUser();
+        $user->setMotto($newMotto);
+        $em  = $this->getDoctrine()->getManager();
+        $em->persist($user);
+        $em->flush();
+        return $this->redirectToRoute('teacher_home');
+
     }
 
 }
