@@ -24,7 +24,6 @@ class TeacherController extends BaseController
                 'class'=>$myClass,
                 'classes'=>$classes,
                 ]);
-
     }
 
     /**
@@ -47,13 +46,12 @@ class TeacherController extends BaseController
     }
 
     /**
-     * @Route("/teacher/motto", name="teacher_motto")
-     * @param Request $request
-     * @return Response
-     */
+      * @Route("/teacher/motto", name="teacher_motto")
+      * @param Request $request
+      * @return Response
+      */
     public function mottoAction(Request $request):Response{
         $newMotto = $request->get("motto");
-
         /** @var User $user*/
         $user = $this->getUser();
         $user->setMotto($newMotto);
@@ -61,7 +59,15 @@ class TeacherController extends BaseController
         $em->persist($user);
         $em->flush();
         return $this->redirectToRoute('teacher_home');
+    }
 
+    /**
+     * @Route("teacher/new_password", name="teacher_new_password")
+     * @param Request $request
+     * @return Response
+     */
+    public function changeTeacherPasswordAction(Request $request):Response{
+        return $this->changePasswordAction($request);
     }
 
 }

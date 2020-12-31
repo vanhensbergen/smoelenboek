@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Gegenereerd op: 30 dec 2020 om 14:50
+-- Gegenereerd op: 31 dec 2020 om 01:01
 -- Serverversie: 10.4.16-MariaDB
 -- PHP-versie: 7.4.12
 
@@ -70,7 +70,8 @@ INSERT INTO `schoolclasses` (`id`, `name`, `description`, `mentor_id`) VALUES
 (3, 'AO_3G', 'Dit is de derde klas van de opleiding, hier worden leerlingen klaargestoomd voor un examens en voor de stage.\r\nZe beheersen hier de full client-server stack', 6),
 (4, 'AO_P3', 'De derde klas van de opleiding AO. De groep studenten is zojuist terug van stage en bereidt zich voor op de laatste 2 examens K2 en K3', 8),
 (9, 'IB_2J', 'De tweede klas van de 3 jarige opleiding netwerkbeheerder', 4),
-(14, 'IB_3Q', 'de tweede klas BOL 3 systembeheer', 124);
+(14, 'IB_3Q', 'de tweede klas BOL 3 systembeheer', 124),
+(15, 'AO_1Z', 'de eerste klas. Er wordt gewerkt aan de basisconcepten van programmeren en ontwerpen in de talen es6  en C#. Views worden opgebouwd in xaml, css en html5', 131);
 
 -- --------------------------------------------------------
 
@@ -96,13 +97,13 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `schoolclass_id`, `email`, `roles`, `password`, `firstname`, `prefix`, `lastname`, `photo`, `motto`) VALUES
-(1, NULL, 'm.van.der.linden@svjit.nl', '[\"ROLE_TEACHER\"]', '$argon2id$v=19$m=65536,t=4,p=1$TThUQ2Y5cy5Ody5Bc1hrLg$4vi1yV7mVOst2xP+fnVafxtu4xha4PmTL8fepT5F29I', 'Marcel', 'van der', 'Linden', NULL, NULL),
+(1, NULL, 'm.van.der.linden@svjit.nl', '[\"ROLE_TEACHER\"]', '$argon2id$v=19$m=65536,t=4,p=1$TThUQ2Y5cy5Ody5Bc1hrLg$4vi1yV7mVOst2xP+fnVafxtu4xha4PmTL8fepT5F29I', 'Marcel', 'van der', 'Linden', NULL, 'Over 5 weken begint de stage-periode. Maak je project af en lever in.'),
 (3, NULL, 's.bliemert@svjit.nl', '[\"ROLE_PRINCIPAL\"]', '$argon2id$v=19$m=65536,t=4,p=1$dEpFMURMNVA3NUhhWHVTVA$Qo8BrIUa49/f7N3asMp68xPh+NdLURMqFyBX/CcZTr0', 'Sebastiaan', NULL, 'Bliemert', 's.bliemert.jpg', 'Ik ben de directeur van SVJIT en ik heet u van harte welkom op onze opleiding voor enthousiaste jonge en gemotiveerde programmeurs.<br/> \r\nOnze docenten gaan voor kwaliteit; onze studenten ook!'),
 (4, NULL, 'b.van.halem@svjit.nl', '[\"ROLE_TEACHER\"]', '$argon2id$v=19$m=65536,t=4,p=1$cG9JYkRIblhBcjBjazIwTg$mMzdfUZThewJHeU/KX3q1SjnQft7fhrd47oZ41zau8I', 'Bart', 'van', 'Halem', 'BHalem.jpg', NULL),
 (5, NULL, 'r.van.rossum@svjit.nl', '[\"ROLE_TEACHER\"]', '$argon2id$v=19$m=65536,t=4,p=1$WUZ5a1gwN1NsOWRvWWZkQQ$4v7BsUYl8D5WvpB6x+fADQpQR/GmkoYMyxJsP2kCSDI', 'Roel', 'van', 'Rossum', 'ROssem.jpg', NULL),
-(6, NULL, 'a.van.hensbergen@svjit.nl', '[\"ROLE_TEACHER\"]', '$argon2id$v=19$m=65536,t=4,p=1$RlNPWFJZclVSUTlsLlVlVg$8XFovftdwXUZuflevgh+9yr6+/h+njyr+ZqNsxlKV78', 'Anton', 'van', 'Hensbergen', '1368653662.jpg', 'Beste leerlingen, jullie zullen 23 februari het examen K2 moeten gaan doen.</br>\r\nIk verwacht dat jullie allemaal een korte zwakte en sterkte analyse in de database plaatsen.\r\n</br> Deze analyse zal ik gebruiken in het mentorgesprek van komende week. We zullen dan samen afspraken vastleggen die de kans op succes voor K2 vergroten.\r\nGa nu je analyse invullen. Ik zie je binnenkort; jouw analyse is nodig voor het gesprek!'),
+(6, NULL, 'a.van.hensbergen@svjit.nl', '[\"ROLE_TEACHER\"]', '$argon2id$v=19$m=65536,t=4,p=1$RlNPWFJZclVSUTlsLlVlVg$8XFovftdwXUZuflevgh+9yr6+/h+njyr+ZqNsxlKV78', 'Anton', 'van', 'Hensbergen', '1368653662.jpg', 'Beste leerlingen, jullie zullen 23 februari het examen K2 moeten gaan doen. Ik verwacht dat jullie allemaal een korte zwakte en sterkte analyse in de database plaatsen maximaal 300 woorden. Deze analyse zal ik gebruiken in het mentorgesprek van komende week. We zullen dan samen afspraken vastleggen die de kans op succes voor K2 vergroten. Ga nu je analyse invullen. Ik zie je binnenkort; jouw analyse is nodig voor het gesprek! Wees eerlijk en zet concrete zaken neer. Het gaat om jouw toekomst!'),
 (7, NULL, 'w.stolk@svjit.nl', '[\"ROLE_TEACHER\"]', '$argon2id$v=19$m=65536,t=4,p=1$UnI2TExFS1JYc01sZFJjeQ$nbzwyRPlC/7oYf+ANshoeVgmga2R2FuooAL/sHeP5+g', 'Wim', NULL, 'Stolk', 'Stolk.jpg', NULL),
-(8, NULL, 'h.kool@svjit.nl', '[\"ROLE_TEACHER\"]', '$argon2id$v=19$m=65536,t=4,p=1$Z3F3WDh4WG83VzBGeWVRag$iKovsFF4w8eM06I2AHPDl0lgwDqBp1JFOJ8Gjbc4Rcw', 'Hanneke', NULL, 'Kool', 'hanneke.png', NULL),
+(8, NULL, 'h.kool@svjit.nl', '[\"ROLE_TEACHER\"]', '$argon2id$v=19$m=65536,t=4,p=1$NU55UjVRYjAucDlQVmdvSQ$D3z+XFAOZ/khXlWRpqIjQjfC/j3lS480ADF/4HXenqU', 'Hanneke', NULL, 'Kool', 'hanneke.png', 'Nog even doorzetten. Het examen k2 komt er aan. Ga er voor...  Ik wil graag een laatste update/analyse van je eigen sterke en zwakke punten. Zet die analyse in de database. Kunnen we ons aankomend mentorgesprek mee nemen. Dit klinkt vrijwillig ... maar je analyse plaatsen is verplicht!  '),
 (9, NULL, 's.bechoe@svjit.nl', '[\"ROLE_TEACHER\"]', '$argon2id$v=19$m=65536,t=4,p=1$ZnYxY3Q1cWtRL1VYVUZPbw$rf8LEJrn/JmVEtn3E1yfLKrVPI1IuF61O8Ff8C7TkNg', 'Saphna', NULL, 'Bechoe', 's.bechoe.png', NULL),
 (10, 2, 'g.le.grand@svjit.nl', '[\"ROLE_PUPIL\"]', '$argon2id$v=19$m=65536,t=4,p=1$WGpxcmhWUy9DbmJ5d1lGQg$Di8gyQglIWqj/bKoss8CIcCI799OQ6D41clCGk/p9jA', 'Gio', 'le', 'Grand', 'gio.le.grand.png', NULL),
 (11, NULL, 'c.bertels@svjit.nl', '[\"ROLE_ADMIN\"]', '$argon2id$v=19$m=65536,t=4,p=1$Z3RlSzFBQXRkYVNSQVoxRQ$fimoE+FMfyssPk0Gq9oI5u7kQMcv7DSKtZmgCSHUaOY', 'Carinda', NULL, 'Bertels', 'c.bertels.jpg', NULL),
@@ -192,7 +193,14 @@ INSERT INTO `users` (`id`, `schoolclass_id`, `email`, `roles`, `password`, `firs
 (128, 14, 'm.heesterman@svjit.nl', '[\"ROLE_PUPIL\"]', '$argon2id$v=19$m=65536,t=4,p=1$ck5ZWXZCSS5nZHlndjMzeA$9c9/m78eWEaFWZ3VVo3oUliZjotXXnF87bHh25zz9Aw', 'Mitchel', NULL, 'Heesterman', '22fe3bd6acfbc2de3917dd5fea5a89a7b15.jpeg', NULL),
 (129, 14, 't.schouten@svjit.nl', '[\"ROLE_PUPIL\"]', '$argon2id$v=19$m=65536,t=4,p=1$RVNMcnNqZzVTWUhNZFIyNw$UvcMxU54N2zNSCiB5M2i8ph7J0iH3opfN6rtwT6skpE', 'Teun', NULL, 'Schouten', '535646ec213c6ea24d015d5fea5afee2488.png', NULL),
 (130, 14, 'm.berkhuysen@svjit.nl', '[\"ROLE_PUPIL\"]', '$argon2id$v=19$m=65536,t=4,p=1$TW0vaGJ4M296QjVCQnJ0SA$ojnclVf+1JTAFHTJUB7nY7uIC9FvIiGpCyTnr/bDX3E', 'Mike', NULL, 'Berkhuysen', 'faca23d229bc1aec06d88f5fea5b559d4c7.jpeg', NULL),
-(131, NULL, 'r.springer@svjit.nl', '[\"ROLE_TEACHER\"]', '$argon2id$v=19$m=65536,t=4,p=1$amliSlFIWFZPSnBLVzJYdw$c1BosKruRGQftXiPBFLNmwY86Rd8mJZxDiwn2Qzk0wE', 'Roy', NULL, 'Springer', 'roy.jpg', NULL);
+(131, NULL, 'r.springer@svjit.nl', '[\"ROLE_TEACHER\"]', '$argon2id$v=19$m=65536,t=4,p=1$amliSlFIWFZPSnBLVzJYdw$c1BosKruRGQftXiPBFLNmwY86Rd8mJZxDiwn2Qzk0wE', 'Roy', NULL, 'Springer', 'roy.jpg', NULL),
+(132, 15, 'p.van.dijk@svjit.nl', '[\"ROLE_PUPIL\"]', '$argon2id$v=19$m=65536,t=4,p=1$VVNGZHBnRzVPREhtcFRtZw$ghCkfHYURnlKJVwfoUhTdE1BSEfgRvvVtH56PagG5cY', 'Patrick', 'van', 'Dijk', '236f1a9fdba407df3bc2fc5fed0b0ae9788.png', NULL),
+(133, 15, 'm.bruens@svjit.nl', '[\"ROLE_PUPIL\"]', '$argon2id$v=19$m=65536,t=4,p=1$eXhZVGRsMmMyRFRmSXJ5eQ$W72VXtarUnN4vL0I0E2s+9wgW6rBw4MYaJWVMOAKiJI', 'Melvin', NULL, 'Bruens', '967f15cdbd0515a5944acb5fed0b4924cf3.png', NULL),
+(134, 15, 'm.fakkel@svjit.nl', '[\"ROLE_PUPIL\"]', '$argon2id$v=19$m=65536,t=4,p=1$N0NHSm1PQzhaU1lBODZJdw$q+4aZkWEjqM6lKtob24W0Db4GlXUZamzG0MaK/OlPcM', 'Michael', NULL, 'Fakkel', '1b654817b4fc9d18bdbaa45fed0ba71c15d.png', NULL),
+(135, 15, 'r.voorthuizen@svjit.nl', '[\"ROLE_PUPIL\"]', '$argon2id$v=19$m=65536,t=4,p=1$SFQuVmVQeWNFS3BVS1BXRA$T0r/v2P3zMERLnsucyrTqhTXWiOOwcDAL7NJJ/Drm5w', 'Rashaad', NULL, 'Voorthuizen', '03a022409544aa35fb68ac5fed0c19e0795.png', NULL),
+(136, 4, 'd.van.barneveld@svjit.nl', '[\"ROLE_PUPIL\"]', '$argon2id$v=19$m=65536,t=4,p=1$MURtQUM0Tm1BMjZ6UVlZUA$xEXCPOMPD8tOX8BDW5ULEfPguSZ+P1oTKtpGodMNhSQ', 'Daisy', 'van', 'Barneveld', 'ec5689f3586cc615a0ce965fed0d120d5bd.png', NULL),
+(137, 15, 'r.kertosari@svjit.nl', '[\"ROLE_PUPIL\"]', '$argon2id$v=19$m=65536,t=4,p=1$NEZtNkZsZEsvME5VdDlWMQ$puMzb2qHp/j/HduCuyUbSGjg8ZN/je5aV1irPi1R/Mw', 'Ray', NULL, 'Kertosari', '61a9d3bee9dca8bf4d02c25fed0e80a13c1.png', NULL),
+(138, 15, 'm.herman@svjit.nl', '[\"ROLE_PUPIL\"]', '$argon2id$v=19$m=65536,t=4,p=1$d3h1SWxuYUVwOGc0YldhNw$e0mP91JMxzbhRvOK2vLgCK/qh2OP16XfiP/TZY8+VQw', 'Michel', NULL, 'Herman', '131b16b30ff9a009b72aba5fed0eb765594.png', NULL);
 
 --
 -- Indexen voor geëxporteerde tabellen
@@ -228,13 +236,13 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT voor een tabel `schoolclasses`
 --
 ALTER TABLE `schoolclasses`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT voor een tabel `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=132;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=139;
 
 --
 -- Beperkingen voor geëxporteerde tabellen
