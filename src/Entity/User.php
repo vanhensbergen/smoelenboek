@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 
@@ -70,6 +72,28 @@ class User implements UserInterface
      * @ORM\Column(type="text", nullable=true)
      */
     private $motto;
+
+    /**
+     * @ORM\OneToMany(targetEntity=StudentRemark::class, mappedBy="author", orphanRemoval=true)
+     * represents the remarks as a collection made by the author
+     */
+    private $remarksAsAuthor;
+
+    /**
+     * @ORM\OneToMany(targetEntity=StudentRemark::class, mappedBy="student", orphanRemoval=true)
+     * represents the remarks as a collection made for the student
+     */
+    private $remarksForStudent;
+
+    public function __construct()
+    {
+        if(in_array("ROLE_STUDENT", $this->roles)) {
+            $this->remarksForStudent = new ArrayCollection();
+        }
+        else {
+            $this->remarksAsAuthor = new ArrayCollection();
+        }
+    }
 
     public function getId(): ?int
     {
@@ -239,6 +263,66 @@ class User implements UserInterface
     public function setMotto(?string $motto): self
     {
         $this->motto = $motto;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|StudentRemark[]
+     */
+    public function getRemarksAsAuthor(): Collection
+    {
+        return $this->remarksAsAuthor;
+    }
+
+    public function addRemarkAsAuthor(StudentRemark $remarkByMe): self
+    {
+        if (!$this->remarksAsAuthor->contains($remarkByMe)) {
+            $this->remarksAsAuthor[] = $remarkByMe;
+            $remarkByMe->setAuthor($this);
+        }
+
+        return $this;
+    }
+
+    public function removeRemarkAsAuthor(StudentRemark $remarkByMe): self
+    {
+        if ($this->remarksAsAuthor->removeElement($remarkByMe)) {
+            // set the owning side to null (unless already changed)
+            if ($remarkByMe->getAuthor() === $this) {
+                $remarkByMe->setAuthor(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|StudentRemark[]
+     */
+    public function getRemarksForStudent(): Collection
+    {
+        return $this->remarksForStudent;
+    }
+
+    public function addRemarkForStudent(StudentRemark $remarkForMe): self
+    {
+        if (!$this->remarksForStudent->contains($remarkForMe)) {
+            $this->remarksForStudent[] = $remarkForMe;
+            $remarkForMe->setStudent($this);
+        }
+
+        return $this;
+    }
+
+    public function removeRemarkForStudent(StudentRemark $remarkForMe): self
+    {
+        if ($this->remarksForStudent->removeElement($remarkForMe)) {
+            // set the owning side to null (unless already changed)
+            if ($remarkForMe->getAuthor() === $this) {
+                $remarkForMe->setAuthor(null);
+            }
+        }
 
         return $this;
     }

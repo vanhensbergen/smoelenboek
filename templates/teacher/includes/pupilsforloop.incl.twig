@@ -2,7 +2,7 @@
     <div class="col-3 bg-light border border-success mb-1 ">
         <article class="p-1">
             <figure>
-                <img src="{{ asset(pupil.photo) }}" class="figure-img img-fluid w-100" alt="{{ pupil.fullname }}"/>
+                <a href="{{ path('teacher_get_remarks',{'id':pupil.id}) }}"><img src="{{ asset(pupil.photo) }}" class="figure-img img-fluid w-100" alt="{{ pupil.fullname }}"/></a>
                 <figcaption class="figure-caption text-center h6">
                     <a href="mailto:{{ pupil.email}}">{{ pupil.fullname }}</a>
                 </figcaption>

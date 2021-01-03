@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Gegenereerd op: 31 dec 2020 om 01:01
+-- Gegenereerd op: 03 jan 2021 om 15:04
 -- Serverversie: 10.4.16-MariaDB
 -- PHP-versie: 7.4.12
 
@@ -45,7 +45,10 @@ INSERT INTO `doctrine_migration_versions` (`version`, `executed_at`, `execution_
 ('DoctrineMigrations\\Version20201211142937', '2020-12-11 15:30:13', 67),
 ('DoctrineMigrations\\Version20201227144254', '2020-12-27 15:43:38', 98),
 ('DoctrineMigrations\\Version20201229212504', '2020-12-29 22:25:37', 317),
-('DoctrineMigrations\\Version20201229213339', '2020-12-29 22:34:21', 267);
+('DoctrineMigrations\\Version20201229213339', '2020-12-29 22:34:21', 267),
+('DoctrineMigrations\\Version20210102190129', '2021-01-02 20:02:00', 326),
+('DoctrineMigrations\\Version20210102191123', '2021-01-02 20:11:31', 47),
+('DoctrineMigrations\\Version20210102191609', '2021-01-02 20:16:20', 357);
 
 -- --------------------------------------------------------
 
@@ -76,6 +79,32 @@ INSERT INTO `schoolclasses` (`id`, `name`, `description`, `mentor_id`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Tabelstructuur voor tabel `studentremarks`
+--
+
+CREATE TABLE `studentremarks` (
+  `id` int(11) NOT NULL,
+  `author_id` int(11) NOT NULL,
+  `student_id` int(11) NOT NULL,
+  `title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `content` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created` date NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Gegevens worden geëxporteerd voor tabel `studentremarks`
+--
+
+INSERT INTO `studentremarks` (`id`, `author_id`, `student_id`, `title`, `content`, `created`) VALUES
+(1, 6, 10, 'afwezigheid zonder geldige reden', 'Gio is erg vaak afwezig tijdens de les. Daarop bevraagd zegt hij even een sigaretje te zijn roken.\r\nDat kan echt niet! Gio wil dat niet inzien. Afgesproken is dat hij hiermee ophoudt en zijn roken beperkt tot de reguliere pauzes.', '2021-01-02'),
+(2, 8, 10, 'storend gedrag in de les programmeren.', 'Gio is erg vervelend in de les. Hij is constant aan het praten. Als hij iemand met programmeren helpt dan is het meestal van de wal in de sloot. De code die hij dan intypt wordt door de leerling zelden begrepen en is meestal een bron van verdere problemen. Gio wil niet luisteren daar mee op te houden.', '2021-01-02'),
+(3, 6, 10, 'positieve verandering in gedrag', 'Gio is helaas niet gestopt met roken. Hij beperkt roken nu echter tot de reguliere pauzes. Dat is een aanzienlijke verbetering. Hij moet nog wel leren wat starttijd en eindtijd is van de pauze. Hij wil nog al eens te vroeg vertrekken.', '2021-01-03'),
+(4, 6, 69, 'afwezigheid gemeld door ouders', 'De ouders van Raïsa hebben gemaild dat zij door ziekte niet zonder hun dochter huis kunnen.  Zij zal hen moeten verzorgen voor de duur van deze ziekte. Het betreft de moeder; zij is momenteel in het ziekenhuis en kot volgende week pas weer thuis. Ook dan zal Raïsa thuis nog nodig zijn.', '2021-01-03'),
+(5, 1, 67, 'afwezigheid te vaak', 'Marcel is erg vaak een hele dag afwezig. Hij meldt na daarop aangesproken te zijn dat hij zelfstandig woont en soms moet werken om inkomsten te genereren om van te leven. Werken gaat niet altijd buiten schooltijden. Hij is overigens een leerling met goede kwaliteiten. Hij bezit veel kennis op programmeergebied.', '2021-01-03');
+
+-- --------------------------------------------------------
+
+--
 -- Tabelstructuur voor tabel `users`
 --
 
@@ -101,7 +130,7 @@ INSERT INTO `users` (`id`, `schoolclass_id`, `email`, `roles`, `password`, `firs
 (3, NULL, 's.bliemert@svjit.nl', '[\"ROLE_PRINCIPAL\"]', '$argon2id$v=19$m=65536,t=4,p=1$dEpFMURMNVA3NUhhWHVTVA$Qo8BrIUa49/f7N3asMp68xPh+NdLURMqFyBX/CcZTr0', 'Sebastiaan', NULL, 'Bliemert', 's.bliemert.jpg', 'Ik ben de directeur van SVJIT en ik heet u van harte welkom op onze opleiding voor enthousiaste jonge en gemotiveerde programmeurs.<br/> \r\nOnze docenten gaan voor kwaliteit; onze studenten ook!'),
 (4, NULL, 'b.van.halem@svjit.nl', '[\"ROLE_TEACHER\"]', '$argon2id$v=19$m=65536,t=4,p=1$cG9JYkRIblhBcjBjazIwTg$mMzdfUZThewJHeU/KX3q1SjnQft7fhrd47oZ41zau8I', 'Bart', 'van', 'Halem', 'BHalem.jpg', NULL),
 (5, NULL, 'r.van.rossum@svjit.nl', '[\"ROLE_TEACHER\"]', '$argon2id$v=19$m=65536,t=4,p=1$WUZ5a1gwN1NsOWRvWWZkQQ$4v7BsUYl8D5WvpB6x+fADQpQR/GmkoYMyxJsP2kCSDI', 'Roel', 'van', 'Rossum', 'ROssem.jpg', NULL),
-(6, NULL, 'a.van.hensbergen@svjit.nl', '[\"ROLE_TEACHER\"]', '$argon2id$v=19$m=65536,t=4,p=1$RlNPWFJZclVSUTlsLlVlVg$8XFovftdwXUZuflevgh+9yr6+/h+njyr+ZqNsxlKV78', 'Anton', 'van', 'Hensbergen', '1368653662.jpg', 'Beste leerlingen, jullie zullen 23 februari het examen K2 moeten gaan doen. Ik verwacht dat jullie allemaal een korte zwakte en sterkte analyse in de database plaatsen maximaal 300 woorden. Deze analyse zal ik gebruiken in het mentorgesprek van komende week. We zullen dan samen afspraken vastleggen die de kans op succes voor K2 vergroten. Ga nu je analyse invullen. Ik zie je binnenkort; jouw analyse is nodig voor het gesprek! Wees eerlijk en zet concrete zaken neer. Het gaat om jouw toekomst!'),
+(6, NULL, 'a.van.hensbergen@svjit.nl', '[\"ROLE_TEACHER\"]', '$argon2id$v=19$m=65536,t=4,p=1$RlNPWFJZclVSUTlsLlVlVg$8XFovftdwXUZuflevgh+9yr6+/h+njyr+ZqNsxlKV78', 'Anton', 'van', 'Hensbergen', '1368653662.jpg', 'Beste leerlingen, jullie zullen 25 februari het examen K2 moeten gaan doen. Ik verwacht dat jullie allemaal een korte zwakte en sterkte analyse in de database plaatsen maximaal 300 woorden. Deze analyse zal ik gebruiken in het mentorgesprek van komende week. We zullen dan samen afspraken vastleggen die de kans op succes voor K2 vergroten. Ga nu je analyse invullen. Ik zie je binnenkort; jouw analyse is nodig voor het gesprek! Wees eerlijk en zet concrete zaken neer. Het gaat om jouw toekomst!'),
 (7, NULL, 'w.stolk@svjit.nl', '[\"ROLE_TEACHER\"]', '$argon2id$v=19$m=65536,t=4,p=1$UnI2TExFS1JYc01sZFJjeQ$nbzwyRPlC/7oYf+ANshoeVgmga2R2FuooAL/sHeP5+g', 'Wim', NULL, 'Stolk', 'Stolk.jpg', NULL),
 (8, NULL, 'h.kool@svjit.nl', '[\"ROLE_TEACHER\"]', '$argon2id$v=19$m=65536,t=4,p=1$NU55UjVRYjAucDlQVmdvSQ$D3z+XFAOZ/khXlWRpqIjQjfC/j3lS480ADF/4HXenqU', 'Hanneke', NULL, 'Kool', 'hanneke.png', 'Nog even doorzetten. Het examen k2 komt er aan. Ga er voor...  Ik wil graag een laatste update/analyse van je eigen sterke en zwakke punten. Zet die analyse in de database. Kunnen we ons aankomend mentorgesprek mee nemen. Dit klinkt vrijwillig ... maar je analyse plaatsen is verplicht!  '),
 (9, NULL, 's.bechoe@svjit.nl', '[\"ROLE_TEACHER\"]', '$argon2id$v=19$m=65536,t=4,p=1$ZnYxY3Q1cWtRL1VYVUZPbw$rf8LEJrn/JmVEtn3E1yfLKrVPI1IuF61O8Ff8C7TkNg', 'Saphna', NULL, 'Bechoe', 's.bechoe.png', NULL),
@@ -221,6 +250,14 @@ ALTER TABLE `schoolclasses`
   ADD UNIQUE KEY `UNIQ_6629A8ADB403044` (`mentor_id`);
 
 --
+-- Indexen voor tabel `studentremarks`
+--
+ALTER TABLE `studentremarks`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `IDX_33EFB2D8F675F31B` (`author_id`),
+  ADD KEY `IDX_33EFB2D8CB944F1A` (`student_id`);
+
+--
 -- Indexen voor tabel `users`
 --
 ALTER TABLE `users`
@@ -239,6 +276,12 @@ ALTER TABLE `schoolclasses`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
+-- AUTO_INCREMENT voor een tabel `studentremarks`
+--
+ALTER TABLE `studentremarks`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
 -- AUTO_INCREMENT voor een tabel `users`
 --
 ALTER TABLE `users`
@@ -253,6 +296,13 @@ ALTER TABLE `users`
 --
 ALTER TABLE `schoolclasses`
   ADD CONSTRAINT `FK_6629A8ADB403044` FOREIGN KEY (`mentor_id`) REFERENCES `users` (`id`);
+
+--
+-- Beperkingen voor tabel `studentremarks`
+--
+ALTER TABLE `studentremarks`
+  ADD CONSTRAINT `FK_33EFB2D8CB944F1A` FOREIGN KEY (`student_id`) REFERENCES `users` (`id`),
+  ADD CONSTRAINT `FK_33EFB2D8F675F31B` FOREIGN KEY (`author_id`) REFERENCES `users` (`id`);
 
 --
 -- Beperkingen voor tabel `users`

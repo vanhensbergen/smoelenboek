@@ -1,0 +1,56 @@
+{% extends "./base_teacher.html.twig"  %}
+
+{% block content %}
+    <div class="row justify-content-center">
+        <div class="col-3 bg-light border border-success mb-1 ">
+            <article class="p-1">
+                <figure>
+                    <img src="{{ asset(student.photo) }}" class="figure-img img-fluid w-100" alt="{{ student.fullname }}"/></a>
+                    <figcaption class="figure-caption text-center h6">
+                        <a href="mailto:{{ student.email}}">{{ student.fullname }}</a>
+                    </figcaption>
+                </figure>
+            </article>
+        </div>
+    </div>
+    <div class="row justify-content-center">
+        {% for remark in remarks %}
+
+            <article class="bg-light col-5 p-1 m-2">
+                <header class=" h6 bg-white border rounded border-info p-1">
+                    <div class="h6" >titel: {{ remark.title }}</div>
+                    <div class="h6"> datum: {{ remark.created|date("d-m-Y") }}</div>
+                    <div class="h6">door: <a href="mailto:{{ remark.author.email }}">{{ remark.author.fullname }}</a> </div>
+                    {% if app.user == remark.author %}
+                        <a href="#" >bewerk</a>
+                    {% endif %}
+                </header>
+                <main  class=" h6 bg-white border rounded border-info p-1 mt-1">{{ remark.content }}</main>
+            </article>
+        {% endfor %}
+    </div>
+    <div id="form_div" class="row justify-content-center ">
+        <button class="btn-primary btn mb-1">voeg een opmerking toe over {{ student.fullname}}</button>
+        <div class="col-10 justify-content-center bg-light d-none m-2">
+
+            {{ form(form) }}
+        </div>
+    </div>
+
+{% endblock %}
+{% block javascripts %}
+    <script>
+        function showForm(e){
+            let form = document.querySelector('#form_div>div')
+            if(form.classList.contains('d-none'))
+            {
+                form.classList.remove('d-none');
+            }
+        }
+
+        document.querySelector('#form_div>button').addEventListener('click',showForm);
+
+
+    </script>
+
+{% endblock %}

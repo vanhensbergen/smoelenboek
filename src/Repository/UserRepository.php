@@ -25,6 +25,7 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
     public function findLike(string $value,$role):array{
         $qb = $this->createQueryBuilder('u');
           $qb->where('u.firstname LIKE :val')
+              ->orWhere('u.prefix LIKE :val')
               ->orWhere('u.lastname LIKE :val')
               ->andWhere('u.roles LIKE :role')
               ->setParameter('val', '%' . $value . '%')

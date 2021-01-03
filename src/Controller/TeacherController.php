@@ -4,7 +4,9 @@
 namespace App\Controller;
 
 
+use App\Entity\StudentRemark;
 use App\Entity\User;
+use App\Form\StudentRemarkType;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -68,6 +70,37 @@ class TeacherController extends BaseController
      */
     public function changeTeacherPasswordAction(Request $request):Response{
         return $this->changePasswordAction($request);
+    }
+
+    /**
+     * @Route("teacher/remarks/pupil/{id}" , name="teacher_get_remarks" ,requirements={"id"="\d+"})
+     * @param Request $request
+     * @param int $id
+     * @return Response
+     */
+    public function getPupilRemarksForTeacherAction(Request $request,int $id):Response{
+        $student = $this->getDoctrine()->getRepository(User::class)->find($id);
+        $remarks = $student->getRemarksForStudent();
+        $classes = $this->getClasses();
+        $remark = new StudentRemark();
+        $remark->setStudent($student);
+        $remark->setAuthor($this->getUser());
+        $today = new \DateTime("NOW");
+        $remark->setCreated($today);
+        $form = $this->createForm(StudentRemarkType::class,$remark);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()){
+            $em= $this->getDoctrine()->getManager();
+            $em->persist($remark);
+            $em->flush();
+        }
+        return $this->render('teacher/student-details.html.twig',[
+            'student'=>$student,
+            'remarks'=>$remarks,
+            'classes'=>$classes,
+            'form'=>$form->createView()
+        ]);
+
     }
 
 }
