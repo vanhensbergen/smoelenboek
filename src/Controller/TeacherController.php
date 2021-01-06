@@ -73,34 +73,77 @@ class TeacherController extends BaseController
     }
 
     /**
-     * @Route("teacher/remarks/pupil/{id}" , name="teacher_get_remarks" ,requirements={"id"="\d+"})
-     * @param Request $request
-     * @param int $id
+     * @Route("teacher/remarks/{student_id}" , name="teacher_get_remarks" ,requirements={"student_id"="\d+"})
+     * @param int $student_id
      * @return Response
      */
-    public function getPupilRemarksForTeacherAction(Request $request,int $id):Response{
-        $student = $this->getDoctrine()->getRepository(User::class)->find($id);
-        $remarks = $student->getRemarksForStudent();
-        $classes = $this->getClasses();
-        $remark = new StudentRemark();
-        $remark->setStudent($student);
-        $remark->setAuthor($this->getUser());
-        $today = new \DateTime("NOW");
-        $remark->setCreated($today);
-        $form = $this->createForm(StudentRemarkType::class,$remark);
-        $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid()){
-            $em= $this->getDoctrine()->getManager();
-            $em->persist($remark);
-            $em->flush();
-        }
-        return $this->render('teacher/student-details.html.twig',[
-            'student'=>$student,
-            'remarks'=>$remarks,
-            'classes'=>$classes,
-            'form'=>$form->createView()
-        ]);
+    public function getStudentRemarksForTeacherAction(int $student_id):Response{
+        return $this->studentRemarksViewForTeacher($student_id);
 
     }
 
+    private function studentRemarksViewForTeacher(int $student_id, array $form_data=[]):Response{
+        $student = $this->getDoctrine()->getRepository(User::class)->find($student_id);
+        $remarks = $student->getRemarksForStudent();
+        $classes = $this->getClasses();
+        $form_data = array_merge($form_data, [
+            'student'=>$student,
+            'remarks'=>$remarks,
+            'classes'=>$classes,
+        ]);
+        return $this->render('teacher/student-details.html.twig',$form_data);
+    }
+
+    /**
+     * @Route("teacher/remarks/new/{student_id}", name="teacher_new_remark", requirements={"student_id"="\d+"})
+     * @param Request $request
+     * @param int $student_id
+     * @return Response
+     */
+    public function addStudentRemarkByTeacher(Request $request, int $student_id):Response
+    {
+        $remark = new StudentRemark();
+        $form = $this->createForm(StudentRemarkType::class,$remark);
+            //['action'=>$this->generateUrl('teacher_new_remark',['student_id'=>$student_id])]);
+        $form->handleRequest($request);
+        $extraData = ['new_form'=>$form->createView()];
+        if ($form->isSubmitted() && $form->isValid())
+        {
+            $student = $this->getDoctrine()->getRepository(User::class)->find($student_id);
+            $remark->setStudent($student);
+            $remark->setAuthor($this->getUser());
+            $today = new \DateTime("NOW");
+            $remark->setCreated($today);
+            $em= $this->getDoctrine()->getManager();
+            $em->persist($remark);
+            $em->flush();
+            return $this->redirectToRoute("teacher_get_remarks",['student_id'=>$student_id]);
+        }
+       return $this->studentRemarksViewForTeacher($student_id, $extraData);
+    }
+
+    /**
+     * @Route("teacher/remarks/update/{id}", name="teacher_update_remark", requirements={"id"="\d+"})
+     * @param Request $request
+     * @param $id
+     * @return Response
+     */
+    public function updateStudentByTeacherAction(Request $request, $id):Response{
+        $remark = $this->getDoctrine()->getRepository(StudentRemark::class)->find($id);
+        //$route = $this->generateUrl('teacher_update_remark',['id'=>$id]);
+        $student_id = $remark->getStudent()->getId();
+        $form = $this->createForm(StudentRemarkType::class,$remark);
+        $form->handleRequest($request);
+        $extraData = ['update_form'=>$form->createView(),'update_remark'=>$remark];
+        if($form->isSubmitted()&&$form->isValid()){
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($form->getData());
+            $em->flush();
+            return $this->redirectToRoute("teacher_get_remarks",['student_id'=>$student_id]);
+        }
+        return $this->getStudentRemarksForTeacherAction($request,$student_id,$extraData);
+
+
+
+    }
 }

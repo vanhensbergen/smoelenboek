@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Gegenereerd op: 03 jan 2021 om 15:04
+-- Gegenereerd op: 06 jan 2021 om 13:43
 -- Serverversie: 10.4.16-MariaDB
 -- PHP-versie: 7.4.12
 
@@ -96,11 +96,17 @@ CREATE TABLE `studentremarks` (
 --
 
 INSERT INTO `studentremarks` (`id`, `author_id`, `student_id`, `title`, `content`, `created`) VALUES
-(1, 6, 10, 'afwezigheid zonder geldige reden', 'Gio is erg vaak afwezig tijdens de les. Daarop bevraagd zegt hij even een sigaretje te zijn roken.\r\nDat kan echt niet! Gio wil dat niet inzien. Afgesproken is dat hij hiermee ophoudt en zijn roken beperkt tot de reguliere pauzes.', '2021-01-02'),
+(1, 6, 10, 'afwezigheid door rookverslaving', 'Gio is erg vaak afwezig tijdens de les. Daarop bevraagd zegt hij even is gaan roken.\r\nDat kan echt niet! Hij wil dat niet inzien. Afgesproken is dat hij hiermee ophoudt en zijn roken beperkt tot de pauzes. Er is voldoende tijd om te roken dan.', '2021-01-02'),
 (2, 8, 10, 'storend gedrag in de les programmeren.', 'Gio is erg vervelend in de les. Hij is constant aan het praten. Als hij iemand met programmeren helpt dan is het meestal van de wal in de sloot. De code die hij dan intypt wordt door de leerling zelden begrepen en is meestal een bron van verdere problemen. Gio wil niet luisteren daar mee op te houden.', '2021-01-02'),
-(3, 6, 10, 'positieve verandering in gedrag', 'Gio is helaas niet gestopt met roken. Hij beperkt roken nu echter tot de reguliere pauzes. Dat is een aanzienlijke verbetering. Hij moet nog wel leren wat starttijd en eindtijd is van de pauze. Hij wil nog al eens te vroeg vertrekken.', '2021-01-03'),
+(3, 6, 10, 'positieve verandering in gedrag', 'Gio is helaas niet gestopt met roken. Hij beperkt roken nu echter tot de pauzes. Dat is een aanzienlijke verbetering. Hij moet nog wel leren wat starttijd en eindtijd is van de pauze. Hij wil nog al eens te vroeg vertrekken en/of te laat terugkomen in de les.', '2021-01-03'),
 (4, 6, 69, 'afwezigheid gemeld door ouders', 'De ouders van Raïsa hebben gemaild dat zij door ziekte niet zonder hun dochter huis kunnen.  Zij zal hen moeten verzorgen voor de duur van deze ziekte. Het betreft de moeder; zij is momenteel in het ziekenhuis en kot volgende week pas weer thuis. Ook dan zal Raïsa thuis nog nodig zijn.', '2021-01-03'),
-(5, 1, 67, 'afwezigheid te vaak', 'Marcel is erg vaak een hele dag afwezig. Hij meldt na daarop aangesproken te zijn dat hij zelfstandig woont en soms moet werken om inkomsten te genereren om van te leven. Werken gaat niet altijd buiten schooltijden. Hij is overigens een leerling met goede kwaliteiten. Hij bezit veel kennis op programmeergebied.', '2021-01-03');
+(5, 1, 67, 'afwezigheid te vaak', 'Marcel is erg vaak een hele dag afwezig. Hij meldt na daarop aangesproken te zijn dat hij zelfstandig woont en soms moet werken om inkomsten te genereren om van te leven. Werken gaat niet altijd buiten schooltijden. Hij is overigens een leerling met goede kwaliteiten. Hij bezit veel kennis op programmeergebied.', '2021-01-03'),
+(6, 6, 37, 'aandacht svp voor Asperger', 'Patrick is hoogst intelligent. Is zijn loopbaan begonnen op het vwo. Hij is als een spons. Hij zuigt op wat je zegt. Verwacht geen communicatie, daar op aandringen veroorzaakt stress bij Patrick. Doe dat dus niet.', '2021-01-03'),
+(7, 6, 74, 'hoofdpijnklachten', 'Willen de collega\'s rekening houden met he gegeven dat Rashad veel last heeft van migraine achtige hoofdpijnklachten.', '2021-01-04'),
+(8, 6, 136, 'verspreid dit niet!!', 'Daisy  is aanzienlijk ouder dan de andere studenten. Ze is zwanger verschijnt daardoor minder op school en zal waarschijnlijk de opleiding stoppen. De situatiethuis met Barney als vader helpt ook niet.', '2021-01-04'),
+(9, 6, 82, 'lastige start bij AO', 'Edo heeft de overstap gemaakt vanaf BOL3 naar de opleiding AO. Hij heeft grote moeite om mee te komen. Hij is niet gewend om zelf na te denken.  Veelal heeft hij geleerd na te doen. Dat kan niet bij AO. Geef hem extra aandacht met accent op leerstrategieën. Hij is van goede wil.', '2021-01-06'),
+(10, 6, 89, 'hulp mijdend gedrag', 'Jacob kan het allemaal niet bijbenen. Het niveau waarop hij moet werken zit ver boven zijn capaciteiten. Hij hoort eigenlijk BOL3 te doen. Hij wil dan ook geen ondersteuning accepteren. Hij begint wel lichtelijk agressief gedrag te vertonen. Dat baat zorgen', '2021-01-06'),
+(11, 6, 112, 'hinderlijk niet serieus gedrag', 'Jordy is een paar jaartjes ouder dan zijn klasgenoten en probeert excessief vrolijk gedrag te vertonen. Accepteer dat niet, wijs hem erop dat zijn gedrag storend werkt', '2021-01-06');
 
 -- --------------------------------------------------------
 
@@ -279,7 +285,7 @@ ALTER TABLE `schoolclasses`
 -- AUTO_INCREMENT voor een tabel `studentremarks`
 --
 ALTER TABLE `studentremarks`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT voor een tabel `users`

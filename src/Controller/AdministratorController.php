@@ -193,7 +193,7 @@ class AdministratorController extends BaseController
                 unlink($file);
             }
         }
-        $this->addFlash('message',"leerling {$user->getFullName()} verwijderd");
+        $this->addFlash('message',"{$user->getFullName()} verwijderd");
         $path = $this->getUserString();
         if(empty($class_id)){
             return $this->redirectToRoute($path.'_home');

@@ -15,42 +15,40 @@
     </div>
     <div class="row justify-content-center">
         {% for remark in remarks %}
-
-            <article class="bg-light col-5 p-1 m-2">
-                <header class=" h6 bg-white border rounded border-info p-1">
-                    <div class="h6" >titel: {{ remark.title }}</div>
-                    <div class="h6"> datum: {{ remark.created|date("d-m-Y") }}</div>
-                    <div class="h6">door: <a href="mailto:{{ remark.author.email }}">{{ remark.author.fullname }}</a> </div>
-                    {% if app.user == remark.author %}
-                        <a href="#" >bewerk</a>
-                    {% endif %}
-                </header>
-                <main  class=" h6 bg-white border rounded border-info p-1 mt-1">{{ remark.content }}</main>
-            </article>
+            {% if update_remark is defined and update_remark == remark and app.user == remark.author %}
+                <article class="bg-light col-5 p-1 m-2">
+                    <header class=" h6 bg-white border rounded border-info p-1">
+                        <h6>WIJZIG DEZE OPMERKING </h6>
+                    </header>
+                    <main  class=" h6 bg-white border rounded border-info p-1 mt-1">
+                        {{ form(update_form) }}
+                    </main>
+                </article>
+            {% else %}
+                <article class="bg-light col-5 p-1 m-2">
+                    <header class=" h6 bg-white border rounded border-info p-1">
+                        <div class="h6" >titel: {{ remark.title }}</div>
+                        <div class="h6"> datum: {{ remark.created|date("d-m-Y") }}</div>
+                        <div class="h6">door: <a href="mailto:{{ remark.author.email }}">{{ remark.author.fullname }}</a> </div>
+                        {% if app.user == remark.author %}
+                                <a href="{{ path('teacher_update_remark',{'id':remark.id}) }}" >bewerk</a>
+                        {% endif %}
+                    </header>
+                    <main  class=" h6 bg-white border rounded border-info p-1 mt-1">{{ remark.content }}</main>
+                </article>
+            {% endif %}
         {% endfor %}
     </div>
     <div id="form_div" class="row justify-content-center ">
-        <button class="btn-primary btn mb-1">voeg een opmerking toe over {{ student.fullname}}</button>
-        <div class="col-10 justify-content-center bg-light d-none m-2">
-
-            {{ form(form) }}
+        {% if new_form is defined %}
+        <div class="col-10 justify-content-center bg-light m-2">
+            <h6>voeg een opmerking toe over {{ student.fullname}}</h6>
+            {{ form(new_form) }}
         </div>
+        {% else %}
+            <a href="{{ path('teacher_new_remark',{student_id:student.id}) }}">
+                <button class="btn-primary btn mb-1">voeg een opmerking toe over {{ student.fullname}}</button>
+            </a>
+        {% endif %}
     </div>
-
-{% endblock %}
-{% block javascripts %}
-    <script>
-        function showForm(e){
-            let form = document.querySelector('#form_div>div')
-            if(form.classList.contains('d-none'))
-            {
-                form.classList.remove('d-none');
-            }
-        }
-
-        document.querySelector('#form_div>button').addEventListener('click',showForm);
-
-
-    </script>
-
 {% endblock %}

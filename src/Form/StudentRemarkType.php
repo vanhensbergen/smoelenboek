@@ -17,7 +17,7 @@ class StudentRemarkType extends AbstractType
     {
         $builder
             ->add('title', TextType::class)
-            ->add('content',TextareaType::class,['attr'=>['rows'=>10]])
+            ->add('content',TextareaType::class,['attr'=>['rows'=>6]])
            // ->add('created',DateType::class, ['attr'=>['disabed'=>true, 'readonly'=>true]])
             //->add('author')
             //->add('student')
