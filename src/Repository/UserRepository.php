@@ -22,14 +22,15 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         parent::__construct($registry, User::class);
     }
 
-    public function findLike(string $value,$role):array{
+    public function findLike(string $value,$role=null):array{
         $qb = $this->createQueryBuilder('u');
           $qb->where('u.firstname LIKE :val')
               ->orWhere('u.prefix LIKE :val')
-              ->orWhere('u.lastname LIKE :val')
-              ->andWhere('u.roles LIKE :role')
-              ->setParameter('val', '%' . $value . '%')
-              ->setParameter('role','%"'.$role.'"%')
+              ->orWhere('u.lastname LIKE :val');
+              if(!empty($role)){
+                  $qb->andWhere('u.roles LIKE :role')->setParameter('role','%"'.$role.'"%');
+              };
+              $qb->setParameter('val', '%' . $value . '%')
               ->orderBy('u.lastname','ASC');
 
         return $qb->getQuery()->execute();
@@ -77,6 +78,8 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
             ->orderBy('u.lastname','ASC');
         return $db->getQuery()->execute();
     }
+
+
     /*
     public function findOneBySomeField($value): ?User
     {

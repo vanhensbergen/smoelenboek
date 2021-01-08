@@ -194,11 +194,11 @@ class AdministratorController extends BaseController
             }
         }
         $this->addFlash('message',"{$user->getFullName()} verwijderd");
-        $path = $this->getUserString();
+
         if(empty($class_id)){
-            return $this->redirectToRoute($path.'_home');
+            return $this->redirectToRoute('admin_home');
         }
-        return $this->redirectToRoute("{$path}_get_class",['id'=>$class_id]);
+        return $this->redirectToRoute("admin_get_class",['id'=>$class_id]);
     }
 
     /**
@@ -238,7 +238,7 @@ class AdministratorController extends BaseController
      * @return Response
      */
     public function searchForAdminAction(Request  $request):Response{
-        return $this->searchAction($request);
+        return $this->searchAction($request,'ROLE_PUPIL');
     }
 
     /**

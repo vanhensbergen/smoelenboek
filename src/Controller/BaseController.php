@@ -125,17 +125,33 @@ abstract class BaseController extends AbstractController
 
     /**
      * @param Request $request
+     * @param $role
      * @return Response
      */
-    protected function searchAction(Request  $request):Response{
+    protected function searchAction(Request  $request, $role):Response{
         $searchValue = $request->get('search');
-        $results = $this->getDoctrine()->getRepository(User::class)->findLike($searchValue,'ROLE_PUPIL');
+        $results = $this->getDoctrine()->getRepository(User::class)->findLike($searchValue,$role);
         $path = $this->getUserString();
         return $this->render($path.'/search.html.twig',
             [   'classes'=>$this->getClasses() ,
                 'pupils'=>$results,
                 'searchvalue'=>$searchValue,
             ]);
+    }
+
+    protected function findNextInClass(User $student ):?User{
+        $class = $student->getSchoolclass();
+        $students = $class->getUsers();
+        $lastname = $student->getLastname();
+        $index = $students->indexOf($student);
+        return $students->get($index+1);
+    }
+    protected function findPreviousInClass(User $student ):?User{
+        $class = $student->getSchoolclass();
+        $students = $class->getUsers();
+        $lastname = $student->getLastname();
+        $index = $students->indexOf($student);
+        return $students->get($index-1);
     }
 
 }
