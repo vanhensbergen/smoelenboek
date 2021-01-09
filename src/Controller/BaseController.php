@@ -30,12 +30,12 @@ namespace App\Controller {
          */
         protected function getClasses():array{
             $classes = $this->getDoctrine()->getRepository(Schoolclass::class)->findAll();
-            uasort($classes , fn($a,$b)=>$a->getName() <=>$b->getName());
+            usort($classes , fn($a,$b)=>$a->getName() <=>$b->getName());
             return $classes;
         }
 
         /**
-         * beschrijft de afhandeling in abstracte termen van een actie die het wachtword reset naar qwerty.
+         * beschrijft de afhandeling in abstracte termen van een actie die het wachtwoord reset naar qwerty.
          * Veronderstelt dat er een home directory (admin_home, pupil_home etc) is.
          * @param int $id
          * @return Response
@@ -89,8 +89,8 @@ namespace App\Controller {
         /**
          * de methode maakt een hash van het plain pwachtwoord dat in de database bewaard wordt
          *
-         * @param string $plainPassword het door de gebruiker ingevoerde wachtwoord
-         * @return string het volgens het door symfony ingestelde algoritme geëncrypte wachtwoord
+         * @param string $plainPassword het door de gebruiker ingevoerde plain wachtwoord
+         * @return string het volgens het door symfony ingestelde algoritme hashed wachtwoord
          */
         protected function encode(string $plainPassword):string{
             $user = new User();
