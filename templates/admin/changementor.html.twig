@@ -1,0 +1,22 @@
+{% extends './base_admin.html.twig' %}
+
+{% block content %}
+    <div class="row justify-content-center mt-2">
+        <div class ="col-6 border bg-white border-success rounded">
+            <article class="text-center">
+                <h3>de huidige mentor in klas {{ class.name }}</h3>
+                <figure class="figure">
+                    <img src="{{ asset(class.mentor.photo) }}" alt="{{ class.mentor.photo }}" class="rounded figure-img img-fluid "/>
+                    <figcaption>{{ class.mentor.fullname }}</figcaption>
+                </figure>
+            </article>
+
+        </div>
+        <div id="form_div" class="col-7 border border-success rounded mt-2">
+            {{ form(form) }}
+        </div>
+
+    </div>
+
+{% endblock %}
+

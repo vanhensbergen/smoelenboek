@@ -6,6 +6,7 @@ namespace App\Controller {
 
     use App\Entity\Schoolclass;
     use App\Entity\User;
+    use App\Form\ChangeMentorFormType;
     use App\Form\SchoolclassType;
     use App\Form\UserType;
     use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
@@ -21,6 +22,7 @@ namespace App\Controller {
 
         /**
          * @Route("/admin", name="admin_home")
+         * @return Response
          */
         public function defaultAction():Response{
             $classless = $this->getDoctrine()->getRepository(User::class)->findClasslessPupils();
@@ -31,7 +33,24 @@ namespace App\Controller {
                 ]);
         }
 
+        /**
+         * @Route("/admin/mentor/change/class/{class_id}", name="admin_change_mentor")
+         * @param Request $request
+         * @param int $class_id
+         * @return Response
+         */
+        public function changeMentorAction(Request $request, int $class_id):Response{
+            $class = $this->getDoctrine()->getRepository(Schoolclass::class)->find($class_id);
+            $form = $this->createForm(ChangeMentorFormType::class);
+            $form->handleRequest($request);
+                if($form->isSubmitted()&&$form->isValid()){
 
+                }
+            return $this->render('admin/changementor.html.twig',
+                [   'classes'=>$this->getClasses(),
+                    'class'=>$class,
+                    'form'=>$form->createView()]);
+        }
         /**
          * @Route("/admin/pupil/new", name="admin_new_pupil")
          * @param Request $request
