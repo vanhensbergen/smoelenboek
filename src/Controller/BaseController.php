@@ -144,14 +144,12 @@ namespace App\Controller {
         protected function findNextInClass(User $student ):?User{
             $class = $student->getSchoolclass();
             $students = $class->getUsers();
-            $lastname = $student->getLastname();
             $index = $students->indexOf($student);
             return $students->get($index+1);
         }
         protected function findPreviousInClass(User $student ):?User{
             $class = $student->getSchoolclass();
             $students = $class->getUsers();
-            $lastname = $student->getLastname();
             $index = $students->indexOf($student);
             return $students->get($index-1);
         }

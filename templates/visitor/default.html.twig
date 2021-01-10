@@ -1,29 +1,29 @@
 {% extends "./base.html.twig" %}
 {% block body %}
-       <div class="row bg-success text-light text-center p-2">
+       <div class="row text-center p-2">
             <div class="col-8 display-4" >
                 <kbd class="bg-secondary">SVJIT</kbd>
                 <div>"School Voor Jong ICT Talent"</div>
-                <h6 class="text-left pt-5"><a href="{{ path('app_login')}}" class="text-light">klik hier om de school binnen te gaan</a></h6>
+                <h6 class="text-left pt-5"><a href="{{ path('app_login')}}" ><button type="button" class="btn btn-outline-success">klik hier om de school binnen te gaan</button></a></h6>
             </div>
-            <div class="col-4 text-left">
-                <article class="row p-2  bg-light text-dark">
+            <div class="col-4">
+                <article class="row p-2  bg-white border rounded border-success">
                     <div class="col-4 pl-0 pr-0">
                         <figure >
                             <img  src="{{ asset(principal.photo) }}" class="img-fluid col-12"/>
                             <figcaption class="text-center"><a href="mailto:{{ principal.email }}">{{ principal.fullname }}</a></figcaption>
                         </figure>
                     </div>
-                    <div class="col-8 bg-light">
+                    <div class="col-8">
                         {{ principal.motto|raw }}
                     </div>
                 </article>
             </div>
        </div>
-        <div class="row bg-success mt-2 p-2">
+        <div class="row mt-2 p-2">
             <div class="text-center col-12 display-2">DOCENTEN</div>
             {% for teacher in teachers %}
-                <article class="col-2 bg-light p-2  border border-success">
+                <article class="col-2  p-2 bg-white border border-success rounded">
                     <figure class="text-center">
                         <img src="{{ asset(teacher.photo) }}" alt="{{ teacher.fullname }}" class="figure-img img-fluid col-12"/>
                         <figcaption class="text-center" title="stuur {{ teacher.firstname }} een mailtje">
@@ -33,10 +33,10 @@
                 </article>
             {% endfor %}
         </div>
-        <div class="row bg-success mt-2 p-2">
+        <div class="row  mt-2 p-2">
             <div class="text-center col-12 display-2">ADMINISTRATIE</div>
             {% for administrator in administrators %}
-                <article class="col-2 bg-light p-2 border border-success">
+                <article class="col-2  p-2 bg-white border border-success rounded">
                     <figure class="text-center">
                         <img src="{{ asset(administrator.photo) }}" alt="{{ administrator.fullname }}" class="figure-img img-fluid col-12"/>
                         <figcaption class="text-center" title="stuur {{ administrator.firstname }} een mailtje">
@@ -46,6 +46,4 @@
                 </article>
             {% endfor %}
         </div>
-
-
 {% endblock %}

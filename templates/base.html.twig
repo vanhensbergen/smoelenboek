@@ -10,7 +10,7 @@
         {% block stylesheets %}{% endblock %}
     </head>
     <body>
-        <div class="container mt-3 bg-success">
+        <div class="container mt-3 bg-light">
             {% for message in app.flashes('message') %}
                 <div class="alert alert-danger row mb-0">{{ message }}</div>
             {% endfor %}
