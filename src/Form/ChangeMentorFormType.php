@@ -63,7 +63,7 @@ class ChangeMentorFormType extends \Symfony\Component\Form\AbstractType implemen
                         return $u?$u->getId():null;
                     },
                     'choice_label'=>function(?User $u){
-                        return $u?$u->getFullname():null;
+                        return $u?$u->getFullname()." <--> (".$u->getMentorclass()->getName().")":null;
                     },
                     'placeholder'=>'wissel met een mentor van een andere klas',
                     'required'=>false,
