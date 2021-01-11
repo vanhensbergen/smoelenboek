@@ -12,7 +12,12 @@
             <article class="row text-center p-1">
                 <figure class="figure w-100">
                     <figcaption class="figure-caption bg-light">mentor: <a href="mailto:{{ class.mentor.email }}">{{ class.mentor.fullname }}</a></figcaption>
-                    <a href="{{ path('admin_change_mentor',{'class_id':class.id}) }}"><img src="{{ asset(class.mentor.photo) }}" class="w-100 img-fluid figure-img w-100"/></a>
+                    <a href="{{ path('admin_change_mentor',{'class_id':class.id}) }}">
+                        <img src="{{ asset(class.mentor.photo) }}"
+                             class="w-100 img-fluid figure-img w-100"
+                        alt="{{ class.mentor.fullname }}"
+                        title="klik om de mentor van de klas te wijzigen"/>
+                    </a>
                 </figure>
             </article>
         </div>

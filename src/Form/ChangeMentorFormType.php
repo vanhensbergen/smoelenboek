@@ -23,7 +23,6 @@ class ChangeMentorFormType extends \Symfony\Component\Form\AbstractType implemen
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-
         $builder
             ->add('newmentor', EntityType::class,
                 [   'class'=>User::class,
@@ -68,7 +67,7 @@ class ChangeMentorFormType extends \Symfony\Component\Form\AbstractType implemen
                     },
                     'placeholder'=>'wissel met een mentor van een andere klas',
                     'required'=>false,
-                    'label'=>'swap mentoren de huidige mentor en de gekozen mentor ruilen klas'
+                    'label'=>'swap mentoren: "de huidige mentor en de gekozen mentor ruilen klas"'
                 ]
             )
             ->add('save',SubmitType::class)
@@ -76,7 +75,10 @@ class ChangeMentorFormType extends \Symfony\Component\Form\AbstractType implemen
         $builder->addEventSubscriber($this);
     }
 
-    public function ensureOneFieldIsSubmitted(FormEvent $event)
+    /**
+     * @param FormEvent $event
+     */
+    public function ensureOneFieldIsSubmitted(FormEvent $event):void
     {
         $submittedData = $event->getData();
         if (empty($submittedData['newmentor']) && empty($submittedData['swapmentor'])) {
@@ -85,6 +87,15 @@ class ChangeMentorFormType extends \Symfony\Component\Form\AbstractType implemen
                 0, // code
                 null, // previous
                 'Je moet wel een keus maken voor optie 1: een andere docent als mentor of optie 2: twee mentoren swappen',
+            );
+        }
+
+        if (!empty($submittedData['newmentor']) && !empty($submittedData['swapmentor'])) {
+            throw new TransformationFailedException(
+                'either first or second must be set',
+                0, // code
+                null, // previous
+                'Je mag slechts één van beide opties kiezen; niet beiden!',
             );
         }
     }

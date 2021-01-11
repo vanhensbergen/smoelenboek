@@ -40,15 +40,50 @@ namespace App\Controller {
          * @return Response
          */
         public function changeMentorAction(Request $request, int $class_id):Response{
-            $class = $this->getDoctrine()->getRepository(Schoolclass::class)->find($class_id);
+            $class1 = $this->getDoctrine()->getRepository(Schoolclass::class)->find($class_id);
             $form = $this->createForm(ChangeMentorFormType::class);
             $form->handleRequest($request);
                 if($form->isSubmitted()&&$form->isValid()){
+                    $class_id = $class1->getId();
+                    $newMentor = $form->getData()['newmentor'];
+                    $swapMentor = $form->getData()['swapmentor'];
+                    $mentor = $newMentor??$swapMentor;
+                    if($mentor === $class1->getMentor())
+                    {
+                        $form->get('swapmentor')->addError(
+                            new FormError("je mag niet swappen met jezelf; kies iemand anders uit de opties"));
+                        return $this->render('admin/changementor.html.twig',
+                            [   'classes'=>$this->getClasses(),
+                                'class'=>$class1,
+                                'form'=>$form->createView()]);
+                    }
+                    $em = $this->getDoctrine()->getManager();
+                    if($mentor===$swapMentor){
+                        $class2 = $this->getDoctrine()->getRepository(Schoolclass::class)->findMentorClass($swapMentor);
+                        $class2->setMentor($this->getUser());//nodig als dummymentor.
+                        $mentorForclass2 = $class1->getMentor();
+                        $em->persist($class2);
+                        $em->flush();
+                        $class1->setMentor($mentor);
+                        $class2->setMentor($mentorForclass2);
+                        $em->persist($class1);
+                        $em->persist($class2);
+                        $em->flush();
+                        $this->addFlash('message', 'beide mentoren zijn succesvol van klas gewisseld!');
+                    }
+                    else{
+                        $class1->setMentor($newMentor);
+                        $em->persist($class1);
+                        $em->flush();
+                        $this->addFlash('message', 'de klas heeft een nieuwe mentor');
+                    }
+
+                    return $this->redirectToRoute('admin_get_class',['id'=>$class_id]);
 
                 }
             return $this->render('admin/changementor.html.twig',
                 [   'classes'=>$this->getClasses(),
-                    'class'=>$class,
+                    'class'=>$class1,
                     'form'=>$form->createView()]);
         }
         /**
