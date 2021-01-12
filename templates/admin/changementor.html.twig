@@ -20,3 +20,14 @@
 
 {% endblock %}
 
+{% block javascripts %}
+    <script>
+        window.addEventListener("load",hideOption)
+        function hideOption(){
+            document.querySelector("option[value='{{ class.mentor.id }}']").setAttribute('hidden',true);
+        }
+
+    </script>
+
+{%  endblock %}
+

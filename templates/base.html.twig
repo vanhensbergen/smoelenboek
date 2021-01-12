@@ -12,7 +12,7 @@
     <body>
         <div class="container mt-3 bg-light">
             {% for message in app.flashes('message') %}
-                <div class="alert alert-danger row mb-0">{{ message }}</div>
+                <div class="alert alert-danger row mb-1 mt-1">{{ message }}</div>
             {% endfor %}
             {% block nav %}{% endblock %}
             {% block body %}{% endblock %}
