@@ -20,14 +20,14 @@
                 </article>
             </div>
        </div>
-        <div class="row mt-2 p-2">
-            <div class="text-center col-12 display-2">DOCENTEN</div>
+        <div class="row mt-2 p-2 justify-content-center">
+            <div class="text-center col-11 display-2">DOCENTEN</div>
             {% for teacher in teachers %}
                 <article class="col-2  p-2 bg-white border border-success rounded">
+                    <div class="text-center"><a href="mailto:{{ teacher.email }}" title="stuur {{ teacher.fullname }} een mailtje">{{ teacher.fullname }}</a></div>
                     <figure class="text-center">
                         <img src="{{ asset(teacher.photo) }}" alt="{{ teacher.fullname }}" class="figure-img img-fluid col-12"/>
                         <figcaption class="text-center" >
-                            <a href="mailto:{{ teacher.email }}" title="stuur {{ teacher.fullname }} een mailtje">{{ teacher.fullname }}</a>
                             {% if teacher.mentorclass is not null %}
                                 <div >mentor van: {{ teacher.mentorclass.name }}</div>
                             {% endif %}
