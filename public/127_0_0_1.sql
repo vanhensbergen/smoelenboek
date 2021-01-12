@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.0.4
+-- version 5.0.3
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Gegenereerd op: 11 jan 2021 om 15:14
--- Serverversie: 10.4.16-MariaDB
--- PHP-versie: 7.4.12
+-- Gegenereerd op: 12 jan 2021 om 17:14
+-- Serverversie: 10.4.14-MariaDB
+-- PHP-versie: 7.4.11
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -245,7 +245,9 @@ INSERT INTO `users` (`id`, `schoolclass_id`, `email`, `roles`, `password`, `firs
 (142, 16, 'c.sala@svjit.nl', '[\"ROLE_PUPIL\"]', '$argon2id$v=19$m=65536,t=4,p=1$Li5SbkFaVEpvOW1PR1FLLw$Itf91LT18S6QDuhhbsSGKRFvl3GO55FgBisPolUp40c', 'Cheriff', NULL, 'Sala', '981da8512971097fa9bc7c5ffc5c0ac239b.jpeg', NULL),
 (143, 16, 'e.jarakji@svjit.nl', '[\"ROLE_PUPIL\"]', '$argon2id$v=19$m=65536,t=4,p=1$SzJ5MW4ua0NjOXhWN2g1bA$x73xjS78uO2OszGwOopg32ljdH4XKCdY5K1Ln31r8PY', 'Ebraheem', NULL, 'Jarakji', '28bec94c9490f99cb932975ffc5c5b4647c.jpeg', NULL),
 (144, 16, 'e.hunady@svjit.nl', '[\"ROLE_PUPIL\"]', '$argon2id$v=19$m=65536,t=4,p=1$UTNpeUVESkE4R0R4U082bg$GTFUxVqRzssFeBPkQlxJurbWgTLMgDJKcSQW+Lz73Ks', 'Emil', NULL, 'Hunady', '5545ae7689c784deb975b85ffc5c981057a.png', NULL),
-(145, 15, 'r.sommer@svjit.nl', '[\"ROLE_PUPIL\"]', '$argon2id$v=19$m=65536,t=4,p=1$UnFRZ0lzdE9Qa0pISHlGcg$Uc5uxsYunqreFij95fbIl6JU4k08j+ebHTgO7VGWpU8', 'Romano', NULL, 'Sommer', 'd581e1e1b173b26e830ad75ffc5cf3d58e8.jpeg', NULL);
+(145, 15, 'r.sommer@svjit.nl', '[\"ROLE_PUPIL\"]', '$argon2id$v=19$m=65536,t=4,p=1$UnFRZ0lzdE9Qa0pISHlGcg$Uc5uxsYunqreFij95fbIl6JU4k08j+ebHTgO7VGWpU8', 'Romano', NULL, 'Sommer', 'd581e1e1b173b26e830ad75ffc5cf3d58e8.jpeg', NULL),
+(146, NULL, 'p.thong@svjit.nl', '[\"ROLE_TEACHER\"]', '$argon2id$v=19$m=65536,t=4,p=1$T2FRVU5GS1ZYWkt0bDc3cg$Wis2OUcDGQ2DincLGRPaBrBdBYHGzhH07DNSRJP98js', 'Pascal', NULL, 'Thong', 'pascal thong.jpg', NULL),
+(147, NULL, 'j.de.jong@svjit.nl', '[\"ROLE_TEACHER\"]', '$argon2id$v=19$m=65536,t=4,p=1$ZmNsUExaVXNhQnpDOUp0aw$9PBLp8D3t1emrJB/PvkT+jCS56XoLwvAgJXX2wDiaUE', 'Jeen', 'de', 'Jong', 'jeen de jong.jpg', NULL);
 
 --
 -- Indexen voor geëxporteerde tabellen
@@ -301,7 +303,7 @@ ALTER TABLE `studentremarks`
 -- AUTO_INCREMENT voor een tabel `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=146;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=148;
 
 --
 -- Beperkingen voor geëxporteerde tabellen
