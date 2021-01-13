@@ -1,0 +1,8 @@
+{% extends 'base_principal.html.twig' %}
+
+{% block content %}
+    <div class="row mt-2 p-2">
+        <div class="text-center col-11 display-2">{{ type }}</div>
+        {{include ('principal/includes/usersforloop.incl.twig',{users:teachers}) }}
+    </div>
+{% endblock %}
