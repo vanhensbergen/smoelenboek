@@ -8,6 +8,8 @@ use App\Entity\Schoolclass;
 use App\Entity\User;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\CallbackTransformer;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\ResetType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -28,10 +30,25 @@ class UserType extends AbstractType
             ->add('lastname', TextType::class,['label'=>'achternaam','attr'=>['placeholder'=>'vul een achternaam in']])
             ->add('email', EmailType::class,['label'=>'emailadres','attr'=>['placeholder'=>'vul verplicht een (uniek) emailadres in']])
             ->add('password',TextType::class,['label'=>'wachtwoord','attr'=>['placeholder'=>'kies een wachtwoord voor de gebruiker']])
+            ->add('roles',ChoiceType::class, [
+            'choices' =>
+                        [
+                            'administratie' => 'ROLE_ADMIN',
+                            'docent' => 'ROLE_TEACHER',
+                            'leerling' => 'ROLE_PUPIL',
+
+                        ],
+               'required'=>true,
+               'multiple'=>false,
+               'label'=>'rol',
+               'placeholder'=>'---maak verplicht een keus----'
+               ] )
             ->add('schoolclass',EntityType::class,['class'=>Schoolclass::class,
                             'choice_label' => 'name',
                 'placeholder' => 'klas optioneel',
-                'required'=>false])
+                'multiple'=>false,
+                'required'=>false,
+                'label'=>'klas voor leerling'])
             ->add('photofile',FileType::class,
 
                 [
@@ -52,6 +69,19 @@ class UserType extends AbstractType
 
             ])
         ->add('save', SubmitType::class);
+
+        // Data transformer
+        $builder->get('roles')
+            ->addModelTransformer(new CallbackTransformer(
+                function ($rolesArray) {
+                    // transform the array to a string
+                    return count($rolesArray)? $rolesArray[0]: null;
+                },
+                function ($rolesString) {
+                    // transform the string back to an array
+                    return [$rolesString];
+                }
+            ));
     }
 
     public function configureOptions(OptionsResolver $resolver)

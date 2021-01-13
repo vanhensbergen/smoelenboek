@@ -95,6 +95,7 @@ namespace App\Controller {
         {
             $user = new User();
             $form = $this->createForm(UserType::class, $user);
+            $form->remove('roles');
             $form->handleRequest($request);
             if ($form->isSubmitted() && $form->isValid())
             {
@@ -167,6 +168,7 @@ namespace App\Controller {
             }
             $form = $this->createForm(UserType::class, $user);
             $form->remove('password');
+            $form->remove('roles');
             $form->handleRequest($request);
             $old_photo = $user->getPhotoFileName();
             if($form->isSubmitted()&&$form->isValid())

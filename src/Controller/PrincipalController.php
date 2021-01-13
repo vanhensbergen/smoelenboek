@@ -6,6 +6,8 @@ namespace App\Controller {
 
     use App\Entity\Schoolclass;
     use App\Entity\User;
+    use App\Form\UserType;
+    use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
     use Symfony\Component\HttpFoundation\Request;
     use Symfony\Component\HttpFoundation\Response;
     use Symfony\Component\Routing\Annotation\Route;
@@ -81,7 +83,12 @@ namespace App\Controller {
             //TODO
         }
 
+        public function createNewUserAction(Request $request):Response{
+            $classes = $this->getDoctrine()->getRepository(Schoolclass::class)->findAll();
+            $user = new User();
+            $form = $this->createForm(UserType::class,$user);
 
+        }
 
 
     }
