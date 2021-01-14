@@ -91,67 +91,10 @@ namespace App\Controller {
          * @param Request $request
          * @return Response
          */
-        public function newPupilAction(Request $request):Response
-        {
-            $user = new User();
-            $form = $this->createForm(UserType::class, $user);
-            $form->remove('roles');
-            $form->handleRequest($request);
-            if ($form->isSubmitted() && $form->isValid())
-            {
-
-                /** @var UploadedFile $imgFile */
-                $imgFile = $form->get('photofile')->getData();
-                $class = $form->get('schoolclass')->getData();
-                $class_id = empty($class)?null:$class->getId();
-                if ($imgFile) {
-
-                    $originalFilename = pathinfo($imgFile->getClientOriginalName(), PATHINFO_FILENAME);
-                    $newFilename = substr(md5($originalFilename),10).uniqid() . '.' . $imgFile->guessExtension();
-                    $user->setPhoto($newFilename);
-                }
-
-                $user->setPassword($this->encode($user->getPassword()));
-                $user->setRoles(["ROLE_PUPIL"]);
-                try {
-
-                    $entityManager = $this->getDoctrine()->getManager();
-                    $entityManager->persist($user);
-                    $entityManager->flush();
-                    if (isset($newFilename)) {
-                        try {
-                            $dir = $this->getParameter('app.image_directory');
-                            $imgFile->move($dir, $newFilename);
-                        } catch (FileException $e) {
-                            echo "file could not be moved" . $e->getMessage();
-                            die();
-                        }
-                    }
-                    $this->addFlash("message", "nieuwe gebruiker {$user->getFullName()} succesvol toegevoegd");
-                    $path = $this->getUserString();
-                    if(empty($class_id)){
-                        return $this->redirectToRoute($path."_home");
-                    }
-                    return $this->redirectToRoute($path."_get_class",['id'=>$class_id]);
-                }
-                catch(UniqueConstraintViolationException $e)
-                {
-                    $form->get('email')->addError(new FormError("emailadres {$user->getEmail()} is helaas al in gebruik. Kies een ander"));
-                    return $this->render('admin/new-user.html.twig', [
-                        'header'=>'gegevens van een nieuwe leerling',
-                        'form' => $form->createView(),
-                        'classes'=>$this->getClasses(),
-                    ]);
-                }
-            }
-
-            return $this->render('admin/new-user.html.twig', [
-                'header'=>'gegevens van een nieuwe leerling',
-                'form' => $form->createView(),
-                'classes'=>$this->getClasses(),
-            ]);
-
+        public function newPupilAction(Request $request):Response{
+            return $this->addUser($request);
         }
+
 
         /**
          * @Route("/admin/pupil/update/{id}", name="admin_update_pupil", requirements={"id"="\d+"})

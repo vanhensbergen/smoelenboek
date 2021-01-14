@@ -1,7 +1,7 @@
 {% extends 'base_principal.html.twig' %}
 
 {% block content %}
-    <h1 >Voeg een nieuw teamlid/nieuwe leerling toe</h1>
+    <h1 >{{ header }}</h1>
     {{ form(form) }}
 {% endblock %}
 
@@ -16,6 +16,15 @@
         document.querySelector('#user_roles').addEventListener('change',hideShowClassSelect);
         let select = document.querySelector('#user_schoolclass');
         select.parentNode.style.display='none';
+    })
+
+    $('#user_photofile').on('change',function(e){
+        //get the file name
+        let fileName = "";
+        if(!(e.target.files[0] === undefined)){
+            fileName = e.target.files[0].name;
+        }
+        $(this).next('.custom-file-label').text(fileName);
     })
 </script>
 {% endblock %}

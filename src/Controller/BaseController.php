@@ -7,7 +7,12 @@ namespace App\Controller {
     use App\Entity\Schoolclass;
     use App\Entity\User;
     use App\Form\ChangePasswordType;
+    use App\Form\UserType;
+    use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
     use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+    use Symfony\Component\Form\FormError;
+    use Symfony\Component\HttpFoundation\File\Exception\FileException;
+    use Symfony\Component\HttpFoundation\File\UploadedFile;
     use Symfony\Component\HttpFoundation\Request;
     use Symfony\Component\HttpFoundation\Response;
     use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
@@ -153,6 +158,56 @@ namespace App\Controller {
             $index = $students->indexOf($student);
             return $students->get($index-1);
         }
+
+        protected function addUser(Request $request, bool $isPupil=true)
+        {
+            $user = new User();
+            $path = $this->getUserString();
+            $header = $isPupil ? 'gegevens van een nieuwe leerling' : 'gegevens van een nieuwe schoolgebruiker';
+            $form = $this->createForm(UserType::class, $user);
+            if ($isPupil) $form->remove('roles');
+            $form->handleRequest($request);
+            if ($form->isSubmitted() && $form->isValid()) {
+                /** @var UploadedFile $imgFile */
+                $imgFile = $form->get('photofile')->getData();
+                if ($imgFile) {
+
+                    $originalFilename = pathinfo($imgFile->getClientOriginalName(), PATHINFO_FILENAME);
+                    $newFilename = substr(md5($originalFilename), 10) . uniqid() . '.' . $imgFile->guessExtension();
+                    $user->setPhoto($newFilename);
+                }
+                try
+                {
+                    if (isset($newFilename)) {
+                        $dir = $this->getParameter('app.image_directory');
+                        $imgFile->move($dir, $newFilename);
+                    }
+                    //als je hier voorbij bent is alles gelukt dus opslaan in db
+                    if ($isPupil) $user->setRoles(["ROLE_PUPIL"]);
+                    $user->setPassword($this->encode($user->getPassword()));
+                    $entityManager = $this->getDoctrine()->getManager();
+                    $entityManager->persist($user);
+                    $entityManager->flush();
+                    $this->addFlash("message", "nieuwe gebruiker {$user->getFullName()} succesvol toegevoegd");
+                    $class = $user->getSchoolclass();
+                    if (empty($class)) {
+                        return $this->redirectToRoute($path . "_home");
+                    }
+                    return $this->redirectToRoute($path . "_get_class", ['id' => $class->getId()]);
+                } catch (UniqueConstraintViolationException $e) {
+                    $form->get('email')->addError(new FormError("emailadres {$user->getEmail()} is helaas al in gebruik. Kies een ander"));
+                }
+                catch (FileException $e) {
+                    $form->get('photofile')->addError(new FormError("Helaas is de foto niet opgeslagen op de server, probeer nog eens"));
+                }
+            }
+            return $this->render("$path/new-user.html.twig", [
+                'header'=>$header,
+                'form' => $form->createView(),
+                'classes'=>$this->getClasses(),
+            ]);
+        }
+
 
     }
 }

@@ -89,21 +89,7 @@ namespace App\Controller {
          * @return Response
          */
         public function createNewUserAction(Request $request):Response{
-            $classes = $this->getDoctrine()->getRepository(Schoolclass::class)->findAll();
-            $user = new User();
-            $form = $this->createForm(UserType::class,$user);
-            $form->handleRequest($request);
-            if($form->isSubmitted()&&$form->isValid()){
-                $em = $this->getDoctrine()->getManager();
-                $em->persist($user);
-                $em->flush();
-                return $this->redirectToRoute('principal_home');
-            }
-            return $this->render('principal/new-user.html.twig',[
-                'classes'=>$classes,
-                'form'=>$form->createView()
-            ]);
-
+            return $this->addUser($request,false);
         }
 
 

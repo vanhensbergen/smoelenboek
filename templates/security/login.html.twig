@@ -3,10 +3,10 @@
 {% block title %}Log in!{% endblock %}
 
 {% block body %}
-    <div class="row">
+    <div class="row justify-content-center">
        <div class="col-3"><a href="{{ path('visitor_home') }}"><button class="btn btn-lg btn-primary mt-2">terug</button></a></div>
     </div>
-    <div class="row">
+    <div class="row justify-content-center">
         <form action="{{ path('app_login') }}"  method="post" class="col-5 bg-success p-5 ">
             {% if error %}
                 <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>

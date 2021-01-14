@@ -7,7 +7,48 @@
         <!-- CSS only -->
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
-        {% block stylesheets %}{% endblock %}
+        {% block stylesheets %}
+        <style>
+            /* Small devices (landscape phones, 544px and up) */
+            @media (min-width: 544px) {
+                .resp-big-font {font-size: 2.0rem;}
+            }
+
+            /* Medium devices (tablets, 768px and up) */
+            @media (min-width: 768px) {
+                .resp-big-font {font-size: 3.0rem;}
+            }
+
+            /* Large devices (desktops, 992px and up) */
+            @media (min-width: 992px) {
+                .resp-big-font {font-size: 4.0rem;}
+            }
+
+            /* Extra large devices (large desktops, 1200px and up) */
+            @media (min-width: 1200px) {
+                .resp-big-font {font-size: 6.0rem;}
+            }
+            /* Small devices (landscape phones, 544px and up) */
+            @media (min-width: 544px) {
+                .resp-font {font-size: 1.0rem;}
+            }
+
+            /* Medium devices (tablets, 768px and up) */
+            @media (min-width: 768px) {
+                .resp-font {font-size: 2.0rem;}
+            }
+
+            /* Large devices (desktops, 992px and up) */
+            @media (min-width: 992px) {
+                .resp-font {font-size: 3.0rem;}
+            }
+
+            /* Extra large devices (large desktops, 1200px and up) */
+            @media (min-width: 1200px) {
+                .resp-font {font-size: 4.0rem;}
+            }
+        </style>
+        {% endblock %}
     </head>
     <body>
         <div class="container mt-3 bg-light border border-success">
