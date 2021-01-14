@@ -46,16 +46,13 @@ class UserType extends AbstractType
                'multiple'=>false,
                'label'=>'rol',
                'placeholder'=>'---maak verplicht een keus----',
-                'attr'=>[
-                    'id'=>'role_select'
-                ]
                ] )
             ->add('schoolclass',EntityType::class,['class'=>Schoolclass::class,
                             'choice_label' => 'name',
                 'placeholder' => 'klas optioneel',
                 'multiple'=>false,
                 'required'=>false,
-                'label'=>'klas voor leerling'])
+                'label'=>'klas voor leerling',])
             ->add('photofile',FileType::class,
 
                 [

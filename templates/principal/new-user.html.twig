@@ -7,7 +7,16 @@
 
 {% block javascripts %}
 <script>
-
+    function hideShowClassSelect(e){
+        let value = e.target.value;
+        let selectgroup = document.querySelector('#user_schoolclass').parentNode;
+        selectgroup.style.display = value === 'ROLE_PUPIL' ? 'block' : 'none';
+    }
+    window.addEventListener('load',()=>{
+        document.querySelector('#user_roles').addEventListener('change',hideShowClassSelect);
+        let select = document.querySelector('#user_schoolclass');
+        select.parentNode.style.display='none';
+    })
 </script>
 {% endblock %}
 
