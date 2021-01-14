@@ -54,7 +54,7 @@ namespace App\Controller {
         }
 
         /**
-         * Route("/principal/update/user/{id}",  name="principal_update_user", requirements={"id"="\d+"})
+         * Route("/principal/user/update/{id}",  name="principal_update_user", requirements={"id"="\d+"})
          * @param Request $request
          * @param int $id
          * @return Response
@@ -64,7 +64,7 @@ namespace App\Controller {
         }
 
         /**
-         * Route("/principal/reset/user/{id}",  name="principal_reset_user", requirements={"id"="\d+"})
+         * Route("/principal/user/reset/{id}",  name="principal_reset_user", requirements={"id"="\d+"})
          * @param Request $request
          * @param int $id
          * @return Response
@@ -74,7 +74,7 @@ namespace App\Controller {
         }
 
         /**
-         * Route("/principal/delete/user/{id}",  name="principal_delete_user", requirements={"id"="\d+"})
+         * Route("/principal/user/delete/{id}",  name="principal_delete_user", requirements={"id"="\d+"})
          * @param Request $request
          * @param int $id
          * @return Response
@@ -83,10 +83,26 @@ namespace App\Controller {
             //TODO
         }
 
+        /**
+         * @Route("principal/user/add", name="principle_add_user")
+         * @param Request $request
+         * @return Response
+         */
         public function createNewUserAction(Request $request):Response{
             $classes = $this->getDoctrine()->getRepository(Schoolclass::class)->findAll();
             $user = new User();
             $form = $this->createForm(UserType::class,$user);
+            $form->handleRequest($request);
+            if($form->isSubmitted()&&$form->isValid()){
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($user);
+                $em->flush();
+                return $this->redirectToRoute('principal_home');
+            }
+            return $this->render('principal/new-user.html.twig',[
+                'classes'=>$classes,
+                'form'=>$form->createView()
+            ]);
 
         }
 

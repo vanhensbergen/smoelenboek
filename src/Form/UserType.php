@@ -25,7 +25,10 @@ class UserType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('firstname',TextType::class,['label'=>'voornaam','attr'=>['placeholder'=>'vul een voornaam in']])
+            ->add('firstname',TextType::class,[
+                'label'=>'voornaam',
+                'attr'=>[
+                    'placeholder'=>'vul een voornaam in']])
             ->add('prefix',TextType::class,['label'=>'tussenvoegsel(s)','required'=>false,'attr'=>['placeholder'=>'vul eventueel tussenvoegsels in']])
             ->add('lastname', TextType::class,['label'=>'achternaam','attr'=>['placeholder'=>'vul een achternaam in']])
             ->add('email', EmailType::class,['label'=>'emailadres','attr'=>['placeholder'=>'vul verplicht een (uniek) emailadres in']])
@@ -37,11 +40,15 @@ class UserType extends AbstractType
                             'docent' => 'ROLE_TEACHER',
                             'leerling' => 'ROLE_PUPIL',
 
+
                         ],
                'required'=>true,
                'multiple'=>false,
                'label'=>'rol',
-               'placeholder'=>'---maak verplicht een keus----'
+               'placeholder'=>'---maak verplicht een keus----',
+                'attr'=>[
+                    'id'=>'role_select'
+                ]
                ] )
             ->add('schoolclass',EntityType::class,['class'=>Schoolclass::class,
                             'choice_label' => 'name',
