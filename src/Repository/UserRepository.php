@@ -79,6 +79,16 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         return $db->getQuery()->execute();
     }
 
+    public function isPupil(User $user):bool{
+        $qb = $this->createQueryBuilder(u);
+        $qb->where('u.id= :id')
+            ->andWhere('u.roles LIKE :roles')
+            ->setParameter('roles', '%"' . 'ROLE_PUPIL' . '"%')
+            ->setParamater('id', $user->getId());
+            $result= $qb->getQuery()->execute();
+        return !empty($result);
+}
+
 
     /*
     public function findOneBySomeField($value): ?User

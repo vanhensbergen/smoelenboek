@@ -1,7 +1,12 @@
 {% extends 'base_principal.html.twig' %}
 
 {% block content %}
-    <h1 >{{ header }}</h1>
+    <h1 class="row">
+        <span>{{ header }}:</span>
+        {% if photo is defined %}
+            <img class="col-1 p-1 w-100" src="{{ asset(photo) }}" />
+        {% endif %}
+    </h1>
     {{ form(form) }}
 {% endblock %}
 
@@ -15,6 +20,7 @@
     window.addEventListener('load',()=>{
         document.querySelector('#user_roles').addEventListener('change',hideShowClassSelect);
         let select = document.querySelector('#user_schoolclass');
+        if(document.querySelector('#user_roles').value!=='ROLE_PUPIL')
         select.parentNode.style.display='none';
     })
 

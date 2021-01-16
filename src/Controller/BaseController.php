@@ -47,7 +47,7 @@ namespace App\Controller {
          */
         protected function resetPasswordAction(int $id):Response{
             $user = $this->getDoctrine()->getRepository(User::class)->find($id);
-            $path = $this->getUserString();
+            $path = $this->getAuthorisationString();
             if(empty($user)){
                 $this->addFlash('message','deze gebruiker bestaat niet in de database!');
                 return $this->redirectToRoute("{$path}_home");
@@ -64,7 +64,7 @@ namespace App\Controller {
          * geeft de string die als pad verwijst naar de specifieke gebruiker: admin. pupil, visitor, teacher
          * @return string de userstring één van visitor, pupil, teacher, admin of principal
          */
-        protected function getUserString():string{
+        protected function getAuthorisationString():string{
             if($this->isGranted('ROLE_PRINCIPAL')){
                 return 'principal';
             }
@@ -87,7 +87,7 @@ namespace App\Controller {
          */
         protected function getSchoolclassAction(int $id):Response{
             $class = $this->getDoctrine()->getRepository(Schoolclass::class)->find($id);
-            $path = $this->getUserString();
+            $path = $this->getAuthorisationString();
             return $this->render("$path/showclass.html.twig",['classes'=>$this->getClasses(),'class'=>$class]);
         }
 
@@ -111,7 +111,7 @@ namespace App\Controller {
         {
             $form = $this->createForm(ChangePasswordType::class);
             $form->handleRequest($request);
-            $path = $this->getUserString();
+            $path = $this->getAuthorisationString();
             if($form->isSubmitted()&&$form->isValid())
             {
                 $new = $form->get('new_password')->getData();
@@ -138,7 +138,7 @@ namespace App\Controller {
         protected function searchAction(Request  $request, $role):Response{
             $searchValue = $request->get('search');
             $results = $this->getDoctrine()->getRepository(User::class)->findLike($searchValue,$role);
-            $path = $this->getUserString();
+            $path = $this->getAuthorisationString();
             return $this->render($path.'/search.html.twig',
                 [   'classes'=>$this->getClasses() ,
                     'pupils'=>$results,
@@ -162,7 +162,7 @@ namespace App\Controller {
         protected function addUser(Request $request, bool $isPupil=true)
         {
             $user = new User();
-            $path = $this->getUserString();
+            $path = $this->getAuthorisationString();
             $header = $isPupil ? 'gegevens van een nieuwe leerling' : 'gegevens van een nieuwe schoolgebruiker';
             $form = $this->createForm(UserType::class, $user);
             if ($isPupil) $form->remove('roles');
@@ -208,6 +208,67 @@ namespace App\Controller {
             ]);
         }
 
-
+        /**
+         * @param Request $request
+         * @param int $id
+         * @return Response
+         */
+        protected function updateUser(Request $request, int $id):Response
+        {
+            $user = $this->getDoctrine()->getRepository(User::class)->find($id);
+            $auth_path = $this->getAuthorisationString();
+            if (empty($user)) {
+                $this->addFlash('message', 'de te wijzigen gebruiker bestaat niet!');
+                return $this->redirectToRoute($auth_path . '_home');
+            }
+            $form = $this->createForm(UserType::class, $user);
+            if(!$this->isGranted('ROLE_PRINCIPAL')){
+                $form->remove('roles');
+            }
+            $form->remove('password');//password kan je enkel resetten
+            $form->handleRequest($request);
+            if ($form->isSubmitted() && $form->isValid()) {
+                /** @var UploadedFile $imgFile */
+                $imgFile = $form->get('photofile')->getData();
+                try {
+                    if ($imgFile) {
+                        $originalFilename = pathinfo($imgFile->getClientOriginalName(), PATHINFO_FILENAME);
+                        $newFilename = substr(md5($originalFilename), 10) . uniqid() . '.' . $imgFile->guessExtension();
+                        $old_photo = $user->getPhotoFileName();
+                        $user->setPhoto($newFilename);
+                        $dir = $this->getParameter('app.image_directory');
+                        $imgFile->move($dir, $newFilename);
+                        if (!empty($old_photo)) {
+                            $file = $dir . '/' . $old_photo;
+                            if (file_exists($file)) {
+                                unlink($file);
+                            }
+                        }
+                    }
+                    //je bent alle catch van foto opslaan voorbij gekomen. nu kan je proberen om  op te slaan die user!
+                    //mogelijk nog problemen als email niet uniek is. Dartoe catch 2
+                    $class = $user->getSchoolclass();
+                    $class_id = empty($class) ? null : $class->getId();
+                    $entityManager = $this->getDoctrine()->getManager();
+                    $entityManager->persist($user);
+                    $entityManager->flush();
+                    $this->addFlash("message", "gebruiker {$user->getFullName()} succesvol gewijzigd");
+                    if (empty($class_id)) {
+                        return $this->redirectToRoute($auth_path . "_home");
+                    }
+                    return $this->redirectToRoute($auth_path . "_get_class", ['id' => $class_id]);
+                } catch (UniqueConstraintViolationException $e) {
+                    $form->get('email')->addError(new FormError("emailadres {$user->getEmail()} is helaas al in gebruik. Kies een ander"));
+                } catch (FileException $e) {
+                    $form->get('photofile')->addError(new FormError("de foto is helaas niet opgelagen; oude foto behouden"));
+                }
+            }
+            return $this->render($auth_path . '/new-user.html.twig', [
+                'header' => 'wijzig de gegevens van deze user',
+                'photo' => $user->getPhoto(),
+                'form' => $form->createView(),
+                'classes' => $this->getClasses(),
+            ]);
+        }
     }
 }

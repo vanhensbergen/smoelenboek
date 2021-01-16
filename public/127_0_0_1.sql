@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Gegenereerd op: 15 jan 2021 om 23:02
+-- Gegenereerd op: 16 jan 2021 om 23:29
 -- Serverversie: 10.4.16-MariaDB
 -- PHP-versie: 7.4.12
 
@@ -251,7 +251,8 @@ INSERT INTO `users` (`id`, `schoolclass_id`, `email`, `roles`, `password`, `firs
 (150, 14, 't.van.elck@svjit.nl', '[\"ROLE_PUPIL\"]', '$argon2id$v=19$m=65536,t=4,p=1$MEtZOG14RzZOQXVFc2hjcA$KXfB8uCm8b7fZZ8aisEPESHEPA5fJScJvxrPyxRFl80', 'Tim', 'van', 'Elck', '3f85c3e0f51db42a4a70176000b07e1b923.jpeg', NULL),
 (151, 16, 't.van.der.scheer@svjit.nl', '[\"ROLE_PUPIL\"]', '$argon2id$v=19$m=65536,t=4,p=1$eWFZUktid3BVZEpNTGt5Nw$2Uao6ZajuhLEQxkgtLHNEWAr1zpNpG6jbooVZ+uCH5o', 'Tim', 'van der', 'Scheer', 'dd0c6dc60a227d561dff546000b51b52b40.jpeg', NULL),
 (152, NULL, 'j.kubicna@svjit.nl', '[\"ROLE_ADMIN\"]', '$argon2id$v=19$m=65536,t=4,p=1$aTV5QXVqR05TczdoU2hkVw$k8RDByBDDS+F/s3p7yoGmOqEtnNHJxEiIXN7dXOMSfI', 'Jana', NULL, 'Kubicna', '0833316d1daa255e206a366000c7ee53b53.jpeg', NULL),
-(153, NULL, 'a.hermans@svjit.nl', '[\"ROLE_TEACHER\"]', '$argon2id$v=19$m=65536,t=4,p=1$dFA0U3lpT2tvMTN0UllONA$wzKeh62yS1XhFWJ29BkpqWhTWlhcmr+56eOF32RRWJ0', 'Axel', NULL, 'Hermans', '736b8eb6128dba4e69217b60020fbd04392.png', NULL);
+(153, NULL, 'a.hermans@svjit.nl', '[\"ROLE_TEACHER\"]', '$argon2id$v=19$m=65536,t=4,p=1$dFA0U3lpT2tvMTN0UllONA$wzKeh62yS1XhFWJ29BkpqWhTWlhcmr+56eOF32RRWJ0', 'Axel', NULL, 'Hermans', '736b8eb6128dba4e69217b60020fbd04392.png', NULL),
+(154, NULL, 'm.de.kok@svjit.nl', '[\"ROLE_ADMIN\"]', '$argon2id$v=19$m=65536,t=4,p=1$aUI3NXNNYkVwdTJLaWJXSQ$0odZ1wX6p3NVfBBU1WnV0KySm/LDuLUzlE6qWnfuleI', 'Marianne', 'de', 'Kok', 'aa105aeab1acde2019b125600321c2803f6.jpeg', NULL);
 
 --
 -- Indexen voor geëxporteerde tabellen
@@ -307,7 +308,7 @@ ALTER TABLE `studentremarks`
 -- AUTO_INCREMENT voor een tabel `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=154;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=155;
 
 --
 -- Beperkingen voor geëxporteerde tabellen

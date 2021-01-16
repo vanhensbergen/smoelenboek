@@ -54,13 +54,13 @@ namespace App\Controller {
         }
 
         /**
-         * Route("/principal/user/update/{id}",  name="principal_update_user", requirements={"id"="\d+"})
+         * @Route("/principal/user/update/{id}" ,  name="principal_update_user", requirements={"id"="\d+"})
          * @param Request $request
          * @param int $id
          * @return Response
          */
         public function principalUpdateUserAction(Request $request, int $id):Response{
-            //TODO
+            return $this->updateUser($request,$id);
         }
 
         /**
@@ -82,7 +82,14 @@ namespace App\Controller {
         public function principalDeleteUserAction(Request $request, int $id):Response{
             //TODO
         }
-
+        /**
+         * @Route("/principal/class/{id}", name="principal_get_class", requirements={"id"="\d+"})
+         * @param int $id
+         * @return Response
+         */
+        public function getClassForAdminAction(int $id):Response{
+            return $this->getSchoolclassAction($id);
+        }
         /**
          * @Route("principal/user/add", name="principle_add_user")
          * @param Request $request

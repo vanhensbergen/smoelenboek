@@ -102,6 +102,7 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator implements P
     }
     private function generateUserHomeRoute(TokenInterface $token):string{
         $user = $token->getUser();
+
         $roles = $user->getRoles();
         $actingRole = null;
         foreach ($roles as $role){
