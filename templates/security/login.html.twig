@@ -3,11 +3,9 @@
 {% block title %}Log in!{% endblock %}
 
 {% block body %}
-    <div class="row justify-content-center">
-       <div class="col-3"><a href="{{ path('visitor_home') }}"><button class="btn btn-lg btn-primary mt-2">terug</button></a></div>
-    </div>
-    <div class="row justify-content-center">
-        <form action="{{ path('app_login') }}"  method="post" class="col-5 bg-success p-5 ">
+
+    <div class="row justify-content-center m-4">
+        <form action="{{ path('app_login') }}"  method="post" class="col-6 bg-light p-5 border border-primary rounded">
             {% if error %}
                 <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
             {% endif %}
@@ -42,9 +40,10 @@
             <button class="btn btn-lg btn-primary mt-2" type="submit">
                 Sign in
             </button>
-            <button class="btn btn-lg btn-primary mt-2" type="reset">
+            <button class="btn btn-lg btn-primary mt-2 mr-4" type="reset">
                 Reset
             </button>
+            <a href="{{ path('visitor_home') }}"><button class="btn btn-lg btn-primary mt-2 ml-4">terug</button></a>
         </form>
     </div>
 
