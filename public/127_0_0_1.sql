@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Gegenereerd op: 17 jan 2021 om 14:33
+-- Gegenereerd op: 17 jan 2021 om 23:38
 -- Serverversie: 10.4.16-MariaDB
 -- PHP-versie: 7.4.12
 
@@ -239,7 +239,6 @@ INSERT INTO `users` (`id`, `schoolclass_id`, `email`, `roles`, `password`, `firs
 (136, 4, 'd.van.barneveld@svjit.nl', '[\"ROLE_PUPIL\"]', '$argon2id$v=19$m=65536,t=4,p=1$MURtQUM0Tm1BMjZ6UVlZUA$xEXCPOMPD8tOX8BDW5ULEfPguSZ+P1oTKtpGodMNhSQ', 'Daisy', 'van', 'Barneveld', 'ec5689f3586cc615a0ce965fed0d120d5bd.png', NULL),
 (137, 15, 'r.kertosari@svjit.nl', '[\"ROLE_PUPIL\"]', '$argon2id$v=19$m=65536,t=4,p=1$NEZtNkZsZEsvME5VdDlWMQ$puMzb2qHp/j/HduCuyUbSGjg8ZN/je5aV1irPi1R/Mw', 'Ray', NULL, 'Kertosari', '61a9d3bee9dca8bf4d02c25fed0e80a13c1.png', NULL),
 (138, 15, 'm.herman@svjit.nl', '[\"ROLE_PUPIL\"]', '$argon2id$v=19$m=65536,t=4,p=1$d3h1SWxuYUVwOGc0YldhNw$e0mP91JMxzbhRvOK2vLgCK/qh2OP16XfiP/TZY8+VQw', 'Michel', NULL, 'Herman', '131b16b30ff9a009b72aba5fed0eb765594.png', NULL),
-(139, 16, 'a.terlouw@svjit.nl', '[\"ROLE_PUPIL\"]', '$argon2id$v=19$m=65536,t=4,p=1$OGFlN3RZRjc4MGJWeXF4dg$urzVdfRXxSVjvM90+ptm1VhQWB7XFtaPslzC1t+6rTo', 'Arjen', NULL, 'Terlouw', '631fd6ef9d5e37297ef1125ffc5b5573e4c.jpeg', NULL),
 (140, 16, 'a.tromp@svjit.nl', '[\"ROLE_PUPIL\"]', '$argon2id$v=19$m=65536,t=4,p=1$T0FzcGJEQVpPSHVBeEczcw$Ix1f9cx+P2Buqk1/bO0BuCPbAcgxIkY5seC/l21e6UA', 'Ashley', NULL, 'Tromp', 'b16eae3f64ff94468098185ffc5b88eb0d4.jpeg', NULL),
 (141, 16, 'a.girgin@svjit.nl', '[\"ROLE_PUPIL\"]', '$argon2id$v=19$m=65536,t=4,p=1$QkRYZWFSSkU0L1c2c2cxQg$jhTLxaQo/5N06tem+kT/MP9SjuTlQhGEV+6hXEIygaQ', 'Aydin', NULL, 'Girgin', '40998b7fefe07f3942f04a5ffc5bd9a1adc.jpeg', NULL),
 (142, 16, 'c.sala@svjit.nl', '[\"ROLE_PUPIL\"]', '$argon2id$v=19$m=65536,t=4,p=1$Li5SbkFaVEpvOW1PR1FLLw$Itf91LT18S6QDuhhbsSGKRFvl3GO55FgBisPolUp40c', 'Cheriff', NULL, 'Sala', '981da8512971097fa9bc7c5ffc5c0ac239b.jpeg', NULL),
@@ -257,7 +256,8 @@ INSERT INTO `users` (`id`, `schoolclass_id`, `email`, `roles`, `password`, `firs
 (156, NULL, 'a.stephan@svjit.nl', '[\"ROLE_ADMIN\"]', '$argon2id$v=19$m=65536,t=4,p=1$dWNpSmVob082T2NvaU5icw$i/l2yENX6cqwpSVXHOG7VqrI57kbf2N/Z+kCO+fUo3k', 'Ans', NULL, 'Stephan', 'e309b19d0345927ac81bea60042dc4c33e4.png', NULL),
 (157, NULL, 'k.klaver@svjit.nl', '[\"ROLE_PUPIL\"]', '$argon2id$v=19$m=65536,t=4,p=1$dWRRNlpyM01MNDFwVHNtVw$eJL2Zc14sBh8GB5f42ac4m99a9Gqu5DORmXoC+1Nu1c', 'Kelvin', NULL, 'Klaver', '0e470fba6864d60d138630600437c8749cf.jpeg', NULL),
 (158, 15, 'l.witkamp@svjit.nl', '[\"ROLE_PUPIL\"]', '$argon2id$v=19$m=65536,t=4,p=1$TFRuZ2JPM0duWjNsZmhrMg$3o12dH4QFiJXQTGu3w9V4VhBU+X73ueoOAx1ByBS2Eo', 'Leroy', NULL, 'Witkamp', 'af20da75869ad860c03bd96004385713443.jpeg', NULL),
-(159, NULL, 'p.zwinkels@svjit.nl', '[\"ROLE_PUPIL\"]', '$argon2id$v=19$m=65536,t=4,p=1$VFE5TzBGemdFaFZNVlN5Vw$cR5hmtFMp7AwVzKx7Od2vVD0a/Aa5RF60dwxRWAoIVY', 'Pim', NULL, 'Zwinkels', '3d1ae0820f0b1fd51fa512600438e98b321.jpeg', NULL);
+(162, NULL, 'p.zwinkels@svjit.nl', '[\"ROLE_PUPIL\"]', '$argon2id$v=19$m=65536,t=4,p=1$bGlBaUk1QjIwbTJUSllhLw$AUZI12VQKpR7O/smiGCz2rQfaMn9+4BuG1c01a5Bp0o', 'Pim', NULL, 'Zwinkels', '3d1ae0820f0b1fd51fa5126004ad51eced3.jpeg', NULL),
+(163, 16, 'a.terlouw@svjit.nl', '[\"ROLE_PUPIL\"]', '$argon2id$v=19$m=65536,t=4,p=1$Wnp6QkxKQTlnVmhLVmFMOA$BH0F9SXnwyHMn+ZSGrW5siefHoXSu86FyIBlrvufwnk', 'Arjen', NULL, 'Terlouw', '631fd6ef9d5e37297ef1126004b00e8ae4a.jpeg', NULL);
 
 --
 -- Indexen voor geëxporteerde tabellen
@@ -313,7 +313,7 @@ ALTER TABLE `studentremarks`
 -- AUTO_INCREMENT voor een tabel `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=160;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=164;
 
 --
 -- Beperkingen voor geëxporteerde tabellen
