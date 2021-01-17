@@ -18,8 +18,10 @@ namespace App\Controller {
             $principal=$this->getDoctrine()->getRepository(User::class)->findPrincipal();
             $teachers = $this->getDoctrine()->getRepository(User::class)->findTeachers();
             $administrators = $this->getDoctrine()->getRepository(User::class)->findAdministrators();
-            return $this->render('visitor/default.html.twig',
-                [  'principal'=>$principal, 'teachers'=>$teachers,'administrators'=>$administrators]);
+            return $this->render('visitor/default.html.twig', [
+                                            'principal'=>$principal,
+                                            'teachers'=>$teachers,
+                                            'administrators'=>$administrators]);
         }
     }
 }
