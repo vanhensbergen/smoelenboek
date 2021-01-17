@@ -36,7 +36,7 @@
     <div class="row justify-content-center">
         {% for remark in remarks %}
             {% if update_remark is defined and update_remark == remark and app.user == remark.author %}
-                <article class="bg-light col-5 p-1 m-2">
+                <article class="bg-light col-xl-5 col-lg-5 col-md-9 col-sm-11 p-1 m-2 border rounded border-info">
                     <header class=" h6 bg-white border rounded border-info p-1">
                         <h6>WIJZIG DEZE OPMERKING </h6>
                     </header>
@@ -45,7 +45,7 @@
                     </main>
                 </article>
             {% else %}
-                <article class="bg-light col-5 p-1 m-2">
+                <article class="bg-white col-xl-5 col-lg-5 col-md-9 col-sm-11 p-1 m-2 border rounded border-info">
                     <header class=" h6 bg-white border rounded border-info p-1">
                         <div class="h6" >titel: {{ remark.title }}</div>
                         <div class="h6"> datum: {{ remark.created|date("d-m-Y") }}</div>
@@ -67,7 +67,7 @@
                                 </a>
                         {% endif %}
                     </header>
-                    <main  class=" h6 bg-white border rounded border-info p-1 mt-1">{{ remark.content }}</main>
+                    <main  class=" h6 bg-white border rounded border-info p-1 mt-1 ">{{ remark.content }}</main>
                 </article>
             {% endif %}
         {% endfor %}
