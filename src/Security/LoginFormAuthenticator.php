@@ -31,7 +31,7 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator implements P
     private $csrfTokenManager;
     private $passwordEncoder;
 
-    public function __construct(EntityManagerInterface $entityManager, UrlGeneratorInterface $urlGenerator, CsrfTokenManagerInterface $csrfTokenManager, UserPasswordEncoderInterface $passwordEncoder)
+    public function __construct( EntityManagerInterface $entityManager, UrlGeneratorInterface $urlGenerator, CsrfTokenManagerInterface $csrfTokenManager, UserPasswordEncoderInterface $passwordEncoder)
     {
         $this->entityManager = $entityManager;
         $this->urlGenerator = $urlGenerator;
@@ -100,10 +100,16 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator implements P
 
         return new RedirectResponse($this->urlGenerator->generate($route));
     }
-    private function generateUserHomeRoute(TokenInterface $token):string{
-        $user = $token->getUser();
 
-        $roles = $user->getRoles();
+    /**
+     * @param TokenInterface $token
+     * @return string
+     * deze methode bepaalt middels het token welke route bij de homedirectory hoort
+     * kan zijn: pupil_home, teacher_home, admin_home of principal_home
+     * deze zijn direct afgeleid van de rollen: ROLEPUPIL, ROLE_TEACHER etc...
+     */
+    private function generateUserHomeRoute(TokenInterface $token):string{
+        $roles=$token->getRoleNames();
         $actingRole = null;
         foreach ($roles as $role){
             if($role!=='ROLE_USER'){
