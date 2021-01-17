@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.0.3
+-- version 5.0.4
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Gegenereerd op: 17 jan 2021 om 13:36
--- Serverversie: 10.4.14-MariaDB
--- PHP-versie: 7.4.11
+-- Gegenereerd op: 17 jan 2021 om 14:33
+-- Serverversie: 10.4.16-MariaDB
+-- PHP-versie: 7.4.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -254,7 +254,10 @@ INSERT INTO `users` (`id`, `schoolclass_id`, `email`, `roles`, `password`, `firs
 (153, NULL, 'a.hermans@svjit.nl', '[\"ROLE_TEACHER\"]', '$argon2id$v=19$m=65536,t=4,p=1$dFA0U3lpT2tvMTN0UllONA$wzKeh62yS1XhFWJ29BkpqWhTWlhcmr+56eOF32RRWJ0', 'Axel', NULL, 'Hermans', '736b8eb6128dba4e69217b60020fbd04392.png', NULL),
 (154, NULL, 'm.de.kok@svjit.nl', '[\"ROLE_ADMIN\"]', '$argon2id$v=19$m=65536,t=4,p=1$aUI3NXNNYkVwdTJLaWJXSQ$0odZ1wX6p3NVfBBU1WnV0KySm/LDuLUzlE6qWnfuleI', 'Marianne', 'de', 'Kok', 'aa105aeab1acde2019b125600321c2803f6.jpeg', NULL),
 (155, NULL, 'm.zondervan@svjit.nl', '[\"ROLE_ADMIN\"]', '$argon2id$v=19$m=65536,t=4,p=1$UHJXWkNxeXV2N1dvTmx0cA$ZrKXk61FHUNqCPdi18AbOUur+loVxzu1xrjDfXAyQgo', 'Marcel', NULL, 'Zondervan', '5d816a45cae554c788e75460037595b530b.jpeg', NULL),
-(156, NULL, 'a.stephan@svjit.nl', '[\"ROLE_ADMIN\"]', '$argon2id$v=19$m=65536,t=4,p=1$dWNpSmVob082T2NvaU5icw$i/l2yENX6cqwpSVXHOG7VqrI57kbf2N/Z+kCO+fUo3k', 'Ans', NULL, 'Stephan', 'e309b19d0345927ac81bea60042dc4c33e4.png', NULL);
+(156, NULL, 'a.stephan@svjit.nl', '[\"ROLE_ADMIN\"]', '$argon2id$v=19$m=65536,t=4,p=1$dWNpSmVob082T2NvaU5icw$i/l2yENX6cqwpSVXHOG7VqrI57kbf2N/Z+kCO+fUo3k', 'Ans', NULL, 'Stephan', 'e309b19d0345927ac81bea60042dc4c33e4.png', NULL),
+(157, NULL, 'k.klaver@svjit.nl', '[\"ROLE_PUPIL\"]', '$argon2id$v=19$m=65536,t=4,p=1$dWRRNlpyM01MNDFwVHNtVw$eJL2Zc14sBh8GB5f42ac4m99a9Gqu5DORmXoC+1Nu1c', 'Kelvin', NULL, 'Klaver', '0e470fba6864d60d138630600437c8749cf.jpeg', NULL),
+(158, 15, 'l.witkamp@svjit.nl', '[\"ROLE_PUPIL\"]', '$argon2id$v=19$m=65536,t=4,p=1$TFRuZ2JPM0duWjNsZmhrMg$3o12dH4QFiJXQTGu3w9V4VhBU+X73ueoOAx1ByBS2Eo', 'Leroy', NULL, 'Witkamp', 'af20da75869ad860c03bd96004385713443.jpeg', NULL),
+(159, NULL, 'p.zwinkels@svjit.nl', '[\"ROLE_PUPIL\"]', '$argon2id$v=19$m=65536,t=4,p=1$VFE5TzBGemdFaFZNVlN5Vw$cR5hmtFMp7AwVzKx7Od2vVD0a/Aa5RF60dwxRWAoIVY', 'Pim', NULL, 'Zwinkels', '3d1ae0820f0b1fd51fa512600438e98b321.jpeg', NULL);
 
 --
 -- Indexen voor geëxporteerde tabellen
@@ -310,7 +313,7 @@ ALTER TABLE `studentremarks`
 -- AUTO_INCREMENT voor een tabel `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=157;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=160;
 
 --
 -- Beperkingen voor geëxporteerde tabellen
