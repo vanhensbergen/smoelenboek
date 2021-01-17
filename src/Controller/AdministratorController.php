@@ -8,16 +8,13 @@ namespace App\Controller {
     use App\Entity\User;
     use App\Form\ChangeMentorFormType;
     use App\Form\SchoolclassType;
-    use App\Form\UserType;
     use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
     use Symfony\Component\Form\FormError;
-    use Symfony\Component\HttpFoundation\File\Exception\FileException;
-    use Symfony\Component\HttpFoundation\File\UploadedFile;
     use Symfony\Component\HttpFoundation\Request;
     use Symfony\Component\HttpFoundation\Response;
     use Symfony\Component\Routing\Annotation\Route;
 
-    class AdministratorController extends BaseController
+    class AdministratorController extends SuperBaseController
     {
 
         /**
@@ -28,7 +25,7 @@ namespace App\Controller {
             $classless = $this->getDoctrine()->getRepository(User::class)->findClasslessPupils();
             return $this->render('admin/default.html.twig',
                 [   'classes'=>$this->getClasses() ,
-                    'pupils'=>$classless,
+                    'users'=>$classless,
                     'header'=>'ONGEPLAATSTE LEERLINGEN',
                 ]);
         }
@@ -113,28 +110,7 @@ namespace App\Controller {
          * @return Response
          */
         public function deleteUserAction(int $id):Response{
-            $user = $this->getDoctrine()->getRepository(User::class)->find($id);
-            $class = $user->getSchoolclass();
-
-            $class_id = empty($class)?null:$class->getId();
-            $photoName = $user->getPhotoFileName();
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->remove($user);
-            $entityManager->flush();
-            $dir = $this->getParameter('app.image_directory');
-            if(!empty($photoName)){
-                $file = $dir.'/'.$photoName;
-                if(file_exists($file)) {
-
-                    unlink($file);
-                }
-            }
-            $this->addFlash('message',"{$user->getFullName()} verwijderd");
-
-            if(empty($class_id)){
-                return $this->redirectToRoute('admin_home');
-            }
-            return $this->redirectToRoute("admin_get_class",['id'=>$class_id]);
+            return $this->deleteUser($id);
         }
 
         /**

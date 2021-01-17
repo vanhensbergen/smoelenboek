@@ -1,11 +1,12 @@
-{% for pupil in pupils %}
+{% for user in users %}
     <div class="col-xl-2 col-lg-3  col-md-4 col-sm-6 bg-light p-1">
         <div class="w-100 h-100 border border-success rounded">
             <article class="p-1">
                 <figure>
-                    <a href="{{ path('teacher_get_remarks',{'student_id':pupil.id}) }}"><img src="{{ asset(pupil.photo) }}" class="figure-img img-fluid w-100" alt="{{ pupil.fullname }}"/></a>
+                    <a href="{{ path('teacher_get_remarks',{'student_id':user.id}) }}">
+                        <img src="{{ asset(user.photo) }}" class="figure-img img-fluid w-100" alt="{{ user.fullname }}"/></a>
                     <figcaption class="figure-caption text-center h6 align-bottom">
-                        <a href="mailto:{{ pupil.email}}">{{ pupil.fullname }}</a>
+                        <a href="mailto:{{ user.email}}">{{ user.fullname }}</a>
                     </figcaption>
                 </figure>
             </article>

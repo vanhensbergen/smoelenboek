@@ -21,7 +21,7 @@
             {% if class.users is empty %}
                 <h1 class="col-12 text-center display-4">klas is nog leeg</h1>
             {% else %}
-                {{ include ('pupil/includes/pupilsforloop.incl.twig',{pupils:class.users}) }}
+                {{ include ('pupil/includes/usersforloop.incl.twig',{users:class.users}) }}
             {% endif %}
         </div>
     {% endif %}

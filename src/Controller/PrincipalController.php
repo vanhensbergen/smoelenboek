@@ -12,7 +12,7 @@ namespace App\Controller {
     use Symfony\Component\HttpFoundation\Response;
     use Symfony\Component\Routing\Annotation\Route;
 
-    class PrincipalController extends BaseController
+    class PrincipalController extends SuperBaseController
     {
 
         /**
@@ -24,7 +24,7 @@ namespace App\Controller {
         {
             $classes = $this->getDoctrine()->getRepository(Schoolclass::class)->findAll();
             return $this->render('principal/default.html.twig',
-                ['teachers' => $users,
+                ['users' => $users,
                     'classes' => $classes,
                     'type'=>$type
                 ]);
@@ -52,6 +52,13 @@ namespace App\Controller {
             $admins = $this->getDoctrine()->getRepository(User::class)->findAdministrators();
             return $this->show($admins,"ADMINISTRATIE");
         }
+        /**
+         * @Route("principal/classless" , name="principal_classless")
+         */
+        public function showClasslessAction():Response{
+            $pupils = $this->getDoctrine()->getRepository(User::class)->findClasslessPupils();
+            return $this->show($pupils,'ONGEPLAATSTE LEERLINGEN');
+        }
 
         /**
          * @Route("/principal/user/update/{id}" ,  name="principal_update_user", requirements={"id"="\d+"})
@@ -64,7 +71,7 @@ namespace App\Controller {
         }
 
         /**
-         * Route("/principal/user/reset/{id}",  name="principal_reset_user", requirements={"id"="\d+"})
+         * @Route("/principal/user/reset/{id}",  name="principal_reset_user", requirements={"id"="\d+"})
          * @param Request $request
          * @param int $id
          * @return Response
@@ -74,13 +81,12 @@ namespace App\Controller {
         }
 
         /**
-         * Route("/principal/user/delete/{id}",  name="principal_delete_user", requirements={"id"="\d+"})
-         * @param Request $request
+         * @Route("/principal/user/delete/{id}",  name="principal_delete_user", requirements={"id"="\d+"})
          * @param int $id
          * @return Response
          */
-        public function principalDeleteUserAction(Request $request, int $id):Response{
-            //TODO
+        public function principalDeleteUserAction(int $id):Response{
+            return $this->deleteUser($id);
         }
         /**
          * @Route("/principal/class/{id}", name="principal_get_class", requirements={"id"="\d+"})
@@ -90,13 +96,23 @@ namespace App\Controller {
         public function getClassForAdminAction(int $id):Response{
             return $this->getSchoolclassAction($id);
         }
+
         /**
-         * @Route("principal/user/add", name="principle_add_user")
+         * @Route("principal/user/new/{type}", name="principle_add_user")
          * @param Request $request
+         * @param string $type
          * @return Response
          */
-        public function createNewUserAction(Request $request):Response{
-            return $this->addUser($request,false);
+        public function createNewUserAction(Request $request,string $type):Response{
+            switch($type){
+                case "pupil":
+                    return $this->addUser($request, true);
+                case "personel":
+                    return $this->addUser($request,false);
+                default:
+                    $this->addFlash('message','niet knoeien op de urlbalk svp');
+                   return  $this->redirectToRoute('principal_home');
+            }
         }
 
 
