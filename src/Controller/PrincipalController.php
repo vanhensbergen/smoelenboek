@@ -98,7 +98,7 @@ namespace App\Controller {
         }
 
         /**
-         * @Route("principal/user/new/{type}", name="principle_add_user")
+         * @Route("principal/new/{type}", name="principle_add_user", requirements={"type"="pupil|personel"})
          * @param Request $request
          * @param string $type
          * @return Response
