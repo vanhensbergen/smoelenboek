@@ -242,7 +242,15 @@ namespace App\Entity {
         {
             return $this->mentorclass;
         }
-
+        public function isPupil():bool{
+            return in_array('ROLE_PUPIL',$this->roles);
+        }
+        public function isAdmin():bool{
+            return in_array('ROLE_ADMINISTRATOR',$this->roles);
+        }
+        public function isTeacher():bool{
+            return in_array('ROLE_TEACHER',$this->roles);
+        }
         public function setMentorclass(?Schoolclass $mentorclass): self
         {
             $this->mentorclass = $mentorclass;

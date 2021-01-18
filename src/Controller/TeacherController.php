@@ -90,7 +90,8 @@ namespace App\Controller {
                 'remarks'=>$remarks,
                 'classes'=>$classes,
                 'next' =>$next,
-                'previous'=>$previous
+                'previous'=>$previous,
+
             ]);
             return $this->render('teacher/student-details.html.twig',$form_data);
         }
@@ -121,6 +122,20 @@ namespace App\Controller {
                 return $this->redirectToRoute("teacher_get_remarks",['student_id'=>$student_id]);
             }
             return $this->studentRemarksViewForTeacher($student_id, $extraData);
+        }
+        /**
+         * @Route("teacher/resetpassword/{id}", name="teacher_reset_mentor_student", requirements={"id"="\d+"})
+         */
+        public function resetMentorStudentAction(int $id):Response{
+            $user = $this->getDoctrine()->getRepository(User::class)->find($id);
+            $class = $user->getSchoolclass();
+            $mentor = empty($class)?null:$class->getMentor();
+            if(!empty($mentor)&&$mentor===$this->getUser()){
+                return $this->resetPasswordAction($id);
+            }
+            $this->addFlash('message', "je bent geen mentor van de leerling, reset niet toegestaan");
+            return $this->redirectToRoute('teacher_home');
+
         }
 
         /**

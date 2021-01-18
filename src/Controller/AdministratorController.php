@@ -119,7 +119,6 @@ namespace App\Controller {
          * @return Response
          */
         public function adminResetPasswordAction(int $id):Response{
-            //insert constraint as to user types allowed
             return $this->resetPasswordAction($id);
         }
 

@@ -47,17 +47,22 @@ namespace App\Controller {
          */
         protected function resetPasswordAction(int $id):Response{
             $user = $this->getDoctrine()->getRepository(User::class)->find($id);
-            $path = $this->getAuthorisationString();
+            $authorization_path = $this->getAuthorisationString();
             if(empty($user)){
                 $this->addFlash('message','deze gebruiker bestaat niet in de database!');
-                return $this->redirectToRoute("{$path}_home");
+                return $this->redirectToRoute("{$authorization_path}_home");
+            }
+            $isPupil = $user->isPupil();
+            if(($authorization_path==='admin'||$authorization_path==='teacher')&&!$isPupil){
+                $this->addFlash('message','deze gebruiker mag je niet resetten');
+                return $this->redirectToRoute("{$authorization_path}_home");
             }
             $user->setPassword($this->encode('qwerty'));
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($user);
             $entityManager->flush();
             $this->addFlash('message',"wachtwoord van {$user->getFullname()} is gereset naar 'qwerty'.");
-            return $this->redirectToRoute("{$path}_home");
+            return $this->redirectToRoute("{$authorization_path}_home");
         }
 
         /**

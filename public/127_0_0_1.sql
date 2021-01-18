@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Gegenereerd op: 17 jan 2021 om 23:38
+-- Gegenereerd op: 18 jan 2021 om 12:07
 -- Serverversie: 10.4.16-MariaDB
 -- PHP-versie: 7.4.12
 
@@ -105,11 +105,12 @@ INSERT INTO `studentremarks` (`id`, `author_id`, `student_id`, `title`, `content
 (6, 6, 37, 'aandacht svp voor Asperger', 'Patrick is hoogst intelligent. Is zijn loopbaan begonnen op het vwo. Hij is als een spons. Hij zuigt op wat je zegt. Verwacht geen communicatie, daar op aandringen veroorzaakt stress bij Patrick. Doe dat dus niet.', '2021-01-03'),
 (7, 6, 74, 'hoofdpijnklachten', 'Willen de collega\'s rekening houden met he gegeven dat Rashad veel last heeft van migraine achtige hoofdpijnklachten.', '2021-01-04'),
 (8, 6, 136, 'verspreid dit niet!!', 'Daisy  is aanzienlijk ouder dan de andere studenten. Ze is zwanger verschijnt daardoor minder op school en zal waarschijnlijk de opleiding stoppen. De situatiethuis met Barney als vader helpt ook niet.', '2021-01-04'),
-(9, 6, 82, 'lastige start bij AO', 'Edo heeft de overstap gemaakt vanaf BOL3 naar de opleiding AO. Hij heeft grote moeite om mee te komen. Hij is niet gewend om zelf na te denken.  Veelal heeft hij geleerd na te doen. Dat kan niet bij AO. Geef hem extra aandacht met accent op leerstrategieën. Hij is van goede wil.', '2021-01-06'),
 (10, 6, 89, 'hulp mijdend gedrag', 'Jacob kan het allemaal niet bijbenen. Het niveau waarop hij moet werken zit ver boven zijn capaciteiten. Hij hoort eigenlijk BOL3 te doen. Hij wil dan ook geen ondersteuning accepteren. Hij begint wel lichtelijk agressief gedrag te vertonen. Dat baat zorgen', '2021-01-06'),
 (11, 6, 112, 'hinderlijk niet serieus gedrag', 'Jordy is een paar jaartjes ouder dan zijn klasgenoten en probeert excessief vrolijk gedrag te vertonen. Accepteer dat niet, wijs hem erop dat zijn gedrag storend werkt', '2021-01-06'),
 (13, 8, 93, 'Gedrag in de klas', 'Ian heeft een positive invloed op zijn omgeving. Hij poogt bewust hulpvaardig te zijn. Probeert kennis bij te brengen bij zijn mede studenten en draagt bij aan een positief studieklimaat. Gesprekken met hem hebben geholpen.', '2021-01-08'),
-(14, 6, 80, 'In vertrouwen medegedeeld', 'Socrates ondervindt grote druk van Giovanni le Grand. Hij wordt op het schoolplein en in school getreiterd. Laatst is zijn wachtwoord voor zijn PC gewijzigd. Het pesten is subtiel maar laakbaar. Hou voorlopig en oogje in het zeil.', '2021-01-10');
+(14, 6, 80, 'In vertrouwen medegedeeld', 'Socrates ondervindt grote druk van Giovanni le Grand. Hij wordt op het schoolplein en in school getreiterd. Laatst is zijn wachtwoord voor zijn PC gewijzigd. Het pesten is subtiel maar laakbaar. Hou voorlopig en oogje in het zeil.', '2021-01-10'),
+(15, 6, 77, 'punt van aandacht collega\'s!', 'Rashid heeft de overstap gemaakt vanaf BOL3 naar de opleiding AO. Hij heeft grote moeite om mee te komen. Hij is niet gewend om zelf na te denken. Veelal heeft hij geleerd na te doen. Dat kan niet bij AO. Geef hem extra aandacht met accent op leerstrategieën. Hij is van goede wil.', '2021-01-18'),
+(16, 6, 145, 'thuissituatie: scheiding ouders', 'Na een onrustige periode met veel ruzie thuis, hebben de ouders besloten te gaan scheiden. De vader van Romano is vertrokken.Dit geeft rust, Romano hoeft niet mer te kiezen tussen ouders en voelt minder druk om de toestand thuis te pacificeren. Hou een positief oogje op hem.', '2021-01-18');
 
 -- --------------------------------------------------------
 
@@ -191,7 +192,7 @@ INSERT INTO `users` (`id`, `schoolclass_id`, `email`, `roles`, `password`, `firs
 (83, 3, 'm.v.d.burgh@svjit.nl', '[\"ROLE_PUPIL\"]', '$argon2id$v=19$m=65536,t=4,p=1$UFVTMlk0b2J3U3R3cURQLw$5ZJq2P+SmLpUcR226iM4JA3+ih3Ncj17+Od1O/9KsZI', 'Mark', 'van den', 'Burgh', '05b9033196ba818f7a872b5fe5fe7079111.jpeg', NULL),
 (84, 3, 'a.kurnaz@svjit.nl', '[\"ROLE_PUPIL\"]', '$argon2id$v=19$m=65536,t=4,p=1$cTJVVk1ZMXlHeS5xVVBsSQ$bzedLoOtpKIFrgf5LYIojnMy38LXbacl9GTHnmSZtD8', 'Abdul', NULL, 'Kurnaz', '69000262e398418be022455fe60077b7995.jpeg', NULL),
 (86, 4, 'n.lahmidi@svjit.nl', '[\"ROLE_PUPIL\"]', '$argon2id$v=19$m=65536,t=4,p=1$ZkxQS1VJS3hpWmJ4OUhuNA$YcWuBe6ZaKK3Cd1IYMmGMJlqVl2jufMCrTE76vGUBSY', 'Nassiem', NULL, 'Lahmidi', '2c1e3124cffd67d48194685fe63c3121d2a.png', NULL),
-(87, 3, 't.sahin@svjit.nl', '[\"ROLE_PUPIL\"]', '$argon2id$v=19$m=65536,t=4,p=1$UENNNW9TQTBLRzM4azlZVg$hPcuuy9Gt3pDFmBX8PYQp5BIW+/BKLUOJ5f96fBYstY', 'Taner', NULL, 'Sahin', '6aaf53ee9a8096fa6c11525fe74594ef9ae.png', NULL),
+(87, 3, 't.sahin@svjit.nl', '[\"ROLE_PUPIL\"]', '$argon2id$v=19$m=65536,t=4,p=1$S2xCTnhLZExyUUVqN1lPZA$KGmjXKhBRjwtMp+0BsG5lI+Sr3Bjpkq5dJ6zRrZ+zMQ', 'Taner', NULL, 'Sahin', '6aaf53ee9a8096fa6c11525fe74594ef9ae.png', NULL),
 (88, 4, 'a.efe@svjit.nl', '[\"ROLE_PUPIL\"]', '$argon2id$v=19$m=65536,t=4,p=1$NnpSZ3EvWm5qZC4zNC5TTg$iDDV+X81kGu6Xq9NM+DXOn/L/RX7HmKabRwdalldK40', 'Ariyan', NULL, 'Efe', '4207fdc7c9628927c4836a5fe7494b67216.png', NULL),
 (89, 4, 'j.farhaoui@svjit.nl', '[\"ROLE_PUPIL\"]', '$argon2id$v=19$m=65536,t=4,p=1$eUFwU2ZuT1lXeVpXZ0JLTg$+UgnWp8QZdQXwdgV4/TX+VgC2MD8ddoobdDz8l5ug4Y', 'Jacob', NULL, 'Farhaoui', '6072f535a6a98e652565765fe8af4fc905a.png', NULL),
 (90, 4, 'b.al-assbahi@svjit.nl', '[\"ROLE_PUPIL\"]', '$argon2id$v=19$m=65536,t=4,p=1$T1BaQ3BjUTcyUG9JT1pxag$sODq/AeUmL6THn1/9uTzRbME5IehcLyVndCSxlB8vCk', 'Boraida', NULL, 'Al-Assbahi', '61cbc3d74eb2dd9b2ce4ba5fe74b1ea85f2.jpeg', NULL),
@@ -307,7 +308,7 @@ ALTER TABLE `schoolclasses`
 -- AUTO_INCREMENT voor een tabel `studentremarks`
 --
 ALTER TABLE `studentremarks`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT voor een tabel `users`
