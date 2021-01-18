@@ -62,12 +62,11 @@
     <body>
         <div class="container mt-3 bg-light border border-success">
             {% for message in app.flashes('message') %}
-                <div class="alert alert-danger row mb-1 mt-1">{{ message }}</div>
+                <div class="alert alert-danger row m-1">{{ message }}</div>
             {% endfor %}
             {% block nav %}{% endblock %}
             {% block body %}{% endblock %}
         </div>
-
         <!-- JavaScript Bundle with Popper -->
         <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>

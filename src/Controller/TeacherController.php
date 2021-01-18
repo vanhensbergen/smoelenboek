@@ -148,6 +148,11 @@ namespace App\Controller {
         {
             $remark = $this->getDoctrine()->getRepository(StudentRemark::class)->find($id);
             //$route = $this->generateUrl('teacher_update_remark',['id'=>$id]);
+            $author = $remark->getAuthor();
+            if($author!==$this->getUser()){
+                $this->addFlash('message',"bewerking niet toegestaan: je bent niet de ateur dat is {$author->getFullname()}");
+                return $this->redirectToRoute('teacher_home');
+            }
             $student_id = $remark->getStudent()->getId();
             $form = $this->createForm(StudentRemarkType::class, $remark);
             $form->handleRequest($request);
