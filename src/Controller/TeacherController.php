@@ -106,7 +106,6 @@ namespace App\Controller {
         {
             $remark = new StudentRemark();
             $form = $this->createForm(StudentRemarkType::class,$remark);
-            //['action'=>$this->generateUrl('teacher_new_remark',['student_id'=>$student_id])]);
             $form->handleRequest($request);
             $extraData = ['new_form'=>$form->createView()];
             if ($form->isSubmitted() && $form->isValid())
@@ -147,7 +146,6 @@ namespace App\Controller {
         public function updateStudentRemarkByTeacherAction(Request $request, $id):Response
         {
             $remark = $this->getDoctrine()->getRepository(StudentRemark::class)->find($id);
-            //$route = $this->generateUrl('teacher_update_remark',['id'=>$id]);
             $author = $remark->getAuthor();
             if($author!==$this->getUser()){
                 $this->addFlash('message',"bewerking niet toegestaan: je bent niet de ateur dat is {$author->getFullname()}");
