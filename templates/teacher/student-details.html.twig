@@ -1,10 +1,10 @@
 {% extends "./base_teacher.html.twig"  %}
 
 {% block content %}
-    <div class="row justify-content-center p-1" >
+    <div class="row justify-content-center" >
 
-        <a href="{{ path('teacher_get_class',{'id':student.schoolclass.id}) }}" title="ga terug naar klas {{ student.schoolclass.name }}" class="col-2">
-            <button type="button" class="btn btn-outline-primary m-2 ">
+        <a href="{{ path('teacher_get_class',{'id':student.schoolclass.id}) }}" title="ga terug naar klas {{ student.schoolclass.name }}" class="my-1" >
+            <button type="button" class="btn btn-outline-primary">
                 <img src="{{ asset("img/up.png") }}" class="figure-img img-fluid"/>
             </button>
         </a>
@@ -17,7 +17,7 @@
         {% else %}
                 <span class="my-auto col-2 border rounded border-primary mr-2"> <img src="{{ asset('img/prev.png') }}" class="figure-img img-fluid w-75 p-2"/></span>
         {% endif %}
-        <div class="col-3 bg-light border border-success mb-1 ">
+        <div class="col-xl-3 col-lg-5 col-md-6 col-sm-6 bg-light border border-success mb-1 ">
             <article class="p-1">
                 <figure>
                     <img src="{{ asset(student.photo) }}" class="figure-img img-fluid w-100" alt="{{ student.fullname }}"/>
