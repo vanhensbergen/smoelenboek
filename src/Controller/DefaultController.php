@@ -31,6 +31,8 @@ namespace App\Controller {
                                             'error' => $error]);
         }
 
+
+
         /**
          * @Route("/logout", name="app_logout")
          */

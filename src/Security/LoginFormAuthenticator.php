@@ -23,7 +23,7 @@ use Symfony\Component\Security\Http\Util\TargetPathTrait;
 class LoginFormAuthenticator extends AbstractFormLoginAuthenticator implements PasswordAuthenticatedInterface
 {
     use TargetPathTrait;
-
+    //we hebben een loginscherm op de visitor home pagina dat middels javascript opgeroepen wordt.
     //public const LOGIN_ROUTE = 'app_login';//we hebben een loginscherm op de visitor home pagina dat middels javascript opgeroepen wordt.
     public const LOGIN_ROUTE = 'visitor_home';
 
