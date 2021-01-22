@@ -1,6 +1,6 @@
 
-<div class="row justify-content-center m-4" >
-    <form action="{{ path('visitor_home') }}"  method="post" class="col-10 bg-light p-5 border border-primary rounded">
+<div class="row justify-content-center" >
+    <form action="{{ path('visitor_home') }}"  method="post" class="col-10 bg-light p-5 border border-primary rounded m-4">
         {% if error  %}
             <div class="alert alert-danger" id="error_div">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
         {% endif %}
@@ -12,7 +12,7 @@
         {% endif %}
 
 
-        <h1 class="h3 mb-3 font-weight-normal">aub wilt u inloggen</h1>
+        <h1 class="h3 mb-3 font-weight-normal">aub inloggen. bij vergissing gebruik <button class="btn btn-lg btn-danger mt-2 ml-1" disabled type="button">terug</button></h1>
         <label for="inputEmail">Email</label>
         <input type="email" value="{{ last_username }}" placeholder="vul je emailadres van school in" name="email" id="inputEmail" class="form-control" required autofocus>
         <label for="inputPassword">Wachtwoord</label>
