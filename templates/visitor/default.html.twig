@@ -1,5 +1,6 @@
 {% extends "./base.html.twig" %}
 {% block body %}
+
        <div class="row text-center border border-success"  style="background-image:url('{{asset("img/800.jpg") }}');">
             <div class="col-lg-7 col-sm-12 resp-font" style="background: white;opacity: 0.6;">
                 <div class=" font-weight-bold">SVJIT</div>
@@ -11,7 +12,9 @@
                         <figure >
                             <img  src="{{ asset(principal.photo) }}" class="img-fluid w-100"/>
                             <figcaption class="text-center"><a href="mailto:{{ principal.email }}">{{ principal.fullname }}</a>
-                                <h6 class="justify-content-center pt-5"><a href="{{ path('app_login')}}" ><button type="button" class="btn btn-outline-success">log in</button></a></h6>
+                                <h6 class="justify-content-center pt-5">
+                                    <button type="button" class="btn btn-outline-success" id="show_login_button">log in</button>
+                                </h6>
                             </figcaption>
                         </figure>
                     </div>
@@ -48,4 +51,34 @@
                 </article>
             {% endfor %}
         </div>
+    <div style="display:none; position:fixed; top:0; left:0; bottom:0; right:0; background: rgba(0, 0, 0, 0.6);z-index:1000" id="login_scherm">
+        <div style="position:absolute; width:900px; padding:20px; transform: translate(-50%, -50%);top:50%; left:50%;opacity:1.0; background: white;">
+            {{  include ('visitor/includes/login-form.incl.twig',{error:error}) }}
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+        <script>
+            function swapVisibilityLogin(){
+                let login = document.querySelector('#login_scherm')
+                login.style.display = login.style.display==='block'?'none':'block';
+                if(login.style.display==='block'){
+                    let errors = document.querySelector('#error_div');
+                    if(errors===null){
+                        document.querySelector("#inputEmail").value="";
+                        console.log(document.querySelector("#inputEmail").value)
+                    }
+                }
+
+            }
+            document.querySelector('#show_login_button').addEventListener('click',swapVisibilityLogin);
+            document.querySelector('#hide_scherm_button').addEventListener('click',swapVisibilityLogin);
+            let errors = document.querySelector('#error_div');
+            if(errors!==null){
+                swapVisibilityLogin();
+            }
+        </script>
+
+
 {% endblock %}
