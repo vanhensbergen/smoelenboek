@@ -1,0 +1,17 @@
+{% for user in users %}
+    <div class="col-xl-2 col-lg-3  col-md-4 col-sm-6 bg-light p-1">
+        <div class="w-100 h-100 border border-success rounded">
+            <article class="p-1">
+                <div class="text-center"><a href="mailto:{{ user.email }}" title="stuur {{ user.fullname }} een mailtje">{{ user.fullname }}</a></div>
+                <figure class="text-center">
+                    <img src="{{ asset(user.photo) }}" alt="{{ user.fullname }}" class="figure-img img-fluid w-100"/>
+                    <figcaption class="text-center" >
+                        {% if user.mentorclass is not null %}
+                            <div >mentor van: {{ user.mentorclass.name }}</div>
+                        {% endif %}
+                    </figcaption>
+                </figure>
+            </article>
+        </div>
+    </div>
+{% endfor %}

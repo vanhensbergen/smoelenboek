@@ -2,7 +2,7 @@
 {% block body %}
 
        <div class="row text-center border border-success"  style="background-image:url('{{asset("img/800.jpg") }}');">
-            <div class="col-lg-7 col-sm-12 resp-font" style="background: white;opacity: 0.6;">
+            <div class="col-lg-7 col-sm-12 resp-font" style="min-height:150px;background: white;opacity: 0.6;">
                 <div class=" font-weight-bold">SVJIT</div>
                 <div class=" font-weight-bold">"School Voor Jong ICT Talent"</div>
             </div>
@@ -24,32 +24,11 @@
        </div>
         <div class="row mt-2 p-2 ">
             <div class="text-center col-12  resp-big-font">DOCENTEN</div>
-            {% for teacher in teachers %}
-                <article class="col-xl-2 col-lg-3  col-md-4 col-sm-6 p-2 bg-white border border-success rounded">
-                    <div class="text-center"><a href="mailto:{{ teacher.email }}" title="stuur {{ teacher.fullname }} een mailtje">{{ teacher.fullname }}</a></div>
-                    <figure class="text-center">
-                        <img src="{{ asset(teacher.photo) }}" alt="{{ teacher.fullname }}" class="figure-img img-fluid w-100"/>
-                        <figcaption class="text-center" >
-                            {% if teacher.mentorclass is not null %}
-                                <div >mentor van: {{ teacher.mentorclass.name }}</div>
-                            {% endif %}
-                        </figcaption>
-                    </figure>
-                </article>
-            {% endfor %}
+            {{ include ('visitor/includes/usersforloop.incl.twig',{users:teachers}) }}
         </div>
         <div class="row  mt-2 p-2">
             <div class="text-center col-12 resp-big-font">ADMINISTRATIE</div>
-            {% for administrator in administrators %}
-                <article class="col-xl-2 col-lg-3  col-md-4 col-sm-6 p-2 bg-white border border-success rounded">
-                    <figure class="text-center">
-                        <img src="{{ asset(administrator.photo) }}" alt="{{ administrator.fullname }}" class="figure-img img-fluid w-100"/>
-                        <figcaption class="text-center" title="stuur {{ administrator.firstname }} een mailtje">
-                            <a href="mailto:{{ administrator.email }}">{{ administrator.fullname }}</a>
-                        </figcaption>
-                    </figure>
-                </article>
-            {% endfor %}
+            {{ include ('visitor/includes/usersforloop.incl.twig',{users:administrators}) }}
         </div>
     <div  style="display:none; position:fixed; top:0; left:0; bottom:0; right:0; background: rgba(0, 0, 0, 0.6);z-index:1000" id="login_scherm">
         <div class="border rounded border-primary" style="position:absolute; width:900px; padding:20px; transform: translate(-50%, -50%);top:50%; left:50%;opacity:1.0; background: white;">
