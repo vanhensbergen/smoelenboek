@@ -77,6 +77,10 @@ class SuperBaseController extends BaseController
             $this->addFlash('message', 'de te wijzigen gebruiker bestaat niet!');
             return $this->redirectToRoute($auth_path . '_home');
         }
+        if(!$this->isGranted("ROLE_PRINCIPAL")&&!$user->isPupil()){
+            $this->addFlash('message', 'je hebt niet het recht deze gebruiker te wijzigen');
+            return $this->redirectToRoute($auth_path . '_home');
+        }
         $form = $this->createForm(UserType::class, $user);
         if(!$this->isGranted('ROLE_PRINCIPAL')){
             $form->remove('roles');
@@ -84,39 +88,47 @@ class SuperBaseController extends BaseController
         $form->remove('password');//password kan je enkel resetten
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            /** @var UploadedFile $imgFile */
-            $imgFile = $form->get('photofile')->getData();
-            try {
-                if ($imgFile) {
-                    $originalFilename = pathinfo($imgFile->getClientOriginalName(), PATHINFO_FILENAME);
-                    $newFilename = substr(md5($originalFilename), 10) . uniqid() . '.' . $imgFile->guessExtension();
-                    $old_photo = $user->getPhotoFileName();
-                    $user->setPhoto($newFilename);
-                    $dir = $this->getParameter('app.image_directory');
-                    $imgFile->move($dir, $newFilename);
-                    if (!empty($old_photo)) {
-                        $file = $dir . '/' . $old_photo;
-                        if (file_exists($file)) {
-                            unlink($file);
+            $isMentorOfOld = $user->getMentorclass()!==null;
+            $isTeacherOfNew = $user->isTeacher();
+            if($isMentorOfOld&&!$isTeacherOfNew){
+                $className = $user->getMentorclass()->getName();
+                $this->addFlash('message',"verandering van rol is niet toegestaan. Dit teamlid is mentor van $className en de rol van docent is daartoe vereist");
+            }
+            else {
+                /** @var UploadedFile $imgFile */
+                $imgFile = $form->get('photofile')->getData();
+                try {
+                    if ($imgFile) {
+                        $originalFilename = pathinfo($imgFile->getClientOriginalName(), PATHINFO_FILENAME);
+                        $newFilename = substr(md5($originalFilename), 10) . uniqid() . '.' . $imgFile->guessExtension();
+                        $old_photo = $user->getPhotoFileName();
+                        $user->setPhoto($newFilename);
+                        $dir = $this->getParameter('app.image_directory');
+                        $imgFile->move($dir, $newFilename);
+                        if (!empty($old_photo)) {
+                            $file = $dir . '/' . $old_photo;
+                            if (file_exists($file)) {
+                                unlink($file);
+                            }
                         }
                     }
+                    //je bent alle catch van foto opslaan voorbij gekomen. nu kan je proberen om  op te slaan die user!
+                    //mogelijk nog problemen als email niet uniek is. Daartoe catch 2
+                    $class = $user->getSchoolclass();
+                    $class_id = empty($class) ? null : $class->getId();
+                    $entityManager = $this->getDoctrine()->getManager();
+                    $entityManager->persist($user);
+                    $entityManager->flush();
+                    $this->addFlash("message", "gebruiker {$user->getFullName()} succesvol gewijzigd");
+                    if (empty($class_id)) {
+                        return $this->redirectToRoute($auth_path . "_home");
+                    }
+                    return $this->redirectToRoute($auth_path . "_get_class", ['id' => $class_id]);
+                } catch (UniqueConstraintViolationException $e) {
+                    $form->get('email')->addError(new FormError("emailadres {$user->getEmail()} is helaas al in gebruik. Kies een ander"));
+                } catch (FileException $e) {
+                    $form->get('photofile')->addError(new FormError("de foto is helaas niet opgelagen; oude foto behouden"));
                 }
-                //je bent alle catch van foto opslaan voorbij gekomen. nu kan je proberen om  op te slaan die user!
-                //mogelijk nog problemen als email niet uniek is. Daartoe catch 2
-                $class = $user->getSchoolclass();
-                $class_id = empty($class) ? null : $class->getId();
-                $entityManager = $this->getDoctrine()->getManager();
-                $entityManager->persist($user);
-                $entityManager->flush();
-                $this->addFlash("message", "gebruiker {$user->getFullName()} succesvol gewijzigd");
-                if (empty($class_id)) {
-                    return $this->redirectToRoute($auth_path . "_home");
-                }
-                return $this->redirectToRoute($auth_path . "_get_class", ['id' => $class_id]);
-            } catch (UniqueConstraintViolationException $e) {
-                $form->get('email')->addError(new FormError("emailadres {$user->getEmail()} is helaas al in gebruik. Kies een ander"));
-            } catch (FileException $e) {
-                $form->get('photofile')->addError(new FormError("de foto is helaas niet opgelagen; oude foto behouden"));
             }
         }
         return $this->render($auth_path . '/new-user.html.twig', [
@@ -139,6 +151,15 @@ class SuperBaseController extends BaseController
         if(empty($user)){
             $this->addFlash('message','de te verwijderen gebruiker bestaat niet; niets veranderd in de database!');
             return $this->redirectToRoute("{$user_path}_home");
+        }
+        if($user->isTeacher()) {
+            $mentorClass = $user->getMentorclass();
+            if ($mentorClass !== null) {
+                $schoolclassName = $mentorClass->getName();
+                $mentorClassId = $mentorClass->getId();
+                $this->addFlash("message", "deze docent is mentor van $schoolclassName. Geef eerst de klas een andere mentor, daarna kan deze docent pas verwijderd worden");
+                return $this->redirectToRoute('principal_get_class',['id'=>$mentorClassId]);
+            }
         }
         $class = $user->getSchoolclass();
         $class_id = empty($class)?null:$class->getId();
