@@ -66,13 +66,14 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator implements P
         $token = new CsrfToken('authenticate', $credentials['csrf_token']);
         if (!$this->csrfTokenManager->isTokenValid($token)) {
             throw new InvalidCsrfTokenException();
+
         }
 
         $user = $this->entityManager->getRepository(User::class)->findOneBy(['email' => $credentials['email']]);
 
         if (!$user) {
             // fail authentication with a custom error
-            throw new CustomUserMessageAuthenticationException('Email could not be found.');
+            throw new CustomUserMessageAuthenticationException('De ingevoerde email is onbekend.');
         }
 
         return $user;
@@ -80,7 +81,11 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator implements P
 
     public function checkCredentials($credentials, UserInterface $user)
     {
-        return $this->passwordEncoder->isPasswordValid($user, $credentials['password']);
+        $correct = $this->passwordEncoder->isPasswordValid($user, $credentials['password']);
+        if(!$correct){
+            throw new CustomUserMessageAuthenticationException('het ingevoerde wachtwoord klopt niet.');
+        }
+        return $correct;
     }
 
     /**

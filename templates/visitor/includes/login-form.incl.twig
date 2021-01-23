@@ -1,6 +1,7 @@
 
 <div class="row justify-content-center" >
     <form action="{{ path('visitor_home') }}"  method="post" class="col-10 bg-light p-5 border border-primary rounded m-4">
+        <h1 class="h3 mb-3 font-weight-normal">AUB inloggen. Ga terug met:  <button class="btn btn-lg btn-danger mt-2 ml-1" disabled type="button">terug</button></h1>
         {% if error  %}
             <div class="alert alert-danger" id="error_div">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
         {% endif %}
@@ -10,9 +11,6 @@
                 You are logged in as {{ app.user.username }}, <a href="{{ path('app_logout') }}">Logout</a>
             </div>
         {% endif %}
-
-
-        <h1 class="h3 mb-3 font-weight-normal">AUB inloggen. Bij vergissing gebruik <button class="btn btn-lg btn-danger mt-2 ml-1" disabled type="button">terug</button></h1>
         <label for="inputEmail">Email</label>
         <input type="email" value="{{ last_username }}" placeholder="vul je emailadres van school in" name="email" id="inputEmail" class="form-control" required autofocus>
         <label for="inputPassword">Wachtwoord</label>
@@ -20,9 +18,7 @@
 
         <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
 
-        <button class="btn btn-lg btn-primary mt-2" type="submit">
-            Sign in
-        </button>
+        <button class="btn btn-lg btn-primary mt-2" type="submit">Log in</button>
         <button class="btn btn-lg btn-primary mt-2 mr-1" type="reset">Reset</button>
         <button class="btn btn-lg btn-danger mt-2 ml-1" id="hide_scherm_button" type="button">terug</button>
     </form>
