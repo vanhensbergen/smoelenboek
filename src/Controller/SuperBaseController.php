@@ -66,21 +66,12 @@ class SuperBaseController extends BaseController
 
     /**
      * @param Request $request
-     * @param int $id
+     * @param User $user
      * @return Response
      */
-    protected function updateUser(Request $request, int $id):Response
+    protected function updateUser(Request $request, User $user):Response
     {
-        $user = $this->getDoctrine()->getRepository(User::class)->find($id);
         $auth_path = $this->getAuthorisationString();
-        if (empty($user)) {
-            $this->addFlash('message', 'de te wijzigen gebruiker bestaat niet!');
-            return $this->redirectToRoute($auth_path . '_home');
-        }
-        if(!$this->isGranted("ROLE_PRINCIPAL")&&!$user->isPupil()){
-            $this->addFlash('message', 'je hebt niet het recht deze gebruiker te wijzigen');
-            return $this->redirectToRoute($auth_path . '_home');
-        }
         $form = $this->createForm(UserType::class, $user);
         if(!$this->isGranted('ROLE_PRINCIPAL')){
             $form->remove('roles');
@@ -140,27 +131,15 @@ class SuperBaseController extends BaseController
     }
 
     /**
-     * @param int $id
+     * @param User $user
      * @return Response
      * methode verondersteld het bestaan van een aantal routes zoals: admin_home of principal_home
      * of admin_get_class principal_get_class voor de 2 rollen.
+     * alle controle vooraf moet gedaan zijn, controle op rolwijziging mentordocent en admin die docent verwijderd..etc
      */
-    public function deleteUser(int $id):Response{
-        $user = $this->getDoctrine()->getRepository(User::class)->find($id);
+    public function deleteUser(User $user):Response{
+
         $user_path = $this->getAuthorisationString();
-        if(empty($user)){
-            $this->addFlash('message','de te verwijderen gebruiker bestaat niet; niets veranderd in de database!');
-            return $this->redirectToRoute("{$user_path}_home");
-        }
-        if($user->isTeacher()) {
-            $mentorClass = $user->getMentorclass();
-            if ($mentorClass !== null) {
-                $schoolclassName = $mentorClass->getName();
-                $mentorClassId = $mentorClass->getId();
-                $this->addFlash("message", "deze docent is mentor van $schoolclassName. Geef eerst de klas een andere mentor, daarna kan deze docent pas verwijderd worden");
-                return $this->redirectToRoute('principal_get_class',['id'=>$mentorClassId]);
-            }
-        }
         $class = $user->getSchoolclass();
         $class_id = empty($class)?null:$class->getId();
         $photoName = $user->getPhotoFileName();

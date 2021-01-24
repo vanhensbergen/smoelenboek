@@ -100,7 +100,16 @@ namespace App\Controller {
          * @return Response
          */
         public function updatePupilAction(Request $request,int $id):Response{
-            return $this->updateUser($request,$id);
+            $user = $this->getDoctrine()->getRepository(User::class)->find($id);
+            if (empty($user)) {
+                $this->addFlash('message', 'de te wijzigen gebruiker bestaat niet!');
+                return $this->redirectToRoute( 'admin_home');
+            }
+            if(!$user->isPupil()){
+                $this->addFlash('message', 'je hebt niet het recht deze gebruiker te wijzigen');
+                return $this->redirectToRoute('admin_home');
+            }
+            return $this->updateUser($request,$user);
         }
 
 
@@ -110,7 +119,16 @@ namespace App\Controller {
          * @return Response
          */
         public function deleteUserAction(int $id):Response{
-            return $this->deleteUser($id);
+            $user = $this->getDoctrine()->getRepository(User::class)->find($id);
+            if(empty($user)){
+                $this->addFlash('message','de te verwijderen gebruiker bestaat niet; niets veranderd in de database!');
+                return $this->redirectToRoute("admin_home");
+            }
+            if(!$user->isPupil()) {
+                $this->addFlash('message', 'je hebt niet het recht deze gebruiker te wijzigen');
+                return $this->redirectToRoute('admin_home');
+            }
+            return $this->deleteUser($user);
         }
 
         /**

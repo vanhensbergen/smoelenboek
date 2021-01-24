@@ -67,7 +67,12 @@ namespace App\Controller {
          * @return Response
          */
         public function principalUpdateUserAction(Request $request, int $id):Response{
-            return $this->updateUser($request,$id);
+            $user = $this->getDoctrine()->getRepository(User::class)->find($id);
+            if (empty($user)) {
+                $this->addFlash('message', 'de te wijzigen gebruiker bestaat niet!');
+                return $this->redirectToRoute('principal_home');
+            }
+            return $this->updateUser($request,$user);
         }
 
         /**
@@ -86,7 +91,21 @@ namespace App\Controller {
          * @return Response
          */
         public function principalDeleteUserAction(int $id):Response{
-            return $this->deleteUser($id);
+            $user = $this->getDoctrine()->getRepository(User::class)->find($id);
+            if(empty($user)){
+                $this->addFlash('message','de te verwijderen gebruiker bestaat niet; niets veranderd in de database!');
+                return $this->redirectToRoute("principal_home");
+            }
+            if($user->isTeacher()) {
+                $mentorClass = $user->getMentorclass();
+                if ($mentorClass !== null) {
+                    $mentorClassName = $mentorClass->getName();
+                    $mentorClassId = $mentorClass->getId();
+                    $this->addFlash("message", "deze docent is mentor van $mentorClassName. Geef eerst de klas een andere mentor, daarna kan deze docent pas verwijderd worden");
+                    return $this->redirectToRoute('principal_get_class',['id'=>$mentorClassId]);
+                }
+            }
+            return $this->deleteUser($user);
         }
         /**
          * @Route("/principal/class/{id}", name="principal_get_class", requirements={"id"="\d+"})
