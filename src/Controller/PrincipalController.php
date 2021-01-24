@@ -6,8 +6,6 @@ namespace App\Controller {
 
     use App\Entity\Schoolclass;
     use App\Entity\User;
-    use App\Form\UserType;
-    use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
     use Symfony\Component\HttpFoundation\Request;
     use Symfony\Component\HttpFoundation\Response;
     use Symfony\Component\Routing\Annotation\Route;
@@ -67,7 +65,7 @@ namespace App\Controller {
          * @return Response
          */
         public function principalUpdateUserAction(Request $request, int $id):Response{
-            $user = $this->getDoctrine()->getRepository(User::class)->find($id);
+            $user = $this->findUserFromId($id);
             if (empty($user)) {
                 $this->addFlash('message', 'de te wijzigen gebruiker bestaat niet!');
                 return $this->redirectToRoute('principal_home');
@@ -82,7 +80,12 @@ namespace App\Controller {
          * @return Response
          */
         public function principalResetUserAction(Request $request, int $id):Response{
-            //TODO
+            $user = $this->findUserFromId($id);
+            if(empty($user)){
+                $this->addFlash('message','deze gebruiker bestaat niet in de database!');
+                return $this->redirectToRoute("principal_home");
+            }
+            return $this->resetPasswordAction($user);
         }
 
         /**
@@ -91,7 +94,7 @@ namespace App\Controller {
          * @return Response
          */
         public function principalDeleteUserAction(int $id):Response{
-            $user = $this->getDoctrine()->getRepository(User::class)->find($id);
+            $user = $this->findUserFromId($id);
             if(empty($user)){
                 $this->addFlash('message','de te verwijderen gebruiker bestaat niet; niets veranderd in de database!');
                 return $this->redirectToRoute("principal_home");
@@ -133,7 +136,6 @@ namespace App\Controller {
                    return  $this->redirectToRoute('principal_home');
             }
         }
-
 
     }
 }

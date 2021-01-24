@@ -42,21 +42,11 @@ namespace App\Controller {
         /**
          * beschrijft de afhandeling in abstracte termen van een actie die het wachtwoord reset naar qwerty.
          * Veronderstelt dat er een home directory (admin_home, pupil_home etc) is.
-         * @param int $id
+         * @param User $user
          * @return Response
          */
-        protected function resetPasswordAction(int $id):Response{
-            $user = $this->getDoctrine()->getRepository(User::class)->find($id);
+        protected function resetPasswordAction(User $user):Response{
             $authorization_path = $this->getAuthorisationString();
-            if(empty($user)){
-                $this->addFlash('message','deze gebruiker bestaat niet in de database!');
-                return $this->redirectToRoute("{$authorization_path}_home");
-            }
-            $isPupil = $user->isPupil();
-            if(($authorization_path==='admin'||$authorization_path==='teacher')&&!$isPupil){
-                $this->addFlash('message','deze gebruiker mag je niet resetten');
-                return $this->redirectToRoute("{$authorization_path}_home");
-            }
             $user->setPassword($this->encode('qwerty'));
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($user);
@@ -162,6 +152,14 @@ namespace App\Controller {
             $students = $class->getUsers();
             $index = $students->indexOf($student);
             return $students->get($index-1);
+        }
+        /**
+         * @param int $id
+         * @return User|null
+         */
+        protected function findUserFromId(int $id):?User
+        {
+            return $this->getDoctrine()->getRepository(User::class)->find($id);
         }
 
     }

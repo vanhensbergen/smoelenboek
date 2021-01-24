@@ -32,7 +32,7 @@
         </div>
         {% if next is not null %}
             <a class="my-auto col-2" href="{{ path('teacher_get_remarks',{'student_id':next.id}) }}" title="ga naar {{ next.fullname }}" >
-                <button type="button" class="btn btn-outline-primary"><img src="{{ asset('img/next.png') }}" class="figure-img img-fluid w-75"/></button>
+                <button type="button" class="btn btn-outline-primary "><img src="{{ asset('img/next.png') }}" class="figure-img img-fluid w-75"/></button>
             </a>
         {% else %}
             <span class="my-auto col-2 border rounded border-primary ml-2"> <img src="{{ asset('img/next.png') }}" class="figure-img img-fluid w-75 p-2"/></span>

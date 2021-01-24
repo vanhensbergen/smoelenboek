@@ -127,10 +127,18 @@ namespace App\Controller {
          */
         public function resetMentorStudentAction(int $id):Response{
             $user = $this->getDoctrine()->getRepository(User::class)->find($id);
+            if(empty($user)){
+                $this->addFlash('message','deze gebruiker bestaat niet in de database!');
+                return $this->redirectToRoute("teacher_home");
+            }
+            if(!$user->isPupil()){
+                $this->addFlash('message','deze gebruiker mag je niet resetten');
+                return $this->redirectToRoute("teacher_home");
+            }
             $class = $user->getSchoolclass();
             $mentor = empty($class)?null:$class->getMentor();
             if(!empty($mentor)&&$mentor===$this->getUser()){
-                return $this->resetPasswordAction($id);
+                return $this->resetPasswordAction($user);
             }
             $this->addFlash('message', "je bent geen mentor van de leerling, reset niet toegestaan");
             return $this->redirectToRoute('teacher_home');
