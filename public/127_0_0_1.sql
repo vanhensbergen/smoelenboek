@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Gegenereerd op: 23 jan 2021 om 22:57
+-- Gegenereerd op: 24 jan 2021 om 23:06
 -- Serverversie: 10.4.16-MariaDB
 -- PHP-versie: 7.4.12
 
@@ -108,7 +108,7 @@ INSERT INTO `studentremarks` (`id`, `author_id`, `student_id`, `title`, `content
 (10, 6, 89, 'hulp mijdend gedrag', 'Jacob kan het allemaal niet bijbenen. Het niveau waarop hij moet werken zit ver boven zijn capaciteiten. Hij hoort eigenlijk BOL3 te doen. Hij wil dan ook geen ondersteuning accepteren. Hij begint wel lichtelijk agressief gedrag te vertonen. Dat baat zorgen', '2021-01-06'),
 (11, 6, 112, 'hinderlijk niet serieus gedrag', 'Jordy is een paar jaartjes ouder dan zijn klasgenoten en probeert excessief vrolijk gedrag te vertonen. Accepteer dat niet, wijs hem erop dat zijn gedrag storend werkt', '2021-01-06'),
 (13, 8, 93, 'Gedrag in de klas', 'Ian heeft een positive invloed op zijn omgeving. Hij poogt bewust hulpvaardig te zijn. Probeert kennis bij te brengen bij zijn mede studenten en draagt bij aan een positief studieklimaat. Gesprekken met hem hebben geholpen.', '2021-01-08'),
-(14, 6, 80, 'In vertrouwen medegedeeld', 'Socrates ondervindt grote druk van Giovanni le Grand. Hij wordt op het schoolplein en in de klas getreiterd. Laatst is zijn wachtwoord voor zijn PC gewijzigd. Het pesten is subtiel maar laakbaar. Hou voorlopig en oogje in het zeil.', '2021-01-10'),
+(14, 6, 80, 'In vertrouwen medegedeeld', 'Socrates ondervindt grote druk van Giovanni le Grand. Hij wordt gedurende de pauzes en in de klas getreiterd. Laatst is zijn wachtwoord voor zijn PC gewijzigd. Het pesten is subtiel maar laakbaar. Houd voorlopig een oogje in het zeil, s.v.p en informeer me bij plaaggedrag Gio.', '2021-01-10'),
 (15, 6, 77, 'punt van aandacht collega\'s!', 'Rashid heeft de overstap gemaakt vanaf BOL3 naar de opleiding AO. Hij heeft grote moeite om mee te komen. Hij is niet gewend om zelf na te denken. Veelal heeft hij geleerd na te doen. Dat kan niet bij AO. Geef hem extra aandacht met accent op leerstrategieën. Hij is van goede wil.', '2021-01-18'),
 (16, 6, 145, 'thuissituatie: scheiding ouders', 'Na een onrustige periode met veel ruzie thuis, hebben de ouders besloten te gaan scheiden. De vader van Romano is vertrokken.Dit geeft rust, Romano hoeft niet mer te kiezen tussen ouders en voelt minder druk om de toestand thuis te pacificeren. Hou een positief oogje op hem.', '2021-01-18');
 
@@ -140,7 +140,7 @@ INSERT INTO `users` (`id`, `schoolclass_id`, `email`, `roles`, `password`, `firs
 (3, NULL, 's.bliemert@svjit.nl', '[\"ROLE_PRINCIPAL\"]', '$argon2id$v=19$m=65536,t=4,p=1$OXA3Ym5LNDg1L0tmUFVCZA$WoJhkHD43IiF9GFwl06ySVp/9Miu4KJ5SRb1DnNQQ4E', 'Sebastiaan', NULL, 'Bliemert', 's.bliemert.jpg', 'Ik ben de directeur van SVJIT en ik heet u van harte welkom op onze opleiding voor enthousiaste jonge en gemotiveerde programmeurs.<br/> \r\nOnze docenten gaan voor kwaliteit; onze studenten ook!\r\n<p style=\"font-size:1.5em\">Ik heet u welkom!</p>'),
 (4, NULL, 'b.van.halem@svjit.nl', '[\"ROLE_TEACHER\"]', '$argon2id$v=19$m=65536,t=4,p=1$cG9JYkRIblhBcjBjazIwTg$mMzdfUZThewJHeU/KX3q1SjnQft7fhrd47oZ41zau8I', 'Bart', 'van', 'Halem', 'BHalem.jpg', NULL),
 (5, NULL, 'r.van.rossum@svjit.nl', '[\"ROLE_TEACHER\"]', '$argon2id$v=19$m=65536,t=4,p=1$WUZ5a1gwN1NsOWRvWWZkQQ$4v7BsUYl8D5WvpB6x+fADQpQR/GmkoYMyxJsP2kCSDI', 'Roel', 'van', 'Rossum', 'ROssem.jpg', NULL),
-(6, NULL, 'a.van.hensbergen@svjit.nl', '[\"ROLE_TEACHER\"]', '$argon2id$v=19$m=65536,t=4,p=1$RlNPWFJZclVSUTlsLlVlVg$8XFovftdwXUZuflevgh+9yr6+/h+njyr+ZqNsxlKV78', 'Anton', 'van', 'Hensbergen', '1368653662.jpg', 'Beste leerlingen, jullie zullen 25 februari het examen K2 moeten gaan doen. Ik verwacht dat jullie allemaal een korte zwakte en sterkte analyse in de database plaatsen, maximaal 300 woorden. Deze analyse zal ik gebruiken in het mentorgesprek van komende week. We zullen dan samen afspraken vastleggen die de kans op succes voor K2 vergroten. Ga nu je analyse invullen. Ik zie je binnenkort; jouw analyse is nodig voor het gesprek! Wees eerlijk en zet concrete zaken neer. Het gaat om jouw toekomst!'),
+(6, NULL, 'a.van.hensbergen@svjit.nl', '[\"ROLE_TEACHER\"]', '$argon2id$v=19$m=65536,t=4,p=1$MGtuc0NyVGM5MVlnRm91MQ$8zu9PUQBJQblhaAHO22DdP1e9xDUq1YEHMlA/xv94l4', 'Anton', 'van', 'Hensbergen', '1368653662.jpg', 'Beste leerlingen, jullie zullen 25 februari het examen K2 moeten gaan doen. Ik verwacht dat jullie allemaal een korte zwakte en sterkte analyse in de database plaatsen, maximaal 300 woorden. Deze analyse zal ik gebruiken in het mentorgesprek van komende week. We zullen dan samen afspraken vastleggen die de kans op succes voor K2 vergroten. Ga nu je analyse invullen. Ik zie je binnenkort; jouw analyse is nodig voor het gesprek! Wees eerlijk en zet concrete zaken neer. Het gaat om jouw toekomst!'),
 (7, NULL, 'w.stolk@svjit.nl', '[\"ROLE_TEACHER\"]', '$argon2id$v=19$m=65536,t=4,p=1$UnI2TExFS1JYc01sZFJjeQ$nbzwyRPlC/7oYf+ANshoeVgmga2R2FuooAL/sHeP5+g', 'Wim', NULL, 'Stolk', 'Stolk.jpg', NULL),
 (8, NULL, 'h.kool@svjit.nl', '[\"ROLE_TEACHER\"]', '$argon2id$v=19$m=65536,t=4,p=1$NU55UjVRYjAucDlQVmdvSQ$D3z+XFAOZ/khXlWRpqIjQjfC/j3lS480ADF/4HXenqU', 'Hanneke', NULL, 'Kool', 'hanneke.png', 'Nog even doorzetten. Het examen k2 komt er aan. Ga er voor...  Ik wil graag een laatste update/analyse van je eigen sterke en zwakke punten. Zet die analyse in de database. Kunnen we ons aankomend mentorgesprek mee nemen. Dit klinkt vrijwillig ... maar je analyse plaatsen is verplicht!  '),
 (9, NULL, 's.bechoe@svjit.nl', '[\"ROLE_TEACHER\"]', '$argon2id$v=19$m=65536,t=4,p=1$ZnYxY3Q1cWtRL1VYVUZPbw$rf8LEJrn/JmVEtn3E1yfLKrVPI1IuF61O8Ff8C7TkNg', 'Saphna', NULL, 'Bechoe', 's.bechoe.png', NULL),
@@ -258,7 +258,8 @@ INSERT INTO `users` (`id`, `schoolclass_id`, `email`, `roles`, `password`, `firs
 (158, 15, 'l.witkamp@svjit.nl', '[\"ROLE_PUPIL\"]', '$argon2id$v=19$m=65536,t=4,p=1$TFRuZ2JPM0duWjNsZmhrMg$3o12dH4QFiJXQTGu3w9V4VhBU+X73ueoOAx1ByBS2Eo', 'Leroy', NULL, 'Witkamp', 'af20da75869ad860c03bd96004385713443.jpeg', NULL),
 (162, NULL, 'p.zwinkels@svjit.nl', '[\"ROLE_PUPIL\"]', '$argon2id$v=19$m=65536,t=4,p=1$bGlBaUk1QjIwbTJUSllhLw$AUZI12VQKpR7O/smiGCz2rQfaMn9+4BuG1c01a5Bp0o', 'Pim', NULL, 'Zwinkels', '3d1ae0820f0b1fd51fa5126004ad51eced3.jpeg', NULL),
 (163, 16, 'a.terlouw@svjit.nl', '[\"ROLE_PUPIL\"]', '$argon2id$v=19$m=65536,t=4,p=1$Wnp6QkxKQTlnVmhLVmFMOA$BH0F9SXnwyHMn+ZSGrW5siefHoXSu86FyIBlrvufwnk', 'Arjen', NULL, 'Terlouw', '631fd6ef9d5e37297ef1126004b00e8ae4a.jpeg', NULL),
-(164, NULL, 'j.kubicna@svjit.nl', '[\"ROLE_ADMIN\"]', '$argon2id$v=19$m=65536,t=4,p=1$eHEzRUpEbjNNOS94U1Z2bg$WDuCOeOGIVKVZ7yoSvL/KrNG3rs6NoXA4aSc5/OAgc4', 'Jana', NULL, 'Kubicna', '0833316d1daa255e206a36600c92ef72f01.jpeg', NULL);
+(164, NULL, 'j.kubicna@svjit.nl', '[\"ROLE_ADMIN\"]', '$argon2id$v=19$m=65536,t=4,p=1$eHEzRUpEbjNNOS94U1Z2bg$WDuCOeOGIVKVZ7yoSvL/KrNG3rs6NoXA4aSc5/OAgc4', 'Jana', NULL, 'Kubicna', '0833316d1daa255e206a36600c92ef72f01.jpeg', NULL),
+(165, NULL, 'b.alleblas@svjit.nl', '[\"ROLE_ADMIN\"]', '$argon2id$v=19$m=65536,t=4,p=1$NGMyL3ZzR3h4L0g5ektiaw$k++P8OrLAlzQMiGQaSsxL0YvVlRIO5jMnhUmvyHFTMY', 'Bianca', NULL, 'Alleblas', '11d7d5825fcead8e6f752d600deec98d357.jpeg', NULL);
 
 --
 -- Indexen voor geëxporteerde tabellen
@@ -314,7 +315,7 @@ ALTER TABLE `studentremarks`
 -- AUTO_INCREMENT voor een tabel `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=165;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=166;
 
 --
 -- Beperkingen voor geëxporteerde tabellen
