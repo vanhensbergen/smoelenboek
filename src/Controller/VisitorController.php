@@ -16,7 +16,7 @@ namespace App\Controller {
          * @Route("/", name="visitor_home")
          * @param AuthenticationUtils $authenticationUtils
          * @return Response
-         * deze route wordt ook gebruikt om in te loggen. Het formulier wordt via javasxript actief gemaakt.
+         * deze route wordt ook gebruikt om in te loggen. Het formulier wordt via javascript actief gemaakt.
          */
         public function defaultAction(AuthenticationUtils $authenticationUtils):Response{
             $principal=$this->getDoctrine()->getRepository(User::class)->findPrincipal();

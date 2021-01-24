@@ -144,12 +144,12 @@ namespace App\Controller {
             $user = $this->findFromId(User::class,$id);
             if(empty($user)){
                 $this->addFlash('message','deze gebruiker bestaat niet in de database!');
-                return $this->redirectToRoute("{$authorization_path}_home");
+                return $this->redirectToRoute("admin_home");
             }
 
             if(!$user->isPupil()){
                 $this->addFlash('message','deze gebruiker mag je niet resetten');
-                return $this->redirectToRoute("{$authorization_path}_home");
+                return $this->redirectToRoute("admin_home");
             }
             return $this->resetPasswordAction($user);
         }
