@@ -15,13 +15,13 @@ use Symfony\Component\HttpFoundation\Response;
 
 class SuperBaseController extends BaseController
 {
-    protected function addUser(Request $request, bool $isPupil=true)
+    protected function addUser(Request $request)
     {
         $user = new User();
-        $path = $this->getAuthorisationString();
-        $header = $isPupil ? 'gegevens van een nieuwe leerling' : 'gegevens van een nieuwe schoolgebruiker';
+        $author = $this->getAuthorisationString();
+        $header = $author==='admin' ? 'gegevens van een nieuwe leerling' : 'gegevens van een nieuwe schoolgebruiker';
         $form = $this->createForm(UserType::class, $user);
-        if ($isPupil) $form->remove('roles');
+        if ($author==='admin') $form->remove('roles');
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             /** @var UploadedFile $imgFile */
@@ -39,7 +39,7 @@ class SuperBaseController extends BaseController
                     $imgFile->move($dir, $newFilename);
                 }
                 //als je hier voorbij bent is alles gelukt dus opslaan in db
-                if ($isPupil) $user->setRoles(["ROLE_PUPIL"]);
+                if ($author==='admin') $user->setRoles(["ROLE_PUPIL"]);
                 $user->setPassword($this->encode($user->getPassword()));
                 $entityManager = $this->getDoctrine()->getManager();
                 $entityManager->persist($user);
@@ -47,9 +47,9 @@ class SuperBaseController extends BaseController
                 $this->addFlash("message", "nieuwe gebruiker {$user->getFullName()} succesvol toegevoegd");
                 $class = $user->getSchoolclass();
                 if (empty($class)) {
-                    return $this->redirectToRoute($path . "_home");
+                    return $this->redirectToRoute($author . "_home");
                 }
-                return $this->redirectToRoute($path . "_get_class", ['id' => $class->getId()]);
+                return $this->redirectToRoute($author . "_get_class", ['id' => $class->getId()]);
             } catch (UniqueConstraintViolationException $e) {
                 $form->get('email')->addError(new FormError("emailadres {$user->getEmail()} is helaas al in gebruik. Kies een ander"));
             }
@@ -57,7 +57,7 @@ class SuperBaseController extends BaseController
                 $form->get('photofile')->addError(new FormError("Helaas is de foto niet opgeslagen op de server, probeer nog eens"));
             }
         }
-        return $this->render("$path/new-user.html.twig", [
+        return $this->render("$author/new-user.html.twig", [
             'header'=>$header,
             'form' => $form->createView(),
             'classes'=>$this->getClasses(),

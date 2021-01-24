@@ -14,7 +14,7 @@ namespace App\Controller {
     use Symfony\Component\HttpFoundation\Response;
     use Symfony\Component\Routing\Annotation\Route;
 
-    class AdministratorController extends SuperBaseController
+    final class AdministratorController extends SuperBaseController
     {
 
         /**
@@ -37,7 +37,11 @@ namespace App\Controller {
          * @return Response
          */
         public function changeMentorAction(Request $request, int $class_id):Response{
-            $class1 = $this->getDoctrine()->getRepository(Schoolclass::class)->find($class_id);
+            $class1 = $this->findFromId(Schoolclass::class,$class_id);
+            if($class1===null){
+                $this->addFlash('message','de klas waarvan je de mentor wil wijzigen bestaat niet');
+                return $this->redirectToRoute("admin_home");
+            }
             $form = $this->createForm(ChangeMentorFormType::class);
             $form->handleRequest($request);
                 if($form->isSubmitted()&&$form->isValid()){
@@ -100,7 +104,7 @@ namespace App\Controller {
          * @return Response
          */
         public function updatePupilAction(Request $request,int $id):Response{
-            $user = $this->findUserFromId($id);
+            $user = $this->findFromId(User::class,$id);
             if (empty($user)) {
                 $this->addFlash('message', 'de te wijzigen gebruiker bestaat niet!');
                 return $this->redirectToRoute( 'admin_home');
@@ -119,7 +123,7 @@ namespace App\Controller {
          * @return Response
          */
         public function deleteUserAction(int $id):Response{
-            $user = $this->findUserFromId($id);
+            $user = $this->findFromId(User::class,$id);
             if(empty($user)){
                 $this->addFlash('message','de te verwijderen gebruiker bestaat niet; niets veranderd in de database!');
                 return $this->redirectToRoute("admin_home");
@@ -137,7 +141,7 @@ namespace App\Controller {
          * @return Response
          */
         public function adminResetPasswordAction(int $id):Response{
-            $user = $this->findUserFromId($id);
+            $user = $this->findFromId(User::class,$id);
             if(empty($user)){
                 $this->addFlash('message','deze gebruiker bestaat niet in de database!');
                 return $this->redirectToRoute("{$authorization_path}_home");

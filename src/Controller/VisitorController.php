@@ -10,7 +10,7 @@ namespace App\Controller {
     use Symfony\Component\Routing\Annotation\Route;
     use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
-    class VisitorController extends AbstractController
+    final class VisitorController extends AbstractController
     {
         /**
          * @Route("/", name="visitor_home")

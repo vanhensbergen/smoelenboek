@@ -1,10 +1,12 @@
 {% for user in users%}
-    <div class="col-xl-2 col-lg-3  col-md-4 col-sm-6 bg-light border border-success">
-        <article class="text-center row p-1">
-            <figure class="figure w-100">
-                <img src="{{ asset(user.photo) }}" class=" rounded figure-img img-fluid w-100" alt="{{ user.fullname }}"/>
-                <figcaption class="figure-caption"><a href="mailto:{{ user.email }}">{{ user.fullname }}</a></figcaption>
-            </figure>
-        </article>
+    <div class="col-xl-2 col-lg-3  col-md-4 col-sm-6 bg-light p-1">
+        <div class="w-100 h-100 border border-success rounded">
+            <article class="p-1">
+                <figure class="figure w-100">
+                    <img src="{{ asset(user.photo) }}" class=" rounded figure-img img-fluid w-100" alt="{{ user.fullname }}"/>
+                    <figcaption class="figure-caption"><a href="mailto:{{ user.email }}">{{ user.fullname }}</a></figcaption>
+                </figure>
+            </article>
+        </div>
     </div>
 {% endfor %}

@@ -7,12 +7,7 @@ namespace App\Controller {
     use App\Entity\Schoolclass;
     use App\Entity\User;
     use App\Form\ChangePasswordType;
-    use App\Form\UserType;
-    use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
     use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-    use Symfony\Component\Form\FormError;
-    use Symfony\Component\HttpFoundation\File\Exception\FileException;
-    use Symfony\Component\HttpFoundation\File\UploadedFile;
     use Symfony\Component\HttpFoundation\Request;
     use Symfony\Component\HttpFoundation\Response;
     use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
@@ -153,13 +148,29 @@ namespace App\Controller {
             $index = $students->indexOf($student);
             return $students->get($index-1);
         }
+
         /**
+         * @param string $className
          * @param int $id
-         * @return User|null
+         * @return object
+         * @throws \Exception
          */
-        protected function findUserFromId(int $id):?User
-        {
-            return $this->getDoctrine()->getRepository(User::class)->find($id);
+        protected function findFromId(string $className,int $id):?object{
+            if(!class_exists($className)){
+                throw new \Exception("de door jou gebruikte entiteit $className bestaat niet");
+            }
+            return $this->getDoctrine()->getRepository($className)->find($id);
+        }
+
+        /**
+         * @param string $className
+         * @return array
+         */
+        protected function findAll(string $className):array{
+            if(!class_exists($className)) {
+                throw new \Exception("de door jou gebruikte entiteit $className bestaat niet");
+            }
+            return $this->getDoctrine()->getRepository($className)->findAll();
         }
 
     }

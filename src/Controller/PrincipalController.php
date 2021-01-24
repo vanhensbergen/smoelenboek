@@ -3,14 +3,12 @@
 
 namespace App\Controller {
 
-
-    use App\Entity\Schoolclass;
     use App\Entity\User;
     use Symfony\Component\HttpFoundation\Request;
     use Symfony\Component\HttpFoundation\Response;
     use Symfony\Component\Routing\Annotation\Route;
 
-    class PrincipalController extends SuperBaseController
+    final class PrincipalController extends SuperBaseController
     {
 
         /**
@@ -20,7 +18,7 @@ namespace App\Controller {
          */
         private function show(array $users,string $type): Response
         {
-            $classes = $this->getDoctrine()->getRepository(Schoolclass::class)->findAll();
+            $classes = $this->getClasses();
             return $this->render('principal/default.html.twig',
                 ['users' => $users,
                     'classes' => $classes,
@@ -65,7 +63,7 @@ namespace App\Controller {
          * @return Response
          */
         public function principalUpdateUserAction(Request $request, int $id):Response{
-            $user = $this->findUserFromId($id);
+            $user = $this->findFromId(User::class,$id);
             if (empty($user)) {
                 $this->addFlash('message', 'de te wijzigen gebruiker bestaat niet!');
                 return $this->redirectToRoute('principal_home');
@@ -80,7 +78,7 @@ namespace App\Controller {
          * @return Response
          */
         public function principalResetUserAction(Request $request, int $id):Response{
-            $user = $this->findUserFromId($id);
+            $user = $this->findFromId(User::class,$id);
             if(empty($user)){
                 $this->addFlash('message','deze gebruiker bestaat niet in de database!');
                 return $this->redirectToRoute("principal_home");
@@ -94,7 +92,7 @@ namespace App\Controller {
          * @return Response
          */
         public function principalDeleteUserAction(int $id):Response{
-            $user = $this->findUserFromId($id);
+            $user = $this->findFromId(User::class,$id);
             if(empty($user)){
                 $this->addFlash('message','de te verwijderen gebruiker bestaat niet; niets veranderd in de database!');
                 return $this->redirectToRoute("principal_home");
@@ -127,10 +125,9 @@ namespace App\Controller {
          */
         public function createNewUserAction(Request $request,string $type):Response{
             switch($type){
-                case "pupil":
-                    return $this->addUser($request, true);
                 case "personel":
-                    return $this->addUser($request,false);
+                case "pupil":
+                    return $this->addUser($request);
                 default:
                     $this->addFlash('message','niet knoeien op de urlbalk svp');
                    return  $this->redirectToRoute('principal_home');

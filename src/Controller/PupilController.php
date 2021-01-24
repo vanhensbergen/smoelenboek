@@ -8,7 +8,7 @@ namespace App\Controller {
     use Symfony\Component\HttpFoundation\Response;
     use Symfony\Component\Routing\Annotation\Route;
 
-    class PupilController extends BaseController{
+    final class PupilController extends BaseController{
 
 
         /**

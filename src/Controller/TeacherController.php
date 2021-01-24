@@ -9,14 +9,13 @@ namespace App\Controller {
     use Symfony\Component\HttpFoundation\Response;
     use Symfony\Component\Routing\Annotation\Route;
 
-    class TeacherController extends BaseController
+    final class TeacherController extends BaseController
     {
         /**
          * @Route("/teacher" , name="teacher_home")
          * @return Response
          */
         public function defaultAction():Response{
-
             $myClass = $this->getUser()->getMentorclass();
             $classes = $this->getClasses();
             return $this->render('teacher/default.html.twig',[
@@ -80,7 +79,7 @@ namespace App\Controller {
         }
 
         private function studentRemarksViewForTeacher(int $student_id, array $form_data=[]):Response{
-            $student = $this->getDoctrine()->getRepository(User::class)->find($student_id);
+            $student = $this->findFromId(User::class,$student_id);
             $remarks = $student->getRemarksForStudent();
             $classes = $this->getClasses();
             $next = $this->findNextInClass($student);
@@ -110,7 +109,7 @@ namespace App\Controller {
             $extraData = ['new_form'=>$form->createView()];
             if ($form->isSubmitted() && $form->isValid())
             {
-                $student = $this->getDoctrine()->getRepository(User::class)->find($student_id);
+                $student = $this->findFromId(User::class,$student_id);
                 $remark->setStudent($student);
                 $remark->setAuthor($this->getUser());
                 $today = new \DateTime("NOW");
@@ -126,7 +125,7 @@ namespace App\Controller {
          * @Route("teacher/resetpassword/{id}", name="teacher_reset_mentor_student", requirements={"id"="\d+"})
          */
         public function resetMentorStudentAction(int $id):Response{
-            $user = $this->getDoctrine()->getRepository(User::class)->find($id);
+            $user = $this->findFromId(User::class,$id);
             if(empty($user)){
                 $this->addFlash('message','deze gebruiker bestaat niet in de database!');
                 return $this->redirectToRoute("teacher_home");
@@ -153,7 +152,11 @@ namespace App\Controller {
          */
         public function updateStudentRemarkByTeacherAction(Request $request, $id):Response
         {
-            $remark = $this->getDoctrine()->getRepository(StudentRemark::class)->find($id);
+            $remark = $this->findFromId(StudentRemark::class,$id);
+            if($remark===null){
+                $this->addFlash('message',"de opmerking die je wilt wijzigen bestaat niet");
+                return $this->redirectToRoute('teacher_home');
+            }
             $author = $remark->getAuthor();
             if($author!==$this->getUser()){
                 $this->addFlash('message',"bewerking niet toegestaan: je bent niet de ateur dat is {$author->getFullname()}");
@@ -179,7 +182,7 @@ namespace App\Controller {
          */
         public function deleteStudentRemarkByTeacherAction(int $id):Response
         {
-            $remark = $this->getDoctrine()->getRepository(StudentRemark::class)->find($id);
+            $remark = $this->findFromId(StudentRemark::class,$id);
             $student_id = $remark->getStudent()->getId();
             $author = $remark->getAuthor();
             if($author===$this->getUser())
