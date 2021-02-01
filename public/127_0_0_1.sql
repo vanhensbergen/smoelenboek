@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Gegenereerd op: 24 jan 2021 om 23:06
+-- Gegenereerd op: 01 feb 2021 om 21:07
 -- Serverversie: 10.4.16-MariaDB
 -- PHP-versie: 7.4.12
 
@@ -110,7 +110,8 @@ INSERT INTO `studentremarks` (`id`, `author_id`, `student_id`, `title`, `content
 (13, 8, 93, 'Gedrag in de klas', 'Ian heeft een positive invloed op zijn omgeving. Hij poogt bewust hulpvaardig te zijn. Probeert kennis bij te brengen bij zijn mede studenten en draagt bij aan een positief studieklimaat. Gesprekken met hem hebben geholpen.', '2021-01-08'),
 (14, 6, 80, 'In vertrouwen medegedeeld', 'Socrates ondervindt grote druk van Giovanni le Grand. Hij wordt gedurende de pauzes en in de klas getreiterd. Laatst is zijn wachtwoord voor zijn PC gewijzigd. Het pesten is subtiel maar laakbaar. Houd voorlopig een oogje in het zeil, s.v.p en informeer me bij plaaggedrag Gio.', '2021-01-10'),
 (15, 6, 77, 'punt van aandacht collega\'s!', 'Rashid heeft de overstap gemaakt vanaf BOL3 naar de opleiding AO. Hij heeft grote moeite om mee te komen. Hij is niet gewend om zelf na te denken. Veelal heeft hij geleerd na te doen. Dat kan niet bij AO. Geef hem extra aandacht met accent op leerstrategieën. Hij is van goede wil.', '2021-01-18'),
-(16, 6, 145, 'thuissituatie: scheiding ouders', 'Na een onrustige periode met veel ruzie thuis, hebben de ouders besloten te gaan scheiden. De vader van Romano is vertrokken.Dit geeft rust, Romano hoeft niet mer te kiezen tussen ouders en voelt minder druk om de toestand thuis te pacificeren. Hou een positief oogje op hem.', '2021-01-18');
+(16, 6, 145, 'thuissituatie: scheiding ouders', 'Na een onrustige periode met veel ruzie thuis, hebben de ouders besloten te gaan scheiden. De vader van Romano is vertrokken.Dit geeft rust, Romano hoeft niet mer te kiezen tussen ouders en voelt minder druk om de toestand thuis te pacificeren. Hou een positief oogje op hem.', '2021-01-18'),
+(17, 6, 58, 'heet gebakerd gedrag', 'Stephan heeft kwaliteiten als programmeur, hij is echter niet benaderbaar. Elk gesprek om inhoudelijk te komen tot verbetering van coderingsstijl brengt het risico van emotionele uitbarstingen met zich mee. De enige persoon die Stephan kan temperen is Danny. Wellicht raadzaam om met Stephan een traject van conflictbeheersing in te gaan.', '2021-01-25');
 
 -- --------------------------------------------------------
 
@@ -259,7 +260,8 @@ INSERT INTO `users` (`id`, `schoolclass_id`, `email`, `roles`, `password`, `firs
 (162, NULL, 'p.zwinkels@svjit.nl', '[\"ROLE_PUPIL\"]', '$argon2id$v=19$m=65536,t=4,p=1$bGlBaUk1QjIwbTJUSllhLw$AUZI12VQKpR7O/smiGCz2rQfaMn9+4BuG1c01a5Bp0o', 'Pim', NULL, 'Zwinkels', '3d1ae0820f0b1fd51fa5126004ad51eced3.jpeg', NULL),
 (163, 16, 'a.terlouw@svjit.nl', '[\"ROLE_PUPIL\"]', '$argon2id$v=19$m=65536,t=4,p=1$Wnp6QkxKQTlnVmhLVmFMOA$BH0F9SXnwyHMn+ZSGrW5siefHoXSu86FyIBlrvufwnk', 'Arjen', NULL, 'Terlouw', '631fd6ef9d5e37297ef1126004b00e8ae4a.jpeg', NULL),
 (164, NULL, 'j.kubicna@svjit.nl', '[\"ROLE_ADMIN\"]', '$argon2id$v=19$m=65536,t=4,p=1$eHEzRUpEbjNNOS94U1Z2bg$WDuCOeOGIVKVZ7yoSvL/KrNG3rs6NoXA4aSc5/OAgc4', 'Jana', NULL, 'Kubicna', '0833316d1daa255e206a36600c92ef72f01.jpeg', NULL),
-(165, NULL, 'b.alleblas@svjit.nl', '[\"ROLE_ADMIN\"]', '$argon2id$v=19$m=65536,t=4,p=1$NGMyL3ZzR3h4L0g5ektiaw$k++P8OrLAlzQMiGQaSsxL0YvVlRIO5jMnhUmvyHFTMY', 'Bianca', NULL, 'Alleblas', '11d7d5825fcead8e6f752d600deec98d357.jpeg', NULL);
+(165, NULL, 'b.alleblas@svjit.nl', '[\"ROLE_ADMIN\"]', '$argon2id$v=19$m=65536,t=4,p=1$NGMyL3ZzR3h4L0g5ektiaw$k++P8OrLAlzQMiGQaSsxL0YvVlRIO5jMnhUmvyHFTMY', 'Bianca', NULL, 'Alleblas', '11d7d5825fcead8e6f752d600deec98d357.jpeg', NULL),
+(166, NULL, 'r.baouch@svjit.nl', '[\"ROLE_TEACHER\"]', '$argon2id$v=19$m=65536,t=4,p=1$Nmh3cmxCV05hWHdNQ0pvSg$7lBIvpdlE2umhPkMzwFPsyjKFelv7PpgtUeo4yCch7o', 'Rachid', NULL, 'Baouch', '8ef4c0473a89ac86fc0fc660185d0a6a7cd.jpeg', NULL);
 
 --
 -- Indexen voor geëxporteerde tabellen
@@ -309,13 +311,13 @@ ALTER TABLE `schoolclasses`
 -- AUTO_INCREMENT voor een tabel `studentremarks`
 --
 ALTER TABLE `studentremarks`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT voor een tabel `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=166;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=167;
 
 --
 -- Beperkingen voor geëxporteerde tabellen
