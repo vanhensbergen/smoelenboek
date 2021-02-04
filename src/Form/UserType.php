@@ -47,8 +47,9 @@ class UserType extends AbstractType
                'label'=>'rol',
                'placeholder'=>'---maak verplicht een keus----',
                ] )
-            ->add('schoolclass',EntityType::class,['class'=>Schoolclass::class,
-                            'choice_label' => 'name',
+            ->add('schoolclass',EntityType::class,[
+                'class'=>Schoolclass::class,
+                'choice_label' => 'name',
                 'placeholder' => 'klas optioneel',
                 'multiple'=>false,
                 'required'=>false,

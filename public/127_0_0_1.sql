@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.0.4
+-- version 5.0.2
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Gegenereerd op: 01 feb 2021 om 21:07
--- Serverversie: 10.4.16-MariaDB
--- PHP-versie: 7.4.12
+-- Gegenereerd op: 04 feb 2021 om 13:48
+-- Serverversie: 10.4.14-MariaDB
+-- PHP-versie: 7.4.10
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -48,7 +48,9 @@ INSERT INTO `doctrine_migration_versions` (`version`, `executed_at`, `execution_
 ('DoctrineMigrations\\Version20201229213339', '2020-12-29 22:34:21', 267),
 ('DoctrineMigrations\\Version20210102190129', '2021-01-02 20:02:00', 326),
 ('DoctrineMigrations\\Version20210102191123', '2021-01-02 20:11:31', 47),
-('DoctrineMigrations\\Version20210102191609', '2021-01-02 20:16:20', 357);
+('DoctrineMigrations\\Version20210102191609', '2021-01-02 20:16:20', 357),
+('DoctrineMigrations\\Version20210204084338', '2021-02-04 09:44:35', 872),
+('DoctrineMigrations\\Version20210204091144', '2021-02-04 10:12:04', 48);
 
 -- --------------------------------------------------------
 
@@ -89,29 +91,31 @@ CREATE TABLE `studentremarks` (
   `student_id` int(11) NOT NULL,
   `title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `content` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
-  `created` date NOT NULL
+  `created` date NOT NULL,
+  `blocked` tinyint(1) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Gegevens worden geëxporteerd voor tabel `studentremarks`
 --
 
-INSERT INTO `studentremarks` (`id`, `author_id`, `student_id`, `title`, `content`, `created`) VALUES
-(1, 6, 10, 'afwezigheid door rookverslaving', 'Gio is erg vaak afwezig tijdens de les. Daarop bevraagd zegt hij even is gaan roken.\r\nDat kan echt niet! Hij wil dat niet inzien. Afgesproken is dat hij hiermee ophoudt en zijn roken beperkt tot de pauzes. Er is voldoende tijd om te roken dan.', '2021-01-02'),
-(2, 8, 10, 'storend gedrag in de les programmeren.', 'Gio is erg vervelend in de les. Hij is constant aan het praten. Als hij iemand met programmeren helpt dan is het meestal van de wal in de sloot. De code die hij dan intypt wordt door de leerling zelden begrepen en is meestal een bron van verdere problemen. Gio wil niet luisteren daar mee op te houden.', '2021-01-02'),
-(3, 6, 10, 'positieve verandering in gedrag', 'Gio is helaas niet gestopt met roken. Hij beperkt roken nu echter tot de pauzes. Dat is een aanzienlijke verbetering. Hij moet nog wel leren wat starttijd en eindtijd is van de pauze. Hij wil nog al eens te vroeg vertrekken en/of te laat terugkomen in de les.', '2021-01-03'),
-(4, 6, 69, 'afwezigheid gemeld door ouders', 'De ouders van Raïsa hebben gemaild dat zij door ziekte niet zonder hun dochter huis kunnen.  Zij zal hen moeten verzorgen voor de duur van deze ziekte. Het betreft de moeder; zij is momenteel in het ziekenhuis en kot volgende week pas weer thuis. Ook dan zal Raïsa thuis nog nodig zijn.', '2021-01-03'),
-(5, 1, 67, 'afwezigheid te vaak', 'Marcel is erg vaak een hele dag afwezig. Hij meldt na daarop aangesproken te zijn dat hij zelfstandig woont en soms moet werken om inkomsten te genereren om van te leven. Werken gaat niet altijd buiten schooltijden. Hij is overigens een leerling met goede kwaliteiten. Hij bezit veel kennis op programmeergebied.', '2021-01-03'),
-(6, 6, 37, 'aandacht svp voor Asperger', 'Patrick is hoogst intelligent. Is zijn loopbaan begonnen op het vwo. Hij is als een spons. Hij zuigt op wat je zegt. Verwacht geen communicatie, daar op aandringen veroorzaakt stress bij Patrick. Doe dat dus niet.', '2021-01-03'),
-(7, 6, 74, 'hoofdpijnklachten', 'Willen de collega\'s rekening houden met he gegeven dat Rashad veel last heeft van migraine achtige hoofdpijnklachten.', '2021-01-04'),
-(8, 6, 136, 'verspreid dit niet!!', 'Daisy  is aanzienlijk ouder dan de andere studenten. Ze is zwanger verschijnt daardoor minder op school en zal waarschijnlijk de opleiding stoppen. De situatiethuis met Barney als vader helpt ook niet.', '2021-01-04'),
-(10, 6, 89, 'hulp mijdend gedrag', 'Jacob kan het allemaal niet bijbenen. Het niveau waarop hij moet werken zit ver boven zijn capaciteiten. Hij hoort eigenlijk BOL3 te doen. Hij wil dan ook geen ondersteuning accepteren. Hij begint wel lichtelijk agressief gedrag te vertonen. Dat baat zorgen', '2021-01-06'),
-(11, 6, 112, 'hinderlijk niet serieus gedrag', 'Jordy is een paar jaartjes ouder dan zijn klasgenoten en probeert excessief vrolijk gedrag te vertonen. Accepteer dat niet, wijs hem erop dat zijn gedrag storend werkt', '2021-01-06'),
-(13, 8, 93, 'Gedrag in de klas', 'Ian heeft een positive invloed op zijn omgeving. Hij poogt bewust hulpvaardig te zijn. Probeert kennis bij te brengen bij zijn mede studenten en draagt bij aan een positief studieklimaat. Gesprekken met hem hebben geholpen.', '2021-01-08'),
-(14, 6, 80, 'In vertrouwen medegedeeld', 'Socrates ondervindt grote druk van Giovanni le Grand. Hij wordt gedurende de pauzes en in de klas getreiterd. Laatst is zijn wachtwoord voor zijn PC gewijzigd. Het pesten is subtiel maar laakbaar. Houd voorlopig een oogje in het zeil, s.v.p en informeer me bij plaaggedrag Gio.', '2021-01-10'),
-(15, 6, 77, 'punt van aandacht collega\'s!', 'Rashid heeft de overstap gemaakt vanaf BOL3 naar de opleiding AO. Hij heeft grote moeite om mee te komen. Hij is niet gewend om zelf na te denken. Veelal heeft hij geleerd na te doen. Dat kan niet bij AO. Geef hem extra aandacht met accent op leerstrategieën. Hij is van goede wil.', '2021-01-18'),
-(16, 6, 145, 'thuissituatie: scheiding ouders', 'Na een onrustige periode met veel ruzie thuis, hebben de ouders besloten te gaan scheiden. De vader van Romano is vertrokken.Dit geeft rust, Romano hoeft niet mer te kiezen tussen ouders en voelt minder druk om de toestand thuis te pacificeren. Hou een positief oogje op hem.', '2021-01-18'),
-(17, 6, 58, 'heet gebakerd gedrag', 'Stephan heeft kwaliteiten als programmeur, hij is echter niet benaderbaar. Elk gesprek om inhoudelijk te komen tot verbetering van coderingsstijl brengt het risico van emotionele uitbarstingen met zich mee. De enige persoon die Stephan kan temperen is Danny. Wellicht raadzaam om met Stephan een traject van conflictbeheersing in te gaan.', '2021-01-25');
+INSERT INTO `studentremarks` (`id`, `author_id`, `student_id`, `title`, `content`, `created`, `blocked`) VALUES
+(1, 6, 10, 'afwezigheid door rookverslaving', 'Giotje is erg vaak afwezig tijdens de les. Daarop bevraagd zegt dat hij even is gaan roken.\r\nDat kan echt niet! Hij wil dat niet inzien. Afgesproken is dat hij hiermee ophoudt en zijn roken beperkt tot de pauzes. Er is voldoende tijd om te roken dan.', '2021-01-02', 1),
+(2, 8, 10, 'storend gedrag in de les programmeren.', 'Gio is erg vervelend in de les. Hij is constant aan het praten. Als hij iemand met programmeren helpt dan is het meestal van de wal in de sloot. De code die hij dan intypt wordt door de leerling zelden begrepen en is meestal een bron van verdere problemen. Gio wil niet luisteren daar mee op te houden.', '2021-01-02', 0),
+(3, 6, 10, 'positieve verandering in gedrag', 'Gio is helaas niet gestopt met roken. Hij beperkt roken nu echter tot de pauzes. Dat is een aanzienlijke verbetering. Hij moet nog wel leren wat starttijd en eindtijd is van de pauze. Hij wil nog al eens te vroeg vertrekken en/of te laat terugkomen in de les.', '2021-01-03', 0),
+(4, 6, 69, 'afwezigheid gemeld door ouders', 'De ouders van Raïsa hebben gemaild dat zij door ziekte niet zonder hun dochter huis kunnen.  Zij zal hen moeten verzorgen voor de duur van deze ziekte. Het betreft de moeder; zij is momenteel in het ziekenhuis en kot volgende week pas weer thuis. Ook dan zal Raïsa thuis nog nodig zijn.', '2021-01-03', 0),
+(5, 1, 67, 'afwezigheid te vaak', 'Marcel is erg vaak een hele dag afwezig. Hij meldt na daarop aangesproken te zijn dat hij zelfstandig woont en soms moet werken om inkomsten te genereren om van te leven. Werken gaat niet altijd buiten schooltijden. Hij is overigens een leerling met goede kwaliteiten. Hij bezit veel kennis op programmeergebied.', '2021-01-03', 0),
+(6, 6, 37, 'aandacht svp voor Asperger', 'Patrick is hoogst intelligent. Is zijn loopbaan begonnen op het vwo. Hij is als een spons. Hij zuigt op wat je zegt. Verwacht geen communicatie, daar op aandringen veroorzaakt stress bij Patrick. Doe dat dus niet.', '2021-01-03', 0),
+(7, 6, 74, 'hoofdpijnklachten', 'Willen de collega\'s rekening houden met he gegeven dat Rashad veel last heeft van migraine achtige hoofdpijnklachten.', '2021-01-04', 0),
+(8, 6, 136, 'verspreid dit niet!!', 'Daisy  is aanzienlijk ouder dan de andere studenten. Ze is zwanger verschijnt daardoor minder op school en zal waarschijnlijk de opleiding stoppen. De situatiethuis met Barney als vader helpt ook niet.', '2021-01-04', 0),
+(10, 6, 89, 'hulp mijdend gedrag', 'Jacob kan het allemaal niet bijbenen. Het niveau waarop hij moet werken zit ver boven zijn capaciteiten. Hij hoort eigenlijk BOL3 te doen. Hij wil dan ook geen ondersteuning accepteren. Hij begint wel lichtelijk agressief gedrag te vertonen. Dat baat zorgen', '2021-01-06', 0),
+(11, 6, 112, 'hinderlijk niet serieus gedrag', 'Jordy is een paar jaartjes ouder dan zijn klasgenoten en probeert excessief vrolijk gedrag te vertonen. Accepteer dat niet, wijs hem erop dat zijn gedrag storend werkt', '2021-01-06', 0),
+(13, 8, 93, 'Gedrag in de klas', 'Ian heeft een positive invloed op zijn omgeving. Hij poogt bewust hulpvaardig te zijn. Probeert kennis bij te brengen bij zijn mede studenten en draagt bij aan een positief studieklimaat. Gesprekken met hem hebben geholpen.', '2021-01-08', 0),
+(14, 6, 80, 'In vertrouwen medegedeeld', 'Socrates ondervindt grote druk van Giovanni le Grand. Hij wordt gedurende de pauzes en in de klas getreiterd. Laatst is zijn wachtwoord voor zijn PC gewijzigd. Het pesten is subtiel maar laakbaar. Houd voorlopig een oogje in het zeil, s.v.p en informeer me bij plaaggedrag Gio.', '2021-01-10', 0),
+(15, 6, 77, 'punt van aandacht collega\'s!', 'Rashid heeft de overstap gemaakt vanaf BOL3 naar de opleiding AO. Hij heeft grote moeite om mee te komen. Hij is niet gewend om zelf na te denken. Veelal heeft hij geleerd na te doen. Dat kan niet bij AO. Geef hem extra aandacht met accent op leerstrategieën. Hij is van goede wil.', '2021-01-18', 0),
+(16, 6, 145, 'thuissituatie: scheiding ouders', 'Na een onrustige periode met veel ruzie thuis, hebben de ouders besloten te gaan scheiden. De vader van Romano is vertrokken.Dit geeft rust, Romano hoeft niet mer te kiezen tussen ouders en voelt minder druk om de toestand thuis te pacificeren. Hou een positief oogje op hem.', '2021-01-18', 0),
+(17, 6, 58, 'heet gebakerd gedrag', 'Stephan heeft kwaliteiten als programmeur, hij is echter niet benaderbaar. Elk gesprek om inhoudelijk te komen tot verbetering van coderingsstijl brengt het risico van emotionele uitbarstingen met zich mee. De enige persoon die Stephan kan temperen is Danny. Wellicht raadzaam om met Stephan een traject van conflictbeheersing in te gaan.', '2021-01-25', 0),
+(18, 6, 15, 'afwezigheid bij rekenles veelvuldig', 'Samir skipt met grote regelmaat de rekenles. Daar op aangesproken zegt hij dat rekenen makkelijk is.\r\nHij zal ook rekenen in context moeten kunnen. Dat is nog maar de vraag. Wil iedereen Samir wijzen op zijn verantwoordelijkheid dat ook te kunnen.', '2021-02-04', 0);
 
 -- --------------------------------------------------------
 
@@ -311,7 +315,7 @@ ALTER TABLE `schoolclasses`
 -- AUTO_INCREMENT voor een tabel `studentremarks`
 --
 ALTER TABLE `studentremarks`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT voor een tabel `users`

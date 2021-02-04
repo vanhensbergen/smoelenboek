@@ -45,6 +45,11 @@ class StudentRemark
      */
     private $created;
 
+    /**
+     * @ORM\Column(type="boolean", options={"default":false})
+     */
+    private $blocked;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -106,6 +111,18 @@ class StudentRemark
     public function setCreated(\DateTimeInterface $created): self
     {
         $this->created = $created;
+
+        return $this;
+    }
+
+    public function getBlocked(): ?bool
+    {
+        return $this->blocked;
+    }
+
+    public function setBlocked(bool $blocked): self
+    {
+        $this->blocked = $blocked;
 
         return $this;
     }

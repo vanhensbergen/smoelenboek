@@ -173,5 +173,23 @@ namespace App\Controller {
             return $this->getDoctrine()->getRepository($className)->findAll();
         }
 
+        protected function showStudentRemarks(int $student_id, array $form_data=[]):Response{
+            $student = $this->findFromId(User::class,$student_id);
+            $remarks = $student->getRemarksForStudent();
+            $classes = $this->getClasses();
+            $next = $this->findNextInClass($student);
+            $previous = $this->findPreviousInClass($student);
+            $role = $this->getAuthorisationString();
+            $form_data = array_merge($form_data, [
+                'student'=>$student,
+                'remarks'=>$remarks,
+                'classes'=>$classes,
+                'next' =>$next,
+                'previous'=>$previous,
+
+            ]);
+            return $this->render($role.'/student-details.html.twig',$form_data);
+        }
+
     }
 }

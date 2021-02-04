@@ -74,26 +74,11 @@ namespace App\Controller {
          * @return Response
          */
         public function getStudentRemarksForTeacherAction(int $student_id):Response{
-            return $this->studentRemarksViewForTeacher($student_id);
+            return $this->showStudentRemarks($student_id);
 
         }
 
-        private function studentRemarksViewForTeacher(int $student_id, array $form_data=[]):Response{
-            $student = $this->findFromId(User::class,$student_id);
-            $remarks = $student->getRemarksForStudent();
-            $classes = $this->getClasses();
-            $next = $this->findNextInClass($student);
-            $previous = $this->findPreviousInClass($student);
-            $form_data = array_merge($form_data, [
-                'student'=>$student,
-                'remarks'=>$remarks,
-                'classes'=>$classes,
-                'next' =>$next,
-                'previous'=>$previous,
 
-            ]);
-            return $this->render('teacher/student-details.html.twig',$form_data);
-        }
 
         /**
          * @Route("teacher/remarks/new/{student_id}", name="teacher_new_remark", requirements={"student_id"="\d+"})
@@ -114,12 +99,13 @@ namespace App\Controller {
                 $remark->setAuthor($this->getUser());
                 $today = new \DateTime("NOW");
                 $remark->setCreated($today);
+                $remark->setBlocked(false);
                 $em= $this->getDoctrine()->getManager();
                 $em->persist($remark);
                 $em->flush();
                 return $this->redirectToRoute("teacher_get_remarks",['student_id'=>$student_id]);
             }
-            return $this->studentRemarksViewForTeacher($student_id, $extraData);
+            return $this->showStudentRemarks($student_id, $extraData);
         }
         /**
          * @Route("teacher/resetpassword/{id}", name="teacher_reset_mentor_student", requirements={"id"="\d+"})
@@ -172,7 +158,7 @@ namespace App\Controller {
                 $em->flush();
                 return $this->redirectToRoute("teacher_get_remarks", ['student_id' => $student_id]);
             }
-            return $this->studentRemarksViewForTeacher( $student_id, $extraData);
+            return $this->showStudentRemarks( $student_id, $extraData);
         }
 
         /**
