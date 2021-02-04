@@ -4,6 +4,7 @@
 namespace App\Controller {
 
     use App\Entity\User;
+    use App\Form\ChangeMottoFormType;
     use Symfony\Component\HttpFoundation\Request;
     use Symfony\Component\HttpFoundation\Response;
     use Symfony\Component\Routing\Annotation\Route;
@@ -12,33 +13,26 @@ namespace App\Controller {
     {
 
         /**
-         * @param array $users
-         * @param string $type
-         * @return Response
-         */
-        private function show(array $users,string $type): Response
-        {
-            $classes = $this->getClasses();
-            return $this->render('principal/default.html.twig',
-                ['users' => $users,
-                    'classes' => $classes,
-                    'type'=>$type
-                ]);
-        }
-        /**
          * @Route("/principal" , name="principal_home")
          */
         public function defaultAction():Response{
             $teachers = $this->getDoctrine()->getRepository(User::class)->findTeachers();
-            return $this->show($teachers,"DOCENTEN");
+            $classes = $this->getClasses();
+            $form = $this->createForm(ChangeMottoFormType::class, $this->getUser());
+
+            return $this->render('principal/default.html.twig',
+                [   'users' => $teachers,
+                    'classes' => $classes,
+                    'type'=>'DOCENTEN',
+                    'motto_form'=>$form->createView()
+                ]);
         }
 
         /**
          * @Route("/principal/teachers" , name="principal_teachers")
          */
         public function showTeachersAction():Response{
-            $teachers = $this->getDoctrine()->getRepository(User::class)->findTeachers();
-            return $this->show($teachers,"DOCENTEN");
+            return $this->defaultAction();
         }
 
         /**
@@ -46,7 +40,12 @@ namespace App\Controller {
          */
         public function showAdminsAction():Response{
             $admins = $this->getDoctrine()->getRepository(User::class)->findAdministrators();
-            return $this->show($admins,"ADMINISTRATIE");
+            $classes = $this->getClasses();
+            return $this->render('principal/default.html.twig',
+                ['users' => $admins,
+                    'classes' => $classes,
+                    'type'=>'ADMINISTRATIE'
+                ]);
         }
         /**
          * @Route("principal/classless" , name="principal_classless")
@@ -133,6 +132,8 @@ namespace App\Controller {
                    return  $this->redirectToRoute('principal_home');
             }
         }
+
+
 
     }
 }

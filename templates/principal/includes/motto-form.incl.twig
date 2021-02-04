@@ -1,0 +1,20 @@
+{{ form_start(form)}}
+{{ form_widget(form) }}
+<div class="row ml-2">
+    <div  contenteditable="true"
+            class="text-left col-10 h-auto bg-white border rounded h4" id="content_editable_div">{{ app.user.motto|raw}}</div>
+    <div class="col-2 my-auto"><button type="submit" >submit</button></div>
+</div>
+{{ form_end(form) }}
+
+{% block javascripts %}
+
+    <script>
+        function copyTextFrom(e)
+        {
+            document.querySelector("#hidden_textarea").value = document.querySelector('#content_editable_div').innerText;
+            return false;
+        }
+        document.querySelector('form').addEventListener('submit',copyTextFrom)
+    </script>
+{% endblock %}

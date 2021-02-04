@@ -53,7 +53,7 @@
                         </main>
                     </article>
                 {% else %}
-                    <article class="{{ remark.blocked?"bg-danger":"bg-light"}} col-xl-5 col-lg-5 col-md-9 col-sm-11 p-1 m-2 border rounded border-info">
+                    <article class="{{ remark.blocked?"bg-danger text-white ":"bg-light"}} col-xl-5 col-lg-5 col-md-9 col-sm-11 p-1 m-2 border rounded border-info">
                         <header class=" h6 border rounded border-info p-1">
                             <div class="h6" >titel: {{ remark.title }}</div>
                             <div class="h6"> datum: {{ remark.created|date("d-m-Y") }}</div>
@@ -65,7 +65,7 @@
                 {% endif %}
             {% endif %}
         {% if app.user != remark.author %}
-            {% if remark.blocked == false %}
+            {% if not remark.blocked %}
                 <article class="bg-light col-xl-5 col-lg-5 col-md-9 col-sm-11 p-1 m-2 border rounded border-info">
                     <header class=" h6 border rounded border-info p-1">
                         <div class="h6" >titel: {{ remark.title }}</div>

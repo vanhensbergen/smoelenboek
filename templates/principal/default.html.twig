@@ -2,6 +2,9 @@
 
 {% block content %}
     <div class="row mt-2 p-2">
+        {{ include('principal/includes/motto-form.incl.twig',{form:motto_form}) }}
+    </div>
+    <div class="row mt-2 p-2">
         <div class="text-center col-11 resp-big-font">{{ type }}</div>
         {{include ('principal/includes/usersforloop.incl.twig') }}
     </div>
