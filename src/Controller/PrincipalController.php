@@ -11,19 +11,47 @@ namespace App\Controller {
 
     final class PrincipalController extends SuperBaseController
     {
+        /**
+         * @Route ("principal/motto" , name="principal_motto")
+         * @param Request $request
+         * @return Response
+         */
+        public function handleMottoChange(Request $request):Response{
+            $user = $this->getUser();
+            $form = $this->createForm(ChangeMottoFormType::class ,$user, [
+                'action' => $this->generateUrl('principal_motto'),
+                'method' => 'POST',
+            ]);
+            $form->handleRequest($request);
+            if($form->isSubmitted()&&$form->isValid()){
+                $em=$this->getDoctrine()->getManager();
+                $em->persist($user);
+                $em->flush();
+            }
+            return $this->redirectToRoute("principal_home");
+
+        }
+
 
         /**
          * @Route("/principal" , name="principal_home")
+         * @param Request $request
+         * @return Response
          */
-        public function defaultAction():Response{
+        public function defaultAction(Request $request):Response{
             $teachers = $this->getDoctrine()->getRepository(User::class)->findTeachers();
             $classes = $this->getClasses();
-            $form = $this->createForm(ChangeMottoFormType::class, $this->getUser());
-
+            $user = $this->getUser();
+            $form = $this->createForm(ChangeMottoFormType::class ,$user);
+            $form->handleRequest($request);
+            if($form->isSubmitted()&&$form->isValid()){
+                $em=$this->getDoctrine()->getManager();
+                $em->persist($user);
+                $em->flush();
+            }
             return $this->render('principal/default.html.twig',
-                [   'users' => $teachers,
+                [
                     'classes' => $classes,
-                    'type'=>'DOCENTEN',
                     'motto_form'=>$form->createView()
                 ]);
         }

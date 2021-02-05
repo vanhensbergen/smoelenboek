@@ -1,11 +1,36 @@
 {% extends 'base_principal.html.twig' %}
 
 {% block content %}
-    <div class="row mt-2 p-2">
-        {{ include('principal/includes/motto-form.incl.twig',{form:motto_form}) }}
+    <div class="row m-1 p-1 border rounded border-success">
+        {{ form_start(motto_form)}}
+        <div class="row m-2">
+            <div  class="text-left col-12 h-auto bg-white border rounded h4" id="content_div">{{ app.user.motto|raw}}</div>
+        </div>
+
+
+        <div class="row">
+            <div class="col-10">{{ form_widget(motto_form) }}</div>
+            <div class="col-2 my-auto">
+                <button type="button" class="btn btn-outline-success my-2 my-sm-0" id = 'preview_button' >preview</button>
+                <button type="reset" class="btn btn-outline-success my-2 my-sm-1" id="reset_button">reset</button>
+                <button type="submit" class="btn btn-outline-success my-2 my-sm-0" >submit</button>
+            </div>
+        </div>
+        {{ form_end(motto_form) }}
     </div>
-    <div class="row mt-2 p-2">
-        <div class="text-center col-11 resp-big-font">{{ type }}</div>
-        {{include ('principal/includes/usersforloop.incl.twig') }}
-    </div>
+{% endblock %}
+
+
+{% block javascripts %}
+    <script>
+        let previewButton = document.querySelector('#preview_button');
+        let previewDiv  = document.querySelector('#content_div');
+        let editTextarea = document.querySelector('form textarea');
+        let resetButton = document.querySelector('#reset_button')
+        previewButton.addEventListener('click',(e)=>{
+            previewDiv.innerHTML = editTextarea.value;
+        })
+    </script>
+
+
 {% endblock %}
