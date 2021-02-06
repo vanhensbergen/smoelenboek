@@ -11,27 +11,15 @@ namespace App\Controller {
 
     final class PrincipalController extends SuperBaseController
     {
-        /**
-         * @Route ("principal/motto" , name="principal_motto")
-         * @param Request $request
-         * @return Response
-         */
-        public function handleMottoChange(Request $request):Response{
-            $user = $this->getUser();
-            $form = $this->createForm(ChangeMottoFormType::class ,$user, [
-                'action' => $this->generateUrl('principal_motto'),
-                'method' => 'POST',
-            ]);
-            $form->handleRequest($request);
-            if($form->isSubmitted()&&$form->isValid()){
-                $em=$this->getDoctrine()->getManager();
-                $em->persist($user);
-                $em->flush();
-            }
-            return $this->redirectToRoute("principal_home");
+        private function show($users, $type){
+            $classes = $this->getClasses();
+            return $this->render('principal/subteam.html.twig',
+                ['users' => $users,
+                    'classes' => $classes,
+                    'type'=>$type
+                ]);
 
         }
-
 
         /**
          * @Route("/principal" , name="principal_home")
@@ -48,6 +36,7 @@ namespace App\Controller {
                 $em=$this->getDoctrine()->getManager();
                 $em->persist($user);
                 $em->flush();
+                $this->addFlash('message','je motto is succesvol gewijzigd.');
             }
             return $this->render('principal/default.html.twig',
                 [
@@ -59,21 +48,17 @@ namespace App\Controller {
         /**
          * @Route("/principal/teachers" , name="principal_teachers")
          */
-        public function showTeachersAction():Response{
-            return $this->defaultAction();
-        }
+       public function showTeachersAction():Response{
+           $teachers = $this->getDoctrine()->getRepository(User::class)->findTeachers();
+           return $this->show($teachers,'DOCENTEN');
+       }
 
         /**
          * @Route("/principal/admins" , name="principal_admins")
          */
         public function showAdminsAction():Response{
             $admins = $this->getDoctrine()->getRepository(User::class)->findAdministrators();
-            $classes = $this->getClasses();
-            return $this->render('principal/default.html.twig',
-                ['users' => $admins,
-                    'classes' => $classes,
-                    'type'=>'ADMINISTRATIE'
-                ]);
+            return $this->show($admins,'ADMINISTRATIE');
         }
         /**
          * @Route("principal/classless" , name="principal_classless")

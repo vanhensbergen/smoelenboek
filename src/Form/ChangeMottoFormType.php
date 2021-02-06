@@ -18,7 +18,7 @@ class ChangeMottoFormType extends AbstractType
         $builder
             ->add('motto',TextareaType::class,[
                 'label'=>false,
-                'attr'=>['rows'=>10]
+                'attr'=>['class'=>'d-none']
             ]);
     }
 

@@ -1,21 +1,48 @@
 {% extends 'base_principal.html.twig' %}
 
 {% block content %}
-    <div class="row m-1 p-1 border rounded border-success">
+    <div class="row m-1 border rounded border-success ">
         {{ form_start(motto_form)}}
-        <div class="row m-2">
-            <div  class="text-left col-12 h-auto bg-white border rounded h4" id="content_div">{{ app.user.motto|raw}}</div>
-        </div>
-
-
-        <div class="row">
-            <div class="col-10">{{ form_widget(motto_form) }}</div>
-            <div class="col-2 my-auto">
-                <button type="button" class="btn btn-outline-success my-2 my-sm-0" id = 'preview_button' >preview</button>
-                <button type="reset" class="btn btn-outline-success my-2 my-sm-1" id="reset_button">reset</button>
-                <button type="submit" class="btn btn-outline-success my-2 my-sm-0" >submit</button>
+            <div class="row m-1" id="editor_div">
+                <div class="col-10 bg-secondary p-1" id="toolbar" >
+                    <span class="btn btn-outline-success bg-white">
+                        <button type="button" data-action="fontSize 6"
+                                class="btn btn-outline-success"
+                                title="vergroot lettertype iets">G</button>
+                        <button type="button" data-action="fontSize 5"
+                                class="btn btn-outline-success"
+                                title="normale grootte lettertype">g</button>
+                    </span>
+                    <span class="btn btn-outline-success bg-white">
+                        <button type="button" data-action="italic"
+                            class="btn btn-outline-success"
+                            title="toggle italic">I</button>
+                    </span>
+                    <span class="btn btn-outline-success bg-white">
+                        <button type="button" data-action="insertHTML </br>"
+                            class="btn btn-outline-success"
+                            title="plaats een nieuwe regel">&crarr;</button>
+                    </span>
+                    <span class="btn btn-outline-success bg-white">
+                        <button type="button" data-action="foreColor #ff0000"
+                                class="btn btn-outline-success"
+                                title="tekstkleur rood">R</button>
+                        <button type="button" data-action="foreColor #000000"
+                                class="btn btn-outline-success"
+                                title="tekstkleur zwart">Z</button>
+                    </span>
+                </div>
+                <div  class="p-3 text-left col-10 h-auto bg-white border rounded h4" contenteditable="true" id="content_div">{{ app.user.motto|raw}}</div>
             </div>
-        </div>
+             <div class="row p-2">
+                {{ form_widget(motto_form) }}
+                 <div class="col-10 ">
+                     <button type="reset" class="btn btn-outline-success my-2 my-sm-1" id="reset_button">reset</button>
+                     <button type="submit" class="btn btn-outline-success my-2 my-sm-0" >submit</button>
+                 </div>
+
+             </div>
+
         {{ form_end(motto_form) }}
     </div>
 {% endblock %}
@@ -23,13 +50,38 @@
 
 {% block javascripts %}
     <script>
-        let previewButton = document.querySelector('#preview_button');
         let previewDiv  = document.querySelector('#content_div');
         let editTextarea = document.querySelector('form textarea');
         let resetButton = document.querySelector('#reset_button')
-        previewButton.addEventListener('click',(e)=>{
+        let toolBar = document.querySelector('#toolbar')
+        let editor = document.querySelector('#editor_div')
+        resetButton.addEventListener('click',(e)=>{
             previewDiv.innerHTML = editTextarea.value;
         })
+        previewDiv.addEventListener('blur',(e)=>{
+            editTextarea.value = previewDiv.innerHTML
+        })
+        let buttons = toolBar.querySelectorAll('button')
+
+            for(let button of buttons)
+            {
+                button.addEventListener('click', (e) =>
+                    {
+                        document.execCommand('styleWithCSS', false, null)
+                        let action = e.target.getAttribute('data-action');
+                        let args = action.split(' ');
+                        if (args.length === 1)
+                        {
+                            document.execCommand(args[0], false, null);
+                        }
+                        else
+                        {
+                            document.execCommand(args[0], false, args[1]);
+                        }
+                    })
+
+
+            }
     </script>
 
 
