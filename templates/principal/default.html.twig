@@ -6,12 +6,12 @@
             <div class="row m-1" id="editor_div">
                 <div class="col-10 bg-secondary p-1" id="toolbar" >
                     <span class="btn btn-outline-success bg-white">
-                        <button type="button" data-action="fontSize 6"
-                                class="btn btn-outline-success"
-                                title="vergroot lettertype iets"><i class="fas fa-text-height" data-action="fontSize 6"></i></button>
                         <button type="button" data-action="fontSize 5"
                                 class="btn btn-outline-success"
-                                title="normale grootte lettertype"><i class="fas fa-remove-format" data-action="fontSize 5"></i></button>
+                                title="vergroot lettertype iets"><i class="fas fa-text-height" data-action="fontSize 5"></i></button>
+                        <button type="button" data-action="fontSize 4"
+                                class="btn btn-outline-success"
+                                title="normale grootte lettertype"><i class="fas fa-remove-format" data-action="fontSize 4"></i></button>
                     </span>
                     <span class="btn btn-outline-success bg-white">
                         <button type="button" data-action="italic"
@@ -29,6 +29,11 @@
                         <button type="button" data-action="foreColor #000000"
                                 class="btn btn-outline-dark"
                                 title="tekstkleur zwart"><i class="fas fa-pen-nib " data-action="foreColor #000000"></i></button>
+                    </span>
+                    <span class="btn btn-outline-success bg-white">
+                        <button type="button" data-action="removeFormat"
+                                class="btn btn-outline-danger"
+                                title="verwijder opmaak"><i class="fas fa-eraser " data-action="removeFormat"></i></button>
                     </span>
                 </div>
                 <div  class="p-3p text-left col-10 h-auto bg-white border rounded h4" contenteditable="true" id="content_div">{{ app.user.motto|raw}}</div>
