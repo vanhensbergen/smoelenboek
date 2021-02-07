@@ -27,7 +27,6 @@ namespace App\Controller {
          * @return Response
          */
         public function defaultAction(Request $request):Response{
-            $teachers = $this->getDoctrine()->getRepository(User::class)->findTeachers();
             $classes = $this->getClasses();
             $user = $this->getUser();
             $form = $this->createForm(ChangeMottoFormType::class ,$user);

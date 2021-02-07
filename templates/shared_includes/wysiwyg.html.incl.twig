@@ -1,0 +1,63 @@
+<style>
+    [contentEditable=true]:empty:not(:focus)::before{
+        content:attr(data-text);
+        color:gray;
+    }
+</style>
+<div class="col-12 m-1 border rounded border-success ">
+    {{ form_start(motto_form)}}
+    <div class="row m-1 mx-auto" id="editor_div">
+        <div class="mx-auto col-10 bg-secondary p-1 border rounded border-dark" id="toolbar" >
+                    <span class="btn btn-outline-success bg-white">
+                        <button type="button" data-action="fontSize 5"
+                                class="btn btn-outline-success"
+                                title="lettergrootte 5"><i class="fas fa-text-height" data-action="fontSize 5">5</i></button>
+                        <button type="button" data-action="fontSize 4"
+                                class="btn btn-outline-success"
+                                title="lettergrootte 4"><i class="fas fa-text-height" data-action="fontSize 4">4</i></button>
+                         <button type="button" data-action="fontSize 3"
+                                 class="btn btn-outline-success"
+                                 title="lettergrootte 3"><i class="fas fa-text-height" data-action="fontSize 3">3</i></button>
+                        <button type="button" data-action="fontSize 2"
+                                class="btn btn-outline-success"
+                                title="lettergrootte 2"><i class="fas fa-text-height" data-action="fontSize 2">2</i></button>
+                    </span>
+            <span class="btn btn-outline-success bg-white">
+                        <button type="button" data-action="bold"
+                                class="btn btn-outline-success"
+                                title="toggle vet"><i class="fas fa-bold" data-action="bold"></i></button>
+                        <button type="button" data-action="italic"
+                                class="btn btn-outline-success"
+                                title="toggle cursief"><i class="fas fa-italic" data-action="italic"></i></button>
+                        <button type="button" data-action="underline"
+                                class="btn btn-outline-success"
+                                title="toggle onderstrepen"><i class="fas fa-underline" data-action="underline"></i></button>
+
+                    </span>
+            <span class="btn btn-outline-success bg-white" title="tekstkleur instellen">
+                        <input  class="btn btn-outline-success m-2 py-2" type="color" />
+                        <span class="font-weight-bold text-success">kleur</span>
+                    </span>
+            <span class="btn btn-outline-success bg-white float-right ">
+                        <button type="button" data-action="removeFormat"
+                                class="btn btn-outline-success"
+                                title="verwijder opmaak"><i class="fas fa-remove-format" data-action="removeFormat"></i></button>
+                    </span>
+
+        </div>
+        <div  class="mx-auto col-10 h-auto bg-white border rounded border-dark"
+              contenteditable="true" id="content_div"
+              style="min-height: 75px;"
+              data-text="&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;......VUL HIER JOUW MOTTO IN......">{{ app.user.motto|raw}}</div>
+    </div>
+    <div class="row p-2">
+        {{ form_widget(motto_form) }}
+        <div class="row mx-auto">
+            <button type="reset" class="btn btn-outline-success mx-2 my-2 my-sm-0" id="reset_button">reset</button>
+            <button type="submit" class="btn btn-outline-success my-2 my-sm-0" >submit</button>
+        </div>
+
+    </div>
+
+    {{ form_end(motto_form) }}
+</div>

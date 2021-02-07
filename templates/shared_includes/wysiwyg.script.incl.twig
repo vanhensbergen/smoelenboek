@@ -1,0 +1,41 @@
+<script>
+    let previewDiv  = document.querySelector('#content_div');
+    let editTextarea = document.querySelector('form textarea');
+    let resetButton = document.querySelector('#reset_button')
+    let toolBar = document.querySelector('#toolbar')
+    let editor = document.querySelector('#editor_div')
+    resetButton.addEventListener('click',(e)=>{
+        previewDiv.innerHTML = editTextarea.value;
+    })
+    previewDiv.addEventListener('blur',(e)=>{
+        editTextarea.value = previewDiv.innerHTML
+    })
+    let buttons = toolBar.querySelectorAll('button')
+
+    for(let button of buttons)
+    {
+        button.addEventListener('click', (e) =>
+        {
+            document.execCommand('styleWithCSS', false, null)
+            let action = e.target.getAttribute('data-action');
+            let args = action.split(' ');
+            if (args.length === 1)
+            {
+                document.execCommand(args[0], false, null);
+            }
+            else
+            {
+                document.execCommand(args[0], false, args[1]);
+            }
+        })
+    }
+    let colorInput = toolBar.querySelector('input').addEventListener('input',(e)=>{
+
+        document.execCommand("foreColor",false,e.target.value);
+        e.target.value="#000000"
+    })
+
+
+</script>
+<script src="https://kit.fontawesome.com/2ae97535a1.js" crossorigin="anonymous"></script>
+

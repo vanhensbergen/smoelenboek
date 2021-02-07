@@ -1,103 +1,10 @@
 {% extends 'base_principal.html.twig' %}
 
 {% block content %}
-    <div class="row m-1 border rounded border-success ">
-        {{ form_start(motto_form)}}
-            <div class="row mt-1 mx-auto" id="editor_div">
-                <div class="mx-auto col-10 bg-secondary p-1 border rounded border-dark" id="toolbar" >
-                    <span class="btn btn-outline-success bg-white">
-                        <button type="button" data-action="fontSize 5"
-                                class="btn btn-outline-success"
-                                title="lettergrootte 5"><i class="fas fa-text-height" data-action="fontSize 5">5</i></button>
-                        <button type="button" data-action="fontSize 4"
-                                class="btn btn-outline-success"
-                                title="lettergrootte 4"><i class="fas fa-text-height" data-action="fontSize 4">4</i></button>
-                         <button type="button" data-action="fontSize 3"
-                                 class="btn btn-outline-success"
-                                 title="lettergrootte 3"><i class="fas fa-text-height" data-action="fontSize 3">3</i></button>
-                        <button type="button" data-action="fontSize 2"
-                                class="btn btn-outline-success"
-                                title="lettergrootte 2"><i class="fas fa-text-height" data-action="fontSize 2">2</i></button>
-                    </span>
-                    <span class="btn btn-outline-success bg-white">
-                        <button type="button" data-action="bold"
-                                class="btn btn-outline-success"
-                                title="toggle vet"><i class="fas fa-bold" data-action="bold"></i></button>
-                        <button type="button" data-action="italic"
-                            class="btn btn-outline-success"
-                            title="toggle cursief"><i class="fas fa-italic" data-action="italic"></i></button>
-                        <button type="button" data-action="underline"
-                                class="btn btn-outline-success"
-                                title="toggle onderstrepen"><i class="fas fa-underline" data-action="underline"></i></button>
-
-                    </span>
-                    <span class="btn btn-outline-success bg-white" title="tekstkleur instellen">
-                        <input  class="btn btn-outline-success m-2" type="color"></input>
-                        <span class="font-weight-bold text-success">kleur</span>
-                    </span>
-                    <span class="btn btn-outline-success bg-white float-right ">
-                        <button type="button" data-action="removeFormat"
-                                class="btn btn-outline-success"
-                                title="verwijder opmaak"><i class="fas fa-remove-format" data-action="removeFormat"></i></button>
-                    </span>
-
-                </div>
-                <div  class="mx-auto col-10 h-auto bg-white border rounded" contenteditable="true" id="content_div">{{ app.user.motto|raw}}</div>
-            </div>
-             <div class="row p-2">
-                {{ form_widget(motto_form) }}
-                 <div class="col-10 mx-auto">
-                     <button type="reset" class="btn btn-outline-success my-2 my-sm-1" id="reset_button">reset</button>
-                     <button type="submit" class="btn btn-outline-success my-2 my-sm-0" >submit</button>
-                 </div>
-
-             </div>
-
-        {{ form_end(motto_form) }}
-    </div>
+    {{ include('shared_includes/wysiwyg.html.incl.twig') }}
 {% endblock %}
 
 
 {% block javascripts %}
-    <script>
-        let previewDiv  = document.querySelector('#content_div');
-        let editTextarea = document.querySelector('form textarea');
-        let resetButton = document.querySelector('#reset_button')
-        let toolBar = document.querySelector('#toolbar')
-        let editor = document.querySelector('#editor_div')
-        resetButton.addEventListener('click',(e)=>{
-            previewDiv.innerHTML = editTextarea.value;
-        })
-        previewDiv.addEventListener('blur',(e)=>{
-            editTextarea.value = previewDiv.innerHTML
-        })
-        let buttons = toolBar.querySelectorAll('button')
-
-            for(let button of buttons)
-            {
-                button.addEventListener('click', (e) =>
-                    {
-                        document.execCommand('styleWithCSS', false, null)
-                        let action = e.target.getAttribute('data-action');
-                        let args = action.split(' ');
-                        if (args.length === 1)
-                        {
-                            document.execCommand(args[0], false, null);
-                        }
-                        else
-                        {
-                            document.execCommand(args[0], false, args[1]);
-                        }
-                    })
-            }
-        let colorInput = toolBar.querySelector('input').addEventListener('change',(e)=>{
-
-            document.execCommand("foreColor",false,e.target.value);
-        })
-
-
-    </script>
-    <script src="https://kit.fontawesome.com/2ae97535a1.js" crossorigin="anonymous"></script>
-
-
+    {{ include('shared_includes/wysiwyg.script.incl.twig') }}
 {% endblock %}

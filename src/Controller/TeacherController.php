@@ -3,6 +3,7 @@ namespace App\Controller {
 
     use App\Entity\StudentRemark;
     use App\Entity\User;
+    use App\Form\ChangeMottoFormType;
     use App\Form\StudentRemarkType;
     use Symfony\Component\HttpFoundation\File\UploadedFile;
     use Symfony\Component\HttpFoundation\Request;
@@ -13,15 +14,27 @@ namespace App\Controller {
     {
         /**
          * @Route("/teacher" , name="teacher_home")
+         * @param Request $request
          * @return Response
          */
-        public function defaultAction():Response{
+        public function defaultAction(Request $request):Response{
             $myClass = $this->getUser()->getMentorclass();
             $classes = $this->getClasses();
-            return $this->render('teacher/default.html.twig',[
-                'class'=>$myClass,
-                'classes'=>$classes,
-            ]);
+            $user = $this->getUser();
+            $form = $this->createForm(ChangeMottoFormType::class,$user);
+            $form->handleRequest($request);
+            if($form->isSubmitted()&&$form->isValid()){
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($user);
+                $em->flush();
+                $this->addFlash('message','update van motto is geslaagd.');
+            }
+            return $this->render('teacher/default.html.twig',
+                                    [
+                                        'class'=>$myClass,
+                                        'classes'=>$classes,
+                                        'motto_form'=>$form->createView()
+                                    ]);
         }
 
         /**
@@ -43,21 +56,6 @@ namespace App\Controller {
             return $this->getSchoolclassAction($id);
         }
 
-        /**
-         * @Route("/teacher/motto", name="teacher_motto")
-         * @param Request $request
-         * @return Response
-         */
-        public function mottoAction(Request $request):Response{
-            $newMotto = $request->get("motto");
-            /** @var User $user*/
-            $user = $this->getUser();
-            $user->setMotto($newMotto);
-            $em  = $this->getDoctrine()->getManager();
-            $em->persist($user);
-            $em->flush();
-            return $this->redirectToRoute('teacher_home');
-        }
 
         /**
          * @Route("teacher/new_password", name="teacher_new_password")
