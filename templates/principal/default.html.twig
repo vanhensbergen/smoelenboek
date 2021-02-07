@@ -3,17 +3,26 @@
 {% block content %}
     <div class="row m-1 border rounded border-success ">
         {{ form_start(motto_form)}}
-            <div class="row m-1" id="editor_div">
-                <div class="col-10 bg-secondary p-1" id="toolbar" >
+            <div class="row mt-1 mx-auto" id="editor_div">
+                <div class="mx-auto col-10 bg-secondary p-1 border rounded border-dark" id="toolbar" >
                     <span class="btn btn-outline-success bg-white">
                         <button type="button" data-action="fontSize 5"
                                 class="btn btn-outline-success"
-                                title="vergroot lettertype iets"><i class="fas fa-text-height" data-action="fontSize 5"></i></button>
+                                title="vergroot lettertype iets"><i class="fas fa-text-height" data-action="fontSize 5">5</i></button>
                         <button type="button" data-action="fontSize 4"
                                 class="btn btn-outline-success"
-                                title="normale grootte lettertype"><i class="fas fa-remove-format" data-action="fontSize 4"></i></button>
+                                title="normale grootte lettertype"><i class="fas fa-text-height" data-action="fontSize 4">4</i></button>
+                         <button type="button" data-action="fontSize 3"
+                                 class="btn btn-outline-success"
+                                 title="normale grootte lettertype"><i class="fas fa-text-height" data-action="fontSize 3">3</i></button>
+                        <button type="button" data-action="fontSize 2"
+                                class="btn btn-outline-success"
+                                title="normale grootte lettertype"><i class="fas fa-text-height" data-action="fontSize 2">2</i></button>
                     </span>
                     <span class="btn btn-outline-success bg-white">
+                        <button type="button" data-action="bold"
+                                class="btn btn-outline-success"
+                                title="toggle italic"><i class="fas fa-bold" data-action="bold"></i></button>
                         <button type="button" data-action="italic"
                             class="btn btn-outline-success"
                             title="toggle italic"><i class="fas fa-italic" data-action="italic"></i></button>
@@ -23,24 +32,20 @@
 
                     </span>
                     <span class="btn btn-outline-success bg-white">
-                        <button type="button" data-action="foreColor #ff0000"
-                                class="btn btn-outline-danger"
-                                title="tekstkleur rood"><i class="fas fa-pen-nib " data-action="foreColor #ff0000"></i></button>
-                        <button type="button" data-action="foreColor #000000"
-                                class="btn btn-outline-dark"
-                                title="tekstkleur zwart"><i class="fas fa-pen-nib " data-action="foreColor #000000"></i></button>
+                        <input  class="btn btn-outline-success m-2" type="color">kleur</input>
                     </span>
-                    <span class="btn btn-outline-success bg-white">
+                    <span class="btn btn-outline-success bg-white float-right ">
                         <button type="button" data-action="removeFormat"
-                                class="btn btn-outline-danger"
-                                title="verwijder opmaak"><i class="fas fa-eraser " data-action="removeFormat"></i></button>
+                                class="btn btn-outline-success"
+                                title="verwijder opmaak"><i class="fas fa-remove-format" data-action="removeFormat"></i></button>
                     </span>
+
                 </div>
-                <div  class="p-3p text-left col-10 h-auto bg-white border rounded h4" contenteditable="true" id="content_div">{{ app.user.motto|raw}}</div>
+                <div  class="mx-auto col-10 h-auto bg-white border rounded" contenteditable="true" id="content_div">{{ app.user.motto|raw}}</div>
             </div>
              <div class="row p-2">
                 {{ form_widget(motto_form) }}
-                 <div class="col-10 ">
+                 <div class="col-10 mx-auto">
                      <button type="reset" class="btn btn-outline-success my-2 my-sm-1" id="reset_button">reset</button>
                      <button type="submit" class="btn btn-outline-success my-2 my-sm-0" >submit</button>
                  </div>
@@ -83,9 +88,11 @@
                             document.execCommand(args[0], false, args[1]);
                         }
                     })
-
-
             }
+        let colorInput = toolBar.querySelector('input').addEventListener('change',(e)=>{
+
+            document.execCommand("foreColor",false,e.target.value);
+        })
 
 
     </script>
