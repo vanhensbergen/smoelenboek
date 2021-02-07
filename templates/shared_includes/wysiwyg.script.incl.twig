@@ -4,11 +4,11 @@
     let resetButton = document.querySelector('#reset_button')
     let toolBar = document.querySelector('#toolbar')
     let editor = document.querySelector('#editor_div')
-    resetButton.addEventListener('click',(e)=>{
+    resetButton.addEventListener('click',()=>{
         previewDiv.innerHTML = editTextarea.value;
     })
-    previewDiv.addEventListener('blur',(e)=>{
-        editTextarea.value = previewDiv.innerHTML
+    previewDiv.addEventListener('blur',()=>{
+        editTextarea.value = previewDiv.innerHTML;
     })
     let buttons = toolBar.querySelectorAll('button')
 
