@@ -20,6 +20,7 @@ class ChangeMottoFormType extends AbstractType
                 'label'=>false,
                 'attr'=>['class'=>'d-none']
             ]);
+
     }
 
     public function configureOptions(OptionsResolver $resolver)

@@ -8,7 +8,17 @@
         previewDiv.innerHTML = editTextarea.value;
     })
     previewDiv.addEventListener('blur',()=>{
-        editTextarea.value = previewDiv.innerHTML;
+        let content = previewDiv.innerText;
+        content = content.trim();
+        let formattedText = previewDiv.innerHTML;
+        if(content==="")
+        {
+            previewDiv.innerHTML =""
+            formattedText = "";
+        }
+        editTextarea.value =formattedText;
+
+
     })
     let buttons = toolBar.querySelectorAll('button')
 
@@ -29,7 +39,7 @@
             }
         })
     }
-    let colorInput = toolBar.querySelector('input').addEventListener('input',(e)=>{
+    toolBar.querySelector('input').addEventListener('input',(e)=>{
 
         document.execCommand("foreColor",false,e.target.value);
         e.target.value="#000000"
