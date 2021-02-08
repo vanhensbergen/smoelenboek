@@ -21,7 +21,7 @@ namespace App\Controller {
             $myClass = $this->getUser()->getMentorclass();
             $classes = $this->getClasses();
             $user = $this->getUser();
-            $form = $this->createForm(ChangeMottoFormType::class,$user);
+            $form = $this->createForm(ChangeMottoFormType::class,$user);//,['attr'=>['novalidate'=>'novalidate']]
             $form->handleRequest($request);
             if($form->isSubmitted()&&$form->isValid()){
                 $em = $this->getDoctrine()->getManager();

@@ -49,7 +49,7 @@
             </span>
 
         </div>
-        <div  class="mx-auto col-10 h-auto bg-white border rounded border-dark"
+        <div  class="mx-auto col-10 h-auto border rounded border-dark"
               contenteditable="true" id="content_div"
               style="min-height: 75px; position:relative;"
 
@@ -59,7 +59,7 @@
         {{ form_widget(motto_form) }}
         <div class="row mx-auto">
             <button type="reset" class="btn btn-outline-success mx-2 my-2 my-sm-0" id="reset_button">reset</button>
-            <button type="submit" class="btn btn-outline-success my-2 my-sm-0" >submit</button>
+            <button type="submit" formnovalidate="true" class="btn btn-outline-success my-2 my-sm-0" >submit</button>
         </div>
 
     </div>

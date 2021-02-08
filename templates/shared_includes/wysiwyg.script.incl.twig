@@ -4,6 +4,15 @@
     let resetButton = document.querySelector('#reset_button')
     let toolBar = document.querySelector('#toolbar')
     let editor = document.querySelector('#editor_div')
+    let form = document.forms[1];
+    form.addEventListener('submit',(e)=>{
+        let content = editTextarea.value;
+        if(content===""){
+            previewDiv.classList.remove('border-dark');
+            previewDiv.classList.add('border-danger');
+            e.preventDefault();
+        }
+    })
     resetButton.addEventListener('click',()=>{
         previewDiv.innerHTML = editTextarea.value;
     })
